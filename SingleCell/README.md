@@ -451,26 +451,7 @@ plot$celltype <- factor(plot$celltype, levels = c("Spinal.Cord.Progenitor", "Dif
 
 ## plot average expression of genes across each cluster at each timepoint
 time.plot <- filter(plot, treament %in% c("uninj", "24hpa"))
-pmeis <- ggplot(filter(time.plot, gene == "meis1"), aes(x=treament, y=expression, group=treament, fill=celltype))+
-  geom_bar(stat = "identity", position = "dodge2") +
-  scale_fill_manual(values = my.color.neural) +
-  theme_bw() +
-  theme(legend.position = "none", text = element_text(size=20)) +
-  Seurat:::RotatedAxis()
 
-ppbx <- ggplot(filter(time.plot, gene == "pbx3"), aes(x=treament, y=expression, group=treament, fill=celltype))+
-  geom_bar(stat = "identity", position = "dodge2") +
-  scale_fill_manual(values = my.color.neural) +
-  theme_bw() +
-  theme(legend.position = "none", text = element_text(size=20)) +
-  Seurat:::RotatedAxis()
-
-plot_grid(pmeis, ppbx, nrow = 2)
-```
-
-![](README_files/figure-markdown_github/grn-1.png)
-
-``` r
 ggplot(time.plot, aes(x=treament, y=expression, group=treament, fill=celltype))+
   geom_bar(stat = "identity", position = "dodge2") +
   scale_fill_manual(values = my.color.neural) +
@@ -480,7 +461,7 @@ ggplot(time.plot, aes(x=treament, y=expression, group=treament, fill=celltype))+
   Seurat:::RotatedAxis()
 ```
 
-![](README_files/figure-markdown_github/grn-2.png)
+![](README_files/figure-markdown_github/grn-1.png)
 
 Figure 5D: featuremap to show expression of pbx3 and meis1 across neural clusters
 ---------------------------------------------------------------------------------
