@@ -2,16 +2,11 @@
 title: "ATAC Figures"
 author: "Anneke Kakebeen"
 date: "13 Aug 2019"
+always_allow_html: yes
 output:
-  html_document:
-    code_folding: "hide"
+  github_document:
     toc: true
     toc_depth: 3
-    toc_float: true
-fig_width: 6
-fig_height: 4
-editor_options: 
-  chunk_output_type: console
 ---
 ## Setting up project: ATAC
 ```{r set up, cache=TRUE, warning=FALSE, message=FALSE}
@@ -52,13 +47,13 @@ setwd("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/")
 ```{r read in data, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 
 # read in DA tables
-paxVall_agg <- read.table("outs/DA_paxVall_ALL.txt", header = TRUE, sep = "\t", row.names = 1) # paxVall aggregate
-paxVall <- read.table("outs/DA_paxVall.txt", header = TRUE, sep = "\t", row.names = 1) # paxVall aggregate
-timepoints <- read.table("outs/DA_timepoints.txt", header = TRUE, sep = "\t", row.names = 1) # between timepoints within one condition
+paxVall_agg <- read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs/DA_paxVall_ALL.txt", header = TRUE, sep = "\t", row.names = 1) # paxVall aggregate
+paxVall <- read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs/DA_paxVall.txt", header = TRUE, sep = "\t", row.names = 1) # paxVall aggregate
+timepoints <- read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs/DA_timepoints.txt", header = TRUE, sep = "\t", row.names = 1) # between timepoints within one condition
 
 # Read in log counts
-log.counts.paxVall <- as.matrix(read.table("outs/log.counts_paxVall_aggregate.txt", header = TRUE, sep = "\t", row.names = 1)) # log counts for paxVall aggregate
-log.counts.timepoints <- as.matrix(read.table("outs/log.counts_timepoints.txt", header = TRUE, sep = "\t", row.names = 1)) # log counts for timepoints
+log.counts.paxVall <- as.matrix(read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs/log.counts_paxVall_aggregate.txt", header = TRUE, sep = "\t", row.names = 1)) # log counts for paxVall aggregate
+log.counts.timepoints <- as.matrix(read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs/log.counts_timepoints.txt", header = TRUE, sep = "\t", row.names = 1)) # log counts for timepoints
 
 ```
 
@@ -89,7 +84,7 @@ plotMDS(mds,
 
 ## Figure 2C: tss plots
 ```{r 2c, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.width= 8, fig.height= 8}
-Fix when alex gets back to you
+# Fix when alex gets back to you
 # pax <- image_read("~/Desktop/Final_R/ATAC/tss_pax.png")
 # print(pax)
 # 
@@ -144,7 +139,7 @@ peakbreak$Contrast <- factor(peakbreak$Contrast, levels = rev(c("Aggregate Timep
 peakbreak$Direction <- factor(peakbreak$Direction, levels = c("pax6", "all-tissue"))
 
 # view table
-datatable(peakbreak, caption = "Number of peaks called in pax or all tissue libraries per timepoint")
+#datatable(peakbreak, caption = "Number of peaks called in pax or all tissue libraries per timepoint")
 
 
 # Plot pyramid chart of peaks 
@@ -194,7 +189,7 @@ GO_pax <- filter(paxVall_agg, paxVall_agg$DE.p.PaxVSWholeALL == "UP") # filter t
 GO_pax <- GO_pax[,c(12, 3)] # get genes and flags
 
 # view inputs for GO
-datatable(GO_pax, caption = "regions more accessible in pax than all-tissue")
+#datatable(GO_pax, caption = "regions more accessible in pax than all-tissue")
 
 # Run gprofileR2
 GO_out <- gost(query = as.character(GO_pax$Gene), 
@@ -206,7 +201,7 @@ GO_out <- gost(query = as.character(GO_pax$Gene),
 GO_PAX_use <- GO2table(GOResults = GO_out)
 
 # View GO outputs
-datatable(GO_PAX_use)
+datatable#(GO_PAX_use)
 
 # Plot go terms in barplot
 ggplot(GO_PAX_use[1:5,], aes(x= term_name, y= logp))  +
@@ -229,7 +224,7 @@ GO_all <- filter(paxVall_agg, paxVall_agg$DE.p.PaxVSWholeALL == "DOWN") # filter
 GO_all <- GO_all[,c(12, 3)] # get genes and flags
 
 # view table
-datatable(GO_all, caption = "regions more accessible in all than pax")
+#datatable(GO_all, caption = "regions more accessible in all than pax")
 
 
 # Run gprofileR2
@@ -242,7 +237,7 @@ GO_out <- gost(query = as.character(GO_all$Gene),
 GO_ALL_use <- GO2table(GOResults = GO_out)
 
 # View GO outputs
-datatable(GO_ALL_use)
+#datatable(GO_ALL_use)
 
 # Plot go terms in barplot
 ggplot(GO_ALL_use[1:5,], aes(x= term_name, y= logp))  +
@@ -482,7 +477,7 @@ peakbreak$Timepoint <- factor(peakbreak$Timepoint, levels = c("uninjured", "0hpa
 peakbreak$Direction <- factor(peakbreak$Direction, levels = c("gain", "lose"))
 
 # view data table
-datatable(peakbreak, caption = "Break down of peaks for timepoints within a condition")
+#datatable(peakbreak, caption = "Break down of peaks for timepoints within a condition")
 
 ```
 
@@ -547,7 +542,7 @@ GO_6hpa <- as.data.frame(tss_6hpa$Gene)
 input_6hpa <- tss_6hpa[,c(23, 26, 86)]
 
 # view inputs
-datatable(input_6hpa, caption = "Input DA regions to GO")
+#datatable(input_6hpa, caption = "Input DA regions to GO")
 
 #GO BP 
 GO_6hpa_terms <- gost(query = as.character(input_6hpa$Gene), 
@@ -559,7 +554,7 @@ GO_6hpa_terms <- gost(query = as.character(input_6hpa$Gene),
 Go_6hpa_use <- GO2table(GO_6hpa_terms)
 
 # View GO table
-datatable(Go_6hpa_use)
+#datatable(Go_6hpa_use)
 
 # Save out GO
 write.table(Go_6hpa_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO6hpa.txt", sep = "\t")
@@ -588,7 +583,7 @@ revi_6hpa$description <- factor(revi_6hpa$description, levels = c(TermLevels))
 revi_6hpa <- merge.data.frame(Go_6hpa_use, revi_6hpa, by.x = "term_id", by.y = "term_ID")
 
 # view revigo output
-datatable(revi_6hpa)
+#datatable(revi_6hpa)
 
 # plot main GO terms
 ggplot(revi_6hpa, aes(x= description, y= log10.p.value))  +
@@ -617,7 +612,7 @@ revi_6hpa$description <- factor(revi_6hpa$description, levels = c(TermLevels))
 revi_6hpa <- merge.data.frame(Go_6hpa_use, revi_6hpa, by.x = "term_id", by.y = "term_ID")
 
 # view revigo output
-datatable(revi_6hpa)
+#datatable(revi_6hpa)
 
 # plot main GO terms
 ggplot(revi_6hpa, aes(x= description, y= log10.p.value))  +
@@ -648,7 +643,7 @@ GO_24hpa <- as.data.frame(tss_24hpa$Gene)
 input_24hpa <- tss_24hpa[,c(26, 27, 86)]
 
 # View inputs
-datatable(input_24hpa, caption = "24hpa DA region GO input")
+#datatable(input_24hpa, caption = "24hpa DA region GO input")
 
 #GO 
 GO_24hpa_terms <- gost(query = as.character(input_24hpa$Gene), 
@@ -660,7 +655,7 @@ GO_24hpa_terms <- gost(query = as.character(input_24hpa$Gene),
 Go_24hpa_use <- GO2table(GO_24hpa_terms)
 
 # View GO table
-datatable(Go_24hpa_use)
+#datatable(Go_24hpa_use)
 
 # Save out GO
 write.table(Go_24hpa_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO24hpa.txt", sep = "\t")
@@ -678,7 +673,7 @@ print(Go_24hpa_use[,c(2,1)])
 # Save out first page as .csv
 
 # Read in .csv
-revi_24hpa <- read.csv("outs_figures/revigo_24hpa.csv") # .csv
+revi_24hpa <- read.csv("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/revigo_24hpa.csv") # .csv
 revi_24hpa <- revi_24hpa[-1*grep(revi_24hpa$plot_X, pattern ="null"),] # remove nested GO terms
 revi_24hpa$log10.p.value <- -1*revi_24hpa$log10.p.value
 # order for barplot
@@ -688,7 +683,7 @@ revi_24hpa$description <- factor(revi_24hpa$description, levels = c(TermLevels))
 revi_24hpa <- merge.data.frame(Go_24hpa_use, revi_24hpa, by.x = "term_id", by.y = "term_ID")
 
 # view revigo output
-datatable(revi_24hpa)
+#datatable(revi_24hpa)
 
 # plot main GO terms
 ggplot(revi_24hpa, aes(x= description, y= log10.p.value))  +
@@ -708,7 +703,7 @@ ggplot(revi_24hpa, aes(x= description, y= log10.p.value))  +
 # Save out first page as .csv
 
 # Read in .csv
-revi_24hpa <- read.csv("outs_figures/revigo_24hpa_tiny.csv") # .csv
+revi_24hpa <- read.csv("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/revigo_24hpa_tiny.csv") # .csv
 revi_24hpa <- revi_24hpa[-1*grep(revi_24hpa$plot_X, pattern ="null"),] # remove nested GO terms
 revi_24hpa$log10.p.value <- -1*revi_24hpa$log10.p.value
 # order for barplot
@@ -718,7 +713,7 @@ revi_24hpa$description <- factor(revi_24hpa$description, levels = c(TermLevels))
 revi246hpa <- merge.data.frame(Go_24hpa_use, revi_24hpa, by.x = "term_id", by.y = "term_ID")
 
 # view revigo output
-datatable(revi_24hpa)
+#datatable(revi_24hpa)
 
 # plot main GO terms
 ggplot(revi_24hpa, aes(x= description, y= log10.p.value))  +
@@ -747,7 +742,7 @@ GO_72hpa <- as.data.frame(tss_72hpa$Gene)
 input_72hpa <- tss_72hpa[,c(27, 31, 86)]
 
 # view inputs
-datatable(input_72hpa, caption = "72hpa DA region GO input")
+#datatable(input_72hpa, caption = "72hpa DA region GO input")
 
 #GO BP#
 GO_72hpa_terms <- gost(query = as.character(input_72hpa$Gene), 
@@ -759,7 +754,7 @@ GO_72hpa_terms <- gost(query = as.character(input_72hpa$Gene),
 Go_72hpa_use <- GO2table(GO_72hpa_terms)
 
 # View GO table
-datatable(Go_72hpa_use)
+#datatable(Go_72hpa_use)
 
 # Save out GO
 write.table(Go_72hpa_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO72hpa.txt", sep = "\t")
@@ -778,7 +773,7 @@ print(Go_72hpa_use[,c(2,1)])
 # Save out first page as .csv
 
 # Read in .csv
-revi_72hpa <- read.csv("outs_figures/revigo_72hpa.csv") # .csv
+revi_72hpa <- read.csv("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/revigo_72hpa.csv") # .csv
 revi_72hpa <- revi_72hpa[-1*grep(revi_72hpa$plot_X, pattern ="null"),] # remove nested GO terms
 revi_72hpa$log10.p.value <- -1*revi_72hpa$log10.p.value
 # order for barplot
@@ -788,7 +783,7 @@ revi_72hpa$description <- factor(revi_72hpa$description, levels = c(TermLevels))
 revi_72hpa <- merge.data.frame(Go_72hpa_use, revi_72hpa, by.x = "term_id", by.y = "term_ID")
 
 # view revigo output
-datatable(revi_72hpa)
+#datatable(revi_72hpa)
 
 # plot main GO terms
 ggplot(revi_72hpa, aes(x= description, y= log10.p.value))  +
@@ -807,7 +802,7 @@ ggplot(revi_72hpa, aes(x= description, y= log10.p.value))  +
 # Save out first page as .csv
 
 # Read in .csv
-revi_72hpa <- read.csv("outs_figures/revigo_72hpa_tiny.csv") # .csv
+revi_72hpa <- read.csv("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/revigo_72hpa_tiny.csv") # .csv
 revi_72hpa <- revi_72hpa[-1*grep(revi_72hpa$plot_X, pattern ="null"),] # remove nested GO terms
 revi_72hpa$log10.p.value <- -1*revi_72hpa$log10.p.value
 # order for barplot
@@ -817,7 +812,7 @@ revi_72hpa$description <- factor(revi_72hpa$description, levels = c(TermLevels))
 revi_72hpa <- merge.data.frame(Go_72hpa_use, revi_72hpa, by.x = "term_id", by.y = "term_ID")
 
 # view revigo output
-datatable(revi_72hpa)
+#datatable(revi_72hpa)
 
 # plot main GO terms
 ggplot(revi_72hpa, aes(x= description, y= log10.p.value))  +

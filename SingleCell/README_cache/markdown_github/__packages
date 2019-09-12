@@ -1,0 +1,13 @@
+base
+Seurat
+LaCroixColoR
+ggplot2
+cowplot
+tidyr
+DT
+dplyr
+magrittr
+ggpubr
+rmarkdown
+scales
+kableExtra
