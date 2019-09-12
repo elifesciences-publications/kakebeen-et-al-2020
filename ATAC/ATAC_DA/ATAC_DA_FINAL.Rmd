@@ -1,0 +1,1009 @@
+---
+title: "Pax6_Timepoint_DA_Analysis"
+author: "Alex Chitsazan and Anneke Kakebeen"
+date: "12/19/2018 (Revised 9 Aug 2019)"
+output: 
+  html_document: 
+    fig_caption: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+## Set Up
+```{r setup, include=FALSE}
+#Load in packages, counts table and make summary table
+
+library(edgeR)
+library(kableExtra)
+library(GenomicRanges)
+library(ggplot2)
+library(knitr)
+library(RColorBrewer)
+library(VennDiagram)
+library(tidyverse)
+library(biomaRt)
+library(DT)
+
+
+# Set WD
+setwd("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/")
+```
+
+
+## Read in Counts data and set up summary
+### Counts
+```{r read counts}
+# Read in counts table 
+counts <- read.table("peaks_counts.txt", header=T, sep="\t", row.names=1) #store file as counts
+head(counts) #write out header of counts
+colnames(counts) #write column names from counts
+
+# create wanted column names
+# gsub("identify what want to change", "change to", colnames(variable))
+colnames(counts) <- gsub("...BAM.", "", colnames(counts))
+#colnames(counts) <- gsub(".*05_", "", colnames(counts))
+colnames(counts) <- gsub(".bam", "", colnames(counts))
+
+```
+### Summary table
+```{r make summary table}
+# FullFileNames
+FileName <- c("...BAM.01_SG_Wills_05_WW1_WT_Whole.Tail_Run01_S1.bam",    "...BAM.02_SG_Wills_05_PW1_pax6_Whole.Tail_Run01_S2.bam",
+          "...BAM.03_SG_Wills_05_W01_WT_0hpa_Run01_S3.bam",        "...BAM.04_SG_Wills_05_P01_pax6_0hpa_Run01_S4.bam",    
+          "...BAM.05_SG_Wills_05_W61_WT_6hpa_Run01_S5.bam",         "...BAM.06_SG_Wills_05_P61_pax6_6hpa_Run01_S6.bam",      
+          "...BAM.07_SG_Wills_05_W241_WT_24hpa_Run01_S7.bam",       "...BAM.08_SG_Wills_05_P241_pax6_24hpa_Run01_S8.bam",    
+          "...BAM.09_SG_Wills_05_W721_WT_72hpa_Run01_S9.bam",       "...BAM.10_SG_Wills_05_P721_pax6_72hpa_Run01_S10.bam",   
+          "...BAM.11_SG_Wills_05_WW11_WT_Whole.Tail_Run01_S11.bam", "...BAM.12_SG_Wills_05_WW2_WT_Whole.Tail_Run02_S1.bam",  
+          "...BAM.13_SG_Wills_05_PW2_pax6_Whole.Tail_Run02_S2.bam", "...BAM.14_SG_Wills_05_P8F_Run02_S3.bam",     
+          "...BAM.15_SG_Wills_05_P02_pax6_0hpa_Run02_S4.bam",       "...BAM.16_SG_Wills_05_W62_WT_6hpa_Run02_S5.bam",         
+          "...BAM.17_SG_Wills_05_P62_pax6_6hpa_Run02_S6.bam",       "...BAM.18_SG_Wills_05_W242_WT_24hpa_Run02_S7.bam",      
+          "...BAM.19_SG_Wills_05_P242_pax6_24hpa_Run02_S8.bam",     "...BAM.20_SG_Wills_05_W722_WT_72hpa_Run02_S9.bam",      
+          "...BAM.21_SG_Wills_05_P722_pax6_72hpa_Run02_S10.bam",    "...BAM.22_SG_Wills_05_W7212_WT_72hpa_Run02_S11.bam",    
+          "...BAM.23_SG_Wills_05_WW3_WT_Whole.Tail_Run03_S1.bam",   "...BAM.24_SG_Wills_05_PW3_pax6_Whole.Tail_Run03_S2.bam",
+          "...BAM.25_SG_Wills_05_W03_WT_0hpa_Run03_S3.bam",         "...BAM.26_SG_Wills_05_P03_pax6_0hpa_Run03_S4.bam",      
+          "...BAM.27_SG_Wills_05_W63_WT_6hpa_Run03_S5.bam",         "...BAM.28_SG_Wills_05_P63_pax6_6hpa_Run03_S6.bam",      
+          "...BAM.29_SG_Wills_05_W243_WT_24hpa_Run03_S7.bam",       "...BAM.30_SG_Wills_05_P243_pax6_24hpa_Run03_S8.bam",    
+          "...BAM.31_SG_Wills_05_W723_WT_72hpa_Run03_S9.bam",       "...BAM.32_SG_Wills_05_P723_pax6_72hpa_Run03_S10.bam")
+
+# Sample names
+# Three position Naming
+# 1st position indicates Genotype : W=WholeTail, P=Pax6
+# 2nd position indicates Timepoint: W=WholeTail, 0=0hpa, 6=6hpa, 24=24hpa, 72=72hpa
+# 3rd position indicates Bio Rep #: 1=biorep1, 2=biorep2, 3=biorep3
+# WW11  is a special case where WW3 was split into two PCR reactions. WW11 = Wildtype WholeTail n711 primer
+# W7212 is a special case where WW3 was split into two PCR reactions. W7212= Wildtype 72hpa     n712 primer
+#   See notebook 3, pg7 for WW11 and W7212 sample prep details
+
+SampleNames <- c("WW1", "PW1", "W01", "P01", "W61", "P61", "W241", "P241", "W721", "P721", "WW11", "WW2", "PW2", "P8F", "P02", "W62", "P62", "W242", "P242", "W722", "P722", "W7212", "WW3", "PW3", "W03", "P03", "W63", "P63", "W243", "P243", "W723", "P723")
+
+##Data Input##
+## "Metrics taken during ATAC-Seq library building Process"
+CellID <- c("Whole-Tail", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Whole-Tail", "Pax", "NA", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Whole-Tail", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Pax", "Whole-Tail", "Pax")
+CellID <- gsub(CellID, pattern = "Whole-Tail", replacement = "All_Tissue")
+TimePt <- c("Whole-Tail", "Whole-Tail", "0hpa", "0hpa", "6hpa", "6hpa", "24hpa", "24hpa", "72hpa", "72hpa", "Whole-Tail", "Whole-Tail", "Whole-Tail", "NA", "0hpa", "6hpa", "6hpa", "24hpa", "24hpa", "72hpa", "72hpa", "72hpa", "Whole-Tail", "Whole-Tail", "0hpa", "0hpa", "6hpa", "6hpa", "24hpa", "24hpa", "72hpa", "72hpa")
+TimePt <- gsub(TimePt, pattern = "Whole-Tail", replacement = "uninjured")
+TailCount <- c(5, 20, 5, 20, 5, 20, 5, 20, 5, 19, "NA", 5, 20, "NA", 20, 5, 20, 5, 20, 5, 19, "NA", 5, 20, 5, 20, 5, 20, 6, 20, 6, 19)
+CellCount <- c(766, 1214, 1215, 1366, 1803, 2083, 1803, 1577, 5806, 1799, "NA", 2231, 1715, "NA", 1425, 1985, 1819, 1695, 1120, 4728, 2817, "NA", 4827, 2128, 1366, 1803, 2083, 1803, 1985, 1784, 4957, 307)
+Primer <- c("n701", "n702", "n703", "n704", "n705", "n706", "n707", "n708", "n709", "n710", "n711", "n701", "n702", "N703", "n704", "n705", "n706", "n707", "n708", "n709", "n710", "n712", "n701", "n702", "n703", "n704", "n705", "n706", "n707", "n708", "n709", "n710")
+Barcode <- c("TAAGGCGA", "CGTACTAG", "AGGCAGAA", "TCCTGAGC", "GGACTCCT", "TAGGCATG", "CTCTCTAC", "CAGAGAGG", "GCTACGCT", "CGAGGCTG", "AAGAGGCA", "TAAGGCGA", "CGTACTAG", "AGGCAGAA", "TCCTGAGC", "GGACTCCT", "TAGGCATG", "CTCTCTAC", "CAGAGAGG", "GCTACGCT", "CGAGGCTG", "AAGAGGCA", "TAAGGCGA", "CGTACTAG", "AGGCAGAA", "TCCTGAGC", "GGACTCCT", "TAGGCATG", "CTCTCTAC", "CAGAGAGG", "GCTACGCT", "CGAGGCTG")
+SampleTime <- c( 172, 159, 172, 143, 95, 109, 98, 112, 93, 109, "NA", 165, 143, "NA", 165, 143, 95, 105, 98, 108, 93, 103, "NA", 165, 136, 134, 95, 99, 98, 103, 93, 97)
+SampleTime <- paste(SampleTime, "min", sep = "")
+
+# Make data frame
+# Entering metrics into a summary table
+targets <- data.frame(FileName, SampleNames, CellID, TimePt, TailCount, CellCount, Primer, Barcode, SampleTime, stringsAsFactors = FALSE)
+### Fix 'mislabeled' sample
+targets$CellID <- gsub("-", ".", targets$CellID)
+targets$TimePt <- gsub("-", ".", targets$TimePt)
+targets[c(14,25),2:ncol(targets)] <- targets[c(25,14),2:ncol(targets)]
+targets$Replicate <- substr(targets$SampleNames, nchar(targets$SampleNames), nchar(targets$SampleNames))
+# Rename colnames of counts
+colnames(counts) <- paste(targets$CellID, targets$TimePt, targets$Replicate, sep = "_")
+
+# View summary table
+datatable(targets)
+
+```
+
+### Filter counts
+```{r filter, include=FALSE}
+
+### Filter out genes with low read counts ("unexpressed" genes) -- 
+unex_filter <- which(rowSums(cpm(counts)) < 40) #take out peaks(in rows) that have sum of less than 20. Sum=peak value across dog samples
+counts <- counts[-1 * unex_filter,] #reassign peaks in counts to be * -1
+
+### Filter out genes with high read counts ("blacklist")
+ovex_filter <- which(rowSums(cpm(counts)) > 70000) 
+counts <- counts[-1 * ovex_filter,] 
+
+countData <- counts #rewrite countData as sorted by colnames from countData
+colnames(countData)
+
+# NOmenclature change from Whole Tail sample to All-tissue sample and Whole tail tissue to uninjured tissue
+ colnames(countData) <- gsub("_Whole.Tail", "_Uninjured", colnames(countData))
+ colnames(countData) <- gsub("Whole.Tail", "All-tissue", colnames(countData))
+# Print a correlation plot so that we can see how the samples correlate
+ source("myImagePlot.R")
+ myImagePlot(cor(cpm(countData)),
+             title = "Mapped Reads") #make a correlation plot of cpm from countData
+```
+
+### Remove samples that don't meet QC standards
+```{r remove, include=FALSE}
+# Remove 'bad' samples
+removed <- which(targets$SampleNames == "P8F")
+removed <- c(removed, which(targets$SampleNames == "P01"))
+removed <- c(removed, which(targets$SampleNames == "PW3"))
+removed <- c(removed, which(targets$SampleNames == "W01"))
+removed <- c(removed, which(targets$SampleNames == "WW1"))
+removed <- c(removed, which(targets$SampleNames == "PW2"))
+removed <- c(removed, which(targets$SampleNames == "P723"))
+removed <- c(removed, which(targets$SampleNames == "P63"))
+removed <- c(removed, which(targets$SampleNames == "P02"))
+
+## Remove samples from counts data
+countData <- countData[,-1*removed]
+targets <- targets[-1*removed,]
+
+# save out counts and target
+write.table(targets, "outs/targets.txt", sep = "\t")
+write.table(countData, "outs/countData.txt", sep = "\t")
+
+
+# Rerun correlation plot
+ myImagePlot(cor(cpm(countData)),
+             title = "Mapped Reads") 
+```
+
+### Barplot of total counts
+```{r barplot1, include=FALSE}
+# Bar plot to look at coverage
+normalize mapped counts (fcounts)
+totalcounts   <- colSums(countData)/10^6 #make totalcounts as sum of all (peaks/sample)/10^6 #how much library size variation
+
+# get colors
+allSample.cols <- rep(brewer.pal(7, "Set2")) #brewer makes color pallete.
+
+# Set margins for plot
+mymar <- par()$mar #change margins around plot
+mymar[2] <- 2 #change values in [position] to <-#
+mymar[1] <- 6
+
+par(mar = mymar)
+### barplot - totalCounts
+bp <- barplot(totalcounts,
+              col   = allSample.cols,
+              xlab  = "Million Reads", #x-axis label
+              main  = "Total Counts",
+              horiz = TRUE,
+              las = 1)
+
+```
+
+
+## Run edgeR for timepoint contrasts within conditions
+### PCA 1a
+```{r pca 1, include=FALSE}
+
+Group <- factor(paste(targets$CellID, targets$TimePt, sep="_")) #sample as factors cince no replicates]
+y <- DGEList(countData, group=Group) #create object with counts from countData and experimental conditions from Group
+
+# Normalizing 
+y <- calcNormFactors(y) #calculate normalization factors to scale DGEList
+n.counts <-cpm(y, normalized.lib.sizes=TRUE, log=TRUE)
+log.counts <- n.counts
+design <- model.matrix(~0+Group, data=y$samples) #makes design matrix
+colnames(design) <- levels(Group) 
+colnames(countData)
+
+# Save out log.counts for heatmaps
+write.table(log.counts,
+            file="outs/log.counts_timepoints.txt",
+            sep="\t",
+            quote=F,
+            col.names=NA)
+
+```
+
+### PCA 2a
+```{r pca 2, include=FALSE}
+# Running edgeR stat/Dispersion function
+y <- estimateGLMCommonDisp(y, design) 
+y <- estimateGLMTrendedDisp(y, design) 
+y <- estimateGLMTagwiseDisp(y, design) 
+
+# Plot MDS
+MDS <- plotMDS(y,
+               col = col.group,
+               main = "MDS Plot")
+
+# save out MDS for figures
+saveRDS(MDS, "outs/MDS.RDS")
+
+```
+
+### Make contrasts for differential analysis of timepoints within a condition
+```{r edgeR, include=FALSE}
+fit <- glmFit(y, design)
+
+# Makes matrix of all possible contrasts
+design.pairs <- function(levels) {
+  n <- length(levels)
+  design <- matrix(0,n,choose(n,2))
+  rownames(design) <- levels
+  colnames(design) <- 1:choose(n,2)
+  k <- 0
+  for (i in 1:(n-1))
+    for (j in (i+1):n) {
+      k <- k+1
+      design[i,k] <- 1
+      design[j,k] <- -1
+      colnames(design)[k] <- paste(levels[i],"-",levels[j],sep="")
+    }
+  design
+}
+     
+# Making contrast 
+my.contrasts <- design.pairs(colnames(design)) # make contrast matrix
+my.contrasts <- my.contrasts[,-1*grep("^All.Tissue_.*-Pax", colnames(my.contrasts))] # remove intercondition contrasts
+colnames(my.contrasts) # check contrasts
+
+
+```
+
+### Run differential accessiblity analysis
+```{r contrasts, include=FALSE}
+# Run the likelihood ratio test on all contrasts
+runContrastsLRT <- function(x) {
+  comparisons <- colnames(my.contrasts)
+  outComp     <- gsub("-", "VS", comparisons)
+  for (i in 1:length(comparisons)) {
+    tmp.glm <- glmLRT(fit, contrast=my.contrasts[,comparisons[i]])
+    assign(outComp[i], tmp.glm, envir = .GlobalEnv)
+  }
+}
+
+runContrastsLRT(my.contrasts)
+
+# Function that pulls DE express
+#p threshold=pc
+sumStats <- function(x,fc=1,pc=0.01){
+
+    up <- x$table$logFC > 0
+    dn <- x$table$logFC < 0
+    
+    ## indexes of genes with padj < 0.05
+    padj <- p.adjust(x$table$PValue, method="BH") < pc
+    ## indexes of genes with pvals < 0.05
+    pval <- x$table$PValue < pc
+    ## indexes of genes with pval of 0.05 and FC of greator than 1 or -1
+    ng.up <- x$table$logFC > fc & pval
+    ng.dn <- x$table$logFC < -1*fc & pval
+    
+    ## print out a summary table   
+    headers <- c("padj", "pval","up","dn")
+    values <- c(sum(padj), 
+                sum(pval), 
+                sum(ng.up), 
+                sum(ng.dn))
+    names(values) <- headers
+  
+    ## return a list of indexes for the genes that are DE by pval and padj
+    print(values)
+    return(list(up=which(pval & up),
+                dn=which(pval & dn),
+                upfc=which(ng.up),
+                dnfc=which(ng.dn),
+                upq=which(padj & up),
+                dnq=which(padj & dn),
+                padj=which(padj),
+                summary=values))  
+}
+
+# Function that outputs number of regions more accessible (UP), less accessible (DOWN), or not DA (NO)
+runsumStats <- function() {
+  comparisons <- ls(pattern = "VS", envir = .GlobalEnv)
+  GOcomp <- -1*grep(pattern = "GO", comparisons)
+  if (length(GOcomp) > 0) {
+    comparisons <- comparisons[GOcomp]
+  }
+  listD <- list()
+  for (i in 1:length(comparisons)) {
+    print(comparisons[i])
+    comp <- comparisons[i]
+    listD[[comp]] <- sumStats(get(comparisons[i]), pc=0.01)
+  }
+  return(listD)
+}
+
+
+### Create an object with the indexes of gﬁenes that are DE for each experiment
+DEi <- runsumStats()
+
+
+```
+
+### Make DA table 
+```{r export, include=FALSE}
+# Function to make results
+createExpResultsDF <- function(statistic) {
+  comparisons <- ls(pattern = "VS", envir = .GlobalEnv)
+  GOcomp <- -1*grep(pattern = "GO", comparisons)
+  if (length(GOcomp) > 0) {
+    comparisons <- comparisons[GOcomp]
+  }
+  df <- matrix(ncol = length(comparisons), nrow = nrow(get(comparisons[1])$table))
+  for (i in 1:length(comparisons)) {
+    edgeRObject<- get(comparisons[i])
+    df[,i] <- edgeRObject$table[[statistic]]
+  }
+  colnames(df) <- names(DEi)
+  rownames(df) <- rownames(edgeRObject)
+  df           <- data.frame(df)
+  return(df)
+}
+
+# Create an object of the logFC for each comparison 
+m <- createExpResultsDF("logFC")
+
+# Create an object of the pvals for each gene in each expiriment
+pvals <- createExpResultsDF("PValue")
+
+# Adjust the pval object to fdr for a padj object
+p.adj <- apply(pvals, 2, p.adjust, method="BH")
+
+# Create an object of logCPM for each gene in each expiriment
+logCPM <- Pax_0hpaVSPax_24hpa$table$logCPM
+logCPM <- data.frame(logCPM)
+
+```
+
+### Summary data frame
+```{r summary, include=FALSE}
+
+# Add researcher readable column names so that they can be combined for final output
+colnames(pvals) <- paste("pval", colnames(pvals), sep=".")
+colnames(p.adj) <- paste("padj", colnames(m), sep=".")
+colnames(m)     <- paste("fc", colnames(m), sep=".")
+
+
+# add an object that will be designated flag, if up-regulated = 1, down = -1 and not DE = 0
+flags <- matrix("NO", ncol=length(DEi), nrow=nrow(m))
+for (i in 1:length(DEi)) {
+    flags[DEi[[i]]$dn, i] <- "DOWN"
+    flags[DEi[[i]]$up, i] <- "UP"
+}
+colnames(flags) <- paste0("DE.", names(DEi))
+rownames(flags) <- rownames(m)
+
+
+# Create a summary dataframe of all metrics combined
+final.table <- data.frame(m, logCPM, flags, pvals, p.adj)
+
+# Add Gene annotation
+genes.gr <- readRDS("Xtrop9.gr")
+TSS <- promoters(genes.gr, upstream=0, downstream = 1)
+
+DistanceToTSS <- function(peaks.gr, TSS.gr) {
+
+  ## Run DistanceToNearest (GRanges fn) to get distances from TSS for all peaks
+  TSS.distance <- data.frame(distanceToNearest(peaks.gr, TSS.gr, ignore.strand=TRUE))
+  colnames(TSS.distance) <- c("Peaks", "Genes", "Distance")
+
+  ## A really long way to figure out which peaks are upstream/downstream from TSS
+  positive.downstream <- which((start(peaks.gr[TSS.distance$Peaks]) > start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "+") == TRUE)
+  positive.upstream   <- which((end(peaks.gr[TSS.distance$Peaks]) < start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "+") == TRUE)
+  negative.upstream   <- which((start(peaks.gr[TSS.distance$Peaks]) > start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "-") == TRUE)
+  negative.downstream <- which((end(peaks.gr[TSS.distance$Peaks]) < start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "-") == TRUE)
+
+  ## Change TSS.distance to integer value not absolute (both + and - distance from TSS)
+  TSS.distance$Distance[positive.upstream] <- TSS.distance$Distance[positive.upstream] * -1
+  TSS.distance$Distance[positive.downstream] <- TSS.distance$Distance[positive.downstream]
+  TSS.distance$Distance[negative.upstream] <- TSS.distance$Distance[negative.upstream] * -1
+  TSS.distance$Distance[negative.downstream] <- TSS.distance$Distance[negative.downstream]
+
+  ## Add a column to the GRanges to add the nearest GENE and DistanceToTSS of said gene
+  peaks.gr$Gene <- NA
+  peaks.gr$Gene[TSS.distance$Peaks] <- names(TSS.gr)[TSS.distance$Genes]
+  peaks.gr$DistanceToTSS <- NA
+  peaks.gr$DistanceToTSS[TSS.distance$Peaks] <- TSS.distance$Distance
+  return(peaks.gr)
+}
+
+
+# add where ATAC Peak coordinates fall
+loadSummits <- function(file) {
+    ##  Read in table and assign it to the global environment
+    temp.table <- read.table(file, sep="\t", header=FALSE)
+    colnames(temp.table) <- c("Chrom", "Start", "Stop", "Peak", "Pileup")
+    temp.table$Strand <- "*"
+    temp.table <- temp.table[which(temp.table$Start > 200),]
+    temp.gr <- with(temp.table, GRanges(Chrom, IRanges(Start, Stop), Strand, Peak, Pileup))
+    temp.gr <- resize(temp.gr, 400, fix="center")
+    names(temp.gr) <- temp.gr$Peak
+    temp.gr <- DistanceToTSS(temp.gr, TSS)
+    return(temp.gr)
+}
+
+# Load bed file with all peaks and coordinates
+ALL_merged_summits.gr <- loadSummits(file="ALL_merged_summits.bed")
+head(ALL_merged_summits.gr)
+
+# Function to add columns from granges to final table
+addColumns <- function(anno.gr, table) {
+  ## Add Columngs from GRanges to finalOutTable
+  names(anno.gr) <- gsub("All", "ALL", names(anno.gr))
+  remote.All  <- match(rownames(table), names(anno.gr))
+  table$Chrom <- as.character(seqnames(anno.gr)[remote.All])
+  table$Start <- start(anno.gr[remote.All])
+  table$End   <- end(anno.gr[remote.All])
+  table$Peak  <- anno.gr$Peak[remote.All]
+  table$Gene  <- anno.gr$Gene[remote.All]
+  table$DistanceToTSS  <- anno.gr$DistanceToTSS[remote.All]
+  return(table)
+}
+ 
+# Make final table
+final.table.timepoints<- addColumns(ALL_merged_summits.gr, final.table)
+
+# view final DA table
+datatable(final.table.timepoints, caption = "DA Timepoints within Condition")
+
+# Save Table out
+write.table(final.table.timepoints,
+            file="outs/DA_timepoints.txt",
+            sep="\t",
+            quote=F,
+            col.names=NA)
+
+```
+
+
+
+## Run edgeR for timepoint contrasts between conditions
+### PCA 1b
+```{r pca 1 timepoints, include=FALSE}
+
+# if not continuing from above read these in
+# targets <- read.table("outs/targets.txt", sep = "\t")
+# countData <- read.table("outs/countData.txt", sep = "\t")
+
+Group <- factor(paste(targets$CellID, targets$TimePt, sep="_")) #sample as factors cince no replicates]
+y <- DGEList(countData, group=Group) #create object with counts from countData and experimental conditions from Group
+### Normalizing 
+y <- calcNormFactors(y) #calculate normalization factors to scale DGEList
+n.counts <-cpm(y, normalized.lib.sizes=TRUE, log=TRUE)
+log.counts <- n.counts
+design <- model.matrix(~0+Group, data=y$samples) #makes design matrix
+colnames(design) <- levels(Group) 
+colnames(countData)
+
+# save out log.counts for heatmap
+write.table(log.counts,
+            file="outs/log.counts_paxVall.txt",
+            sep="\t",
+            quote=F,
+            col.names=NA)
+
+```
+
+### PCA 2b
+```{r pca 2 timepoints, include=FALSE}
+# Running edgeR stat/Dispersion function
+y <- estimateGLMCommonDisp(y, design) #does something to DGE datasets
+y <- estimateGLMTrendedDisp(y, design) #does something to DGE datasets
+y <- estimateGLMTagwiseDisp(y, design) #does something to DGE datasets
+
+```
+
+### Make contrasts for differential analysis of timepoints between a condition
+```{r contrasts timepoints, include=FALSE}
+fit <- glmFit(y, design)
+
+# make contrasts
+# Makes matrix of all possible contrasts
+design.pairs <- function(levels) {
+  n <- length(levels)
+  design <- matrix(0,n,choose(n,2))
+  rownames(design) <- levels
+  colnames(design) <- 1:choose(n,2)
+  k <- 0
+  for (i in 1:(n-1))
+    for (j in (i+1):n) {
+      k <- k+1
+      design[i,k] <- 1
+      design[j,k] <- -1
+      colnames(design)[k] <- paste(levels[i],"-",levels[j],sep="")
+    }
+  design
+}
+     
+# # Making contrast 
+# my.contrasts <- design.pairs(colnames(design)) #make contrast matrix
+
+# select contrasts
+my.contrasts <- makeContrasts(PaxVSWhole_6hpa=Pax_6hpa-All_Tissue_6hpa,
+                              PaxVSWhole_24hpa=Pax_24hpa-All_Tissue_24hpa,
+                              PaxVSWhole_72hpa=Pax_72hpa-All_Tissue_72hpa,
+                              PaxVSWhole_0hpa=Pax_0hpa-All_Tissue_0hpa,
+                              PaxVSWhole_WT=Pax_uninjured-All_Tissue_uninjured,
+                              levels=design)
+
+
+
+
+# Run the likelihood ratio test on all contrasts
+runContrastsLRT <- function(x) {
+  comparisons <- colnames(my.contrasts)
+  outComp     <- gsub("-", "VS", comparisons)
+  for (i in 1:length(comparisons)) {
+    tmp.glm <- glmLRT(fit, contrast=my.contrasts[,comparisons[i]])
+    assign(outComp[i], tmp.glm, envir = .GlobalEnv)
+  }
+}
+
+runContrastsLRT(my.contrasts)
+
+
+# Function that pulls DE express
+#p threshold=pc
+sumStats <- function(x,fc=1,pc=0.01){
+
+    up <- x$table$logFC > 0
+    dn <- x$table$logFC < 0
+    
+    ## indexes of genes with padj < 0.05
+    padj <- p.adjust(x$table$PValue, method="BH") < pc
+    ## indexes of genes with pvals < 0.05
+    pval <- x$table$PValue < pc
+    ## indexes of genes with pval of 0.05 and FC of greator than 1 or -1
+    ng.up <- x$table$logFC > fc & pval
+    ng.dn <- x$table$logFC < -1*fc & pval
+    
+    ## print out a summary table   
+    headers <- c("padj", "pval","up","dn")
+    values <- c(sum(padj), 
+                sum(pval), 
+                sum(ng.up), 
+                sum(ng.dn))
+    names(values) <- headers
+  
+    ## return a list of indexes for the genes that are DE by pval and padj
+    print(values)
+    return(list(up=which(pval & up),
+                dn=which(pval & dn),
+                upfc=which(ng.up),
+                dnfc=which(ng.dn),
+                upq=which(padj & up),
+                dnq=which(padj & dn),
+                padj=which(padj),
+                summary=values))  
+}
+
+runsumStats <- function() {
+  comparisons <- ls(pattern = "VS", envir = .GlobalEnv)
+  GOcomp <- -1*grep(pattern = "GO", comparisons)
+  if (length(GOcomp) > 0) {
+    comparisons <- comparisons[GOcomp]
+  }
+  listD <- list()
+  for (i in 1:length(comparisons)) {
+    print(comparisons[i])
+    comp <- comparisons[i]
+    listD[[comp]] <- sumStats(get(comparisons[i]), pc=0.01)
+  }
+  return(listD)
+}
+
+
+# Create an object with the indexes of gﬁenes that are DE for each experiment
+DEi <- runsumStats()
+
+```
+
+### Make DA table 
+```{r export timepoints, include=FALSE}
+# Function to make results
+createExpResultsDF <- function(statistic) {
+  comparisons <- ls(pattern = "VS", envir = .GlobalEnv)
+  GOcomp <- -1*grep(pattern = "GO", comparisons)
+  if (length(GOcomp) > 0) {
+    comparisons <- comparisons[GOcomp]
+  }
+  df <- matrix(ncol = length(comparisons), nrow = nrow(get(comparisons[1])$table))
+  for (i in 1:length(comparisons)) {
+    edgeRObject<- get(comparisons[i])
+    df[,i] <- edgeRObject$table[[statistic]]
+  }
+  colnames(df) <- names(DEi)
+  rownames(df) <- rownames(edgeRObject)
+  df           <- data.frame(df)
+  return(df)
+}
+
+### Create an object of the logFC for each comparison 
+m <- createExpResultsDF("logFC")
+
+
+### Create an object of the pvals for each gene in each expiriment
+pvals <- createExpResultsDF("PValue")
+
+### Adjust the pval object to fdr for a padj object
+p.adj <- apply(pvals, 2, p.adjust, method="BH")
+
+### Create an object of logCPM for each gene in each expiriment
+logCPM <- PaxVSWhole_WT$table$logCPM
+logCPM <- data.frame(logCPM)
+
+
+```
+
+### Summary data frame
+```{r summary timepoints, include=FALSE}
+
+# Add researcher readable column names so that they can be combined for final output
+colnames(pvals) <- paste("pval", colnames(pvals), sep=".")
+colnames(p.adj) <- paste("padj", colnames(m), sep=".")
+colnames(m)     <- paste("fc", colnames(m), sep=".")
+
+
+# add an object that will be designated flag, if up-regulated = 1, down = -1 and not DE = 0
+flags <- matrix("NO", ncol=length(DEi), nrow=nrow(m))
+for (i in 1:length(DEi)) {
+    flags[DEi[[i]]$dn, i] <- "DOWN"
+    flags[DEi[[i]]$up, i] <- "UP"
+}
+colnames(flags) <- paste0("DE.", names(DEi))
+rownames(flags) <- rownames(m)
+
+
+# Create a summary dataframe of all metrics combined
+final.table <- data.frame(m, logCPM, flags, pvals, p.adj)
+
+# Add Gene annotation
+genes.gr <- readRDS("Xtrop9.gr")
+TSS <- promoters(genes.gr, upstream=0, downstream = 1)
+
+DistanceToTSS <- function(peaks.gr, TSS.gr) {
+
+  ## Run DistanceToNearest (GRanges fn) to get distances from TSS for all peaks
+  TSS.distance <- data.frame(distanceToNearest(peaks.gr, TSS.gr, ignore.strand=TRUE))
+  colnames(TSS.distance) <- c("Peaks", "Genes", "Distance")
+
+  ## A really long way to figure out which peaks are upstream/downstream from TSS
+  positive.downstream <- which((start(peaks.gr[TSS.distance$Peaks]) > start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "+") == TRUE)
+  positive.upstream   <- which((end(peaks.gr[TSS.distance$Peaks]) < start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "+") == TRUE)
+  negative.upstream   <- which((start(peaks.gr[TSS.distance$Peaks]) > start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "-") == TRUE)
+  negative.downstream <- which((end(peaks.gr[TSS.distance$Peaks]) < start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "-") == TRUE)
+
+  ## Change TSS.distance to integer value not absolute (both + and - distance from TSS)
+  TSS.distance$Distance[positive.upstream] <- TSS.distance$Distance[positive.upstream] * -1
+  TSS.distance$Distance[positive.downstream] <- TSS.distance$Distance[positive.downstream]
+  TSS.distance$Distance[negative.upstream] <- TSS.distance$Distance[negative.upstream] * -1
+  TSS.distance$Distance[negative.downstream] <- TSS.distance$Distance[negative.downstream]
+
+  ## Add a column to the GRanges to add the nearest GENE and DistanceToTSS of said gene
+  peaks.gr$Gene <- NA
+  peaks.gr$Gene[TSS.distance$Peaks] <- names(TSS.gr)[TSS.distance$Genes]
+  peaks.gr$DistanceToTSS <- NA
+  peaks.gr$DistanceToTSS[TSS.distance$Peaks] <- TSS.distance$Distance
+  return(peaks.gr)
+}
+
+
+# add where ATAC Peak coordinates fall
+loadSummits <- function(file) {
+    ##  Read in table and assign it to the global environment
+    temp.table <- read.table(file, sep="\t", header=FALSE)
+    colnames(temp.table) <- c("Chrom", "Start", "Stop", "Peak", "Pileup")
+    temp.table$Strand <- "*"
+    temp.table <- temp.table[which(temp.table$Start > 200),]
+    temp.gr <- with(temp.table, GRanges(Chrom, IRanges(Start, Stop), Strand, Peak, Pileup))
+    temp.gr <- resize(temp.gr, 400, fix="center")
+    names(temp.gr) <- temp.gr$Peak
+    temp.gr <- DistanceToTSS(temp.gr, TSS)
+    return(temp.gr)
+}
+
+# Load bed file with all peaks and coordinates
+ALL_merged_summits.gr <- loadSummits(file="ALL_merged_summits.bed")
+head(ALL_merged_summits.gr)
+
+# Function to add columns from granges to final table
+addColumns <- function(anno.gr, table) {
+  ## Add Columngs from GRanges to finalOutTable
+  names(anno.gr) <- gsub("All", "ALL", names(anno.gr))
+  remote.All  <- match(rownames(table), names(anno.gr))
+  table$Chrom <- as.character(seqnames(anno.gr)[remote.All])
+  table$Start <- start(anno.gr[remote.All])
+  table$End   <- end(anno.gr[remote.All])
+  table$Peak  <- anno.gr$Peak[remote.All]
+  table$Gene  <- anno.gr$Gene[remote.All]
+  table$DistanceToTSS  <- anno.gr$DistanceToTSS[remote.All]
+  return(table)
+}
+ 
+# Make final table
+final.table.paxVall<- addColumns(ALL_merged_summits.gr, final.table)
+
+# view final DA table
+datatable(final.table.paxVall, caption = "DA Timepoints between Condition")
+
+# Save Table out
+write.table(final.table.paxVall,
+            file="outs/DA_paxVall.txt",
+            sep="\t",
+            quote=F,
+            col.names=NA)
+
+```
+
+
+
+## Run edgeR for aggregate pax vs all-tissue
+### PCA 1b
+```{r pca 1 aggregate, include=FALSE}
+
+# Read in if not continuing from before
+ targets <- read.table("outs/targets.txt", sep = "\t")
+ countData <- read.table("outs/countData.txt", sep = "\t")
+
+Group <- factor(targets$CellID) #sample as factors cince no replicates]
+y <- DGEList(countData, group=Group) #create object with counts from countData and experimental conditions from Group
+
+### Normalizing 
+y <- calcNormFactors(y) #calculate normalization factors to scale DGEList
+n.counts <-cpm(y, normalized.lib.sizes=TRUE, log=TRUE)
+log.counts <- n.counts
+design <- model.matrix(~0+Group, data=y$samples) #makes design matrix
+colnames(design) <- levels(Group) 
+colnames(countData)
+
+write.table(log.counts,
+            file="outs/log.counts_paxVall_aggregate.txt",
+            sep="\t",
+            quote=F,
+            col.names=NA)
+
+
+```
+
+### PCA 2b
+```{r pca 2 aggregate, include=FALSE}
+# Running edgeR stat/Dispersion function
+y <- estimateGLMCommonDisp(y, design) #does something to DGE datasets
+y <- estimateGLMTrendedDisp(y, design) #does something to DGE datasets
+y <- estimateGLMTagwiseDisp(y, design) #does something to DGE datasets
+
+```
+
+### Make contrasts for differential analysis of timepoints between a condition
+```{r contrasts aggregate, include=FALSE}
+fit <- glmFit(y, design)
+
+my.contrasts <- makeContrasts(PaxVSWholeALL=Pax-All_Tissue,
+                              levels=design)
+
+
+# Run the likelihood ratio test on all contrasts
+# Run the likelihood ratio test on all contrasts
+runContrastsLRT <- function(x) {
+  comparisons <- colnames(my.contrasts)
+  outComp     <- gsub("-", "VS", comparisons)
+  for (i in 1:length(comparisons)) {
+    tmp.glm <- glmLRT(fit, contrast=my.contrasts[,comparisons[i]])
+    assign(outComp[i], tmp.glm, envir = .GlobalEnv)
+  }
+}
+
+runContrastsLRT(my.contrasts)
+
+### Function that pulls DE express
+#p threshold=pc
+sumStats <- function(x,fc=1,pc=0.01){
+
+    up <- x$table$logFC > 0
+    dn <- x$table$logFC < 0
+    
+    ## indexes of genes with padj < 0.05
+    padj <- p.adjust(x$table$PValue, method="BH") < pc
+    ## indexes of genes with pvals < 0.05
+    pval <- x$table$PValue < pc
+    ## indexes of genes with pval of 0.05 and FC of greator than 1 or -1
+    ng.up <- x$table$logFC > fc & pval
+    ng.dn <- x$table$logFC < -1*fc & pval
+    
+    ## print out a summary table   
+    headers <- c("padj", "pval","up","dn")
+    values <- c(sum(padj), 
+                sum(pval), 
+                sum(ng.up), 
+                sum(ng.dn))
+    names(values) <- headers
+  
+    ## return a list of indexes for the genes that are DE by pval and padj
+    print(values)
+    return(list(up=which(pval & up),
+                dn=which(pval & dn),
+                upfc=which(ng.up),
+                dnfc=which(ng.dn),
+                upq=which(padj & up),
+                dnq=which(padj & dn),
+                padj=which(padj),
+                summary=values))  
+}
+
+runsumStats <- function() {
+  comparisons <- ls(pattern = "VS", envir = .GlobalEnv)
+  GOcomp <- -1*grep(pattern = "GO", comparisons)
+  if (length(GOcomp) > 0) {
+    comparisons <- comparisons[GOcomp]
+  }
+  listD <- list()
+  for (i in 1:length(comparisons)) {
+    print(comparisons[i])
+    comp <- comparisons[i]
+    listD[[comp]] <- sumStats(get(comparisons[i]), pc=0.01)
+  }
+  return(listD)
+}
+
+
+### Create an object with the indexes of gﬁenes that are DE for each experiment
+DEi <- runsumStats()
+
+
+```
+
+### Make DA table 
+```{r export aggregate, include=FALSE}
+# Function to make results
+createExpResultsDF <- function(statistic) {
+  comparisons <- ls(pattern = "VS", envir = .GlobalEnv)
+  GOcomp <- -1*grep(pattern = "GO", comparisons)
+  if (length(GOcomp) > 0) {
+    comparisons <- comparisons[GOcomp]
+  }
+  df <- matrix(ncol = length(comparisons), nrow = nrow(get(comparisons[1])$table))
+  for (i in 1:length(comparisons)) {
+    edgeRObject<- get(comparisons[i])
+    df[,i] <- edgeRObject$table[[statistic]]
+  }
+  colnames(df) <- names(DEi)
+  rownames(df) <- rownames(edgeRObject)
+  df           <- data.frame(df)
+  return(df)
+}
+
+### Create an object of the logFC for each comparison 
+m <- createExpResultsDF("logFC")
+
+
+### Create an object of the pvals for each gene in each expiriment
+pvals <- createExpResultsDF("PValue")
+
+### Adjust the pval object to fdr for a padj object
+p.adj <- apply(pvals, 2, p.adjust, method="BH")
+
+### Create an object of logCPM for each gene in each expiriment
+logCPM <- PaxVSWholeALL$table$logCPM
+logCPM <- data.frame(logCPM)
+
+
+```
+
+### Summary data frame
+```{r summary aggregate, include=FALSE}
+
+# Add researcher readable column names so that they can be combined for final output
+colnames(pvals) <- paste("pval", colnames(pvals), sep=".")
+colnames(p.adj) <- paste("padj", colnames(m), sep=".")
+colnames(m)     <- paste("fc", colnames(m), sep=".")
+
+
+
+### add an object that will be designated flag, if up-regulated = 1, down = -1 and not DE = 0
+flags <- matrix("NO", ncol=length(DEi), nrow=nrow(m))
+for (i in 1:length(DEi)) {
+    flags[DEi[[i]]$dn, i] <- "DOWN"
+    flags[DEi[[i]]$up, i] <- "UP"
+}
+colnames(flags) <- paste0("DE.p.", names(DEi))
+rownames(flags) <- rownames(m)
+
+### add an object that will be designated flag, if up-regulated = 1, down = -1 and not DE = 0
+flags.fc <- matrix("NO", ncol=length(DEi), nrow=nrow(m))
+for (i in 1:length(DEi)) {
+    flags.fc[DEi[[i]]$dnfc, i] <- "DOWN"
+    flags.fc[DEi[[i]]$upfc, i] <- "UP"
+}
+colnames(flags.fc) <- paste0("DE.p.fc", names(DEi))
+rownames(flags.fc) <- rownames(m)
+
+### add an object that will be designated flag, if up-regulated = 1, down = -1 and not DE = 0
+flags.q <- matrix("NO", ncol=length(DEi), nrow=nrow(m))
+for (i in 1:length(DEi)) {
+    flags.q[DEi[[i]]$dnq, i] <- "DOWN"
+    flags.q[DEi[[i]]$upq, i] <- "UP"
+}
+colnames(flags.q) <- paste0("DE.q", names(DEi))
+rownames(flags.q) <- rownames(m)
+
+
+
+### Create a summary dataframe of all metrics combined
+final.table <- data.frame(m, logCPM, flags, flags.q, flags.fc, pvals, p.adj)
+
+### Add Gene annotation
+genes.gr <- readRDS("Xtrop9.gr")
+TSS <- promoters(genes.gr, upstream=0, downstream = 1)
+
+DistanceToTSS <- function(peaks.gr, TSS.gr) {
+
+  ## Run DistanceToNearest (GRanges fn) to get distances from TSS for all peaks
+  TSS.distance <- data.frame(distanceToNearest(peaks.gr, TSS.gr, ignore.strand=TRUE))
+  colnames(TSS.distance) <- c("Peaks", "Genes", "Distance")
+
+  ## A really long way to figure out which peaks are upstream/downstream from TSS
+  positive.downstream <- which((start(peaks.gr[TSS.distance$Peaks]) > start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "+") == TRUE)
+  positive.upstream   <- which((end(peaks.gr[TSS.distance$Peaks]) < start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "+") == TRUE)
+  negative.upstream   <- which((start(peaks.gr[TSS.distance$Peaks]) > start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "-") == TRUE)
+  negative.downstream <- which((end(peaks.gr[TSS.distance$Peaks]) < start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "-") == TRUE)
+
+  ## Change TSS.distance to integer value not absolute (both + and - distance from TSS)
+  TSS.distance$Distance[positive.upstream] <- TSS.distance$Distance[positive.upstream] * -1
+  TSS.distance$Distance[positive.downstream] <- TSS.distance$Distance[positive.downstream]
+  TSS.distance$Distance[negative.upstream] <- TSS.distance$Distance[negative.upstream] * -1
+  TSS.distance$Distance[negative.downstream] <- TSS.distance$Distance[negative.downstream]
+
+  ## Add a column to the GRanges to add the nearest GENE and DistanceToTSS of said gene
+  peaks.gr$Gene <- NA
+  peaks.gr$Gene[TSS.distance$Peaks] <- names(TSS.gr)[TSS.distance$Genes]
+  peaks.gr$DistanceToTSS <- NA
+  peaks.gr$DistanceToTSS[TSS.distance$Peaks] <- TSS.distance$Distance
+  return(peaks.gr)
+}
+
+
+### Where the add where ATAC Peak coordinates fall
+loadSummits <- function(file) {
+    ##  Read in table and assign it to the global environment
+    temp.table <- read.table(file, sep="\t", header=FALSE)
+    colnames(temp.table) <- c("Chrom", "Start", "Stop", "Peak", "Pileup")
+    temp.table$Strand <- "*"
+    temp.table <- temp.table[which(temp.table$Start > 200),]
+    temp.gr <- with(temp.table, GRanges(Chrom, IRanges(Start, Stop), Strand, Peak, Pileup))
+    temp.gr <- resize(temp.gr, 400, fix="center")
+    names(temp.gr) <- temp.gr$Peak
+    temp.gr <- DistanceToTSS(temp.gr, TSS)
+    return(temp.gr)
+}
+
+ALL_merged_summits.gr <- loadSummits(file="ALL_merged_summits.bed")
+
+addColumns <- function(anno.gr, table) {
+  ## Add Columngs from GRanges to finalOutTable
+  names(anno.gr) <- gsub("All", "ALL", names(anno.gr))
+  remote.All  <- match(rownames(table), names(anno.gr))
+  table$Chrom <- as.character(seqnames(anno.gr)[remote.All])
+  table$Start <- start(anno.gr[remote.All])
+  table$End   <- end(anno.gr[remote.All])
+  table$Peak  <- anno.gr$Peak[remote.All]
+  table$Gene  <- anno.gr$Gene[remote.All]
+  table$DistanceToTSS  <- anno.gr$DistanceToTSS[remote.All]
+  return(table)
+}
+ 
+final.table.paxVall_All <- addColumns(ALL_merged_summits.gr, final.table)
+
+# Save Table out
+write.table(final.table.paxVall_All,
+            file="outs/DA_paxVall_ALL.txt",
+            sep="\t",
+            quote=F,
+            col.names=NA)
+
+# view table
+datatable(final.table.paxVall_All)
+
+```

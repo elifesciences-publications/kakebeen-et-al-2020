@@ -1,0 +1,293 @@
+---
+title: "IWRvUninj Seurat saturated"
+author: "Anneke Kakebeen"
+date: "4/9/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Set up
+```{r setup, include=FALSE}
+
+# Load Packages
+library(Seurat)
+library(ggplot2)
+library(LaCroixColoR)
+library(RColorBrewer)
+library(cowplot)
+library(DT)
+library(dplyr)
+library(gridExtra)
+
+## This is where files will save ##
+setwd("/Users/annekekakebeen/Desktop/pax6 paper/Final Markdowns/SingleCell/analysis/")
+```
+
+## DE functions
+```{r DE functions}
+# Define DE marker function
+condition.marker.1 <- function(object, cluster1){ 
+   FindMarkers(object = object, ident.1 = cluster1, verbose = FALSE, min.pct = 0.3, only.pos = TRUE) #cluster = to one cluster denoted by a number
+}
+
+# Define function for loop for marker function
+# clusters = list of clusters by number, outfiles= names out objects to be made
+cluster.marker.multi.1 <- function(object, clusters1, outfiles){ 
+  for(i in 1:length(clusters1)){
+      # Perform Findmarkers function from Seurat
+      temp.markers <- condition.marker.1(object, clusters1[i])
+      # Get number of rows in tempprary table
+      n <- nrow(temp.markers)
+      # Add column with identifier
+      temp.markers$cluster <- rep(outfiles[i], n)
+      # make index of rows with LOC
+      remove <- grep(pattern = "LOC.*", x = rownames(temp.markers))
+      # remove rows with LOC
+      temp.table <- temp.markers[-remove,]
+      # make index to remove rows wtih Xetrov
+      remove <- grep(pattern = "Xetrov.*", x = rownames(temp.table))
+      # remove rows with Xetrov
+      temp.table <- temp.table[-remove,]
+      # make column for genes
+      temp.table$gene <- rownames(temp.table)
+      # Assign to outfile name in the enviornment
+    assign(outfiles[i], temp.table, envir = .GlobalEnv)
+    }
+}
+
+
+### de genes with two idents
+# Define DE marker function
+condition.marker.2 <- function(object, cluster1, cluster2){ 
+   FindMarkers(object = object, ident.1 = cluster1, ident.2 = cluster2, verbose = FALSE, min.pct = 0.3, only.pos = TRUE, min.cells.group = 0, assay = "RNA") #cluster = to one cluster denoted by a number
+}
+
+# Define function for loop for marker function
+# clusters = list of clusters by number, outfiles= names out objects to be made
+cluster.marker.multi.2 <- function(object, clusters1, clusters2, outfiles){ 
+  for(i in 1:length(clusters1)){
+    for(x in 1:length(clusters2)){
+      # Perform Findmarkers function from Seurat
+      temp.markers <- condition.marker.2(object, clusters1[i], clusters2[x])
+      # Get number of rows in tempprary table
+      n <- nrow(temp.markers)
+      # Add column with identifier
+      temp.markers$cluster <- rep(outfiles[i], n)
+      # make index of rows with LOC
+      remove <- grep(pattern = "LOC.*", x = rownames(temp.markers))
+      # remove rows with LOC
+      temp.table <- temp.markers[-remove,]
+      # make index to remove rows wtih Xetrov
+      remove <- grep(pattern = "Xetrov.*", x = rownames(temp.table))
+      # remove rows with Xetrov
+      temp.table <- temp.table[-remove,]
+      temp.table$gene <- rownames(temp.table)
+      # Assign to outfile name in the enviornment
+    assign(outfiles[i], temp.table, envir = .GlobalEnv)
+    }}
+}
+```
+
+
+## Read in Seurat Objects
+```{r load objects, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Read in time.neural seurat object
+pax.neural <- readRDS("~/Desktop/pax6 paper/Final Markdowns/SingleCell/UMAP/pax.neural_FINAL.RDS")
+pax.all <- readRDS("~/Desktop/pax6 paper/Final Markdowns/SingleCell/UMAP/pax.combined_FINAL.RDS")
+
+```
+
+## Neural
+### DE between clusters
+```{r DE between clusters}
+
+# Set identity to AK_Names
+Idents(pax.neural) <- "AK_Names"
+
+# Define ins
+clusters<- levels(pax.neural$AK_Names) # define clusters to use
+clusters <- sort(clusters) # sort object of cluster names alphabetically
+
+# Outfile names
+outfiles <- paste("DEClusters", unique(gsub(clusters, pattern = "_.*", replacement = "")), sep = ".")
+outfiles <- sort(outfiles)
+
+# Run function
+cluster.marker.multi.1(object =  pax.neural, clusters1 = clusters, outfiles = outfiles)
+
+# Make master table
+objects.list <- lapply(outfiles, get)
+DEClusters.neural <- do.call(bind_rows, objects.list) # row bind to make large table
+
+# view table
+datatable(DEClusters.neural)
+
+# Save out table
+write.table(DEClusters.neural, "outs/DEClusters.neural.txt", sep = "\t", col.names = NA)
+
+```
+
+### DE between conditions within one cluster
+#### Set up
+```{r DE between conditions}
+
+# subset pax object to only uninjured and 24hpa 
+pax.neural.subset <- subset(pax.neural, condition %in% c("uninj", "dmso"))
+
+# Define ins
+clusters<- levels(pax.neural.subset@active.ident)
+
+# Uninjured in
+clusters_uninj <- clusters[grep(pattern = ".*uninj", x = clusters, value = FALSE)]
+clusters_uninj <- sort(clusters_uninj)
+
+
+# dmso in
+clusters_dmso <- clusters[grep(pattern = ".*dmso", x = clusters, value = FALSE)]
+clusters_dmso <- sort(clusters_dmso)
+
+```
+
+#### Lose uninj > 24hpa
+```{r DE lose}
+# outs
+outfiles <- paste("DEConditions_lose", unique(gsub(clusters, pattern = ".*_", replacement = "")), sep = ".")
+outfiles <- sort(outfiles)
+
+# run DE analysis
+cluster.marker.multi.2(pax.neural.subset, clusters1 = clusters_uninj, clusters2 = clusters_dmso, outfiles = outfiles)
+
+# make master table
+objects.list <- lapply(outfiles, get) # list all outfiles
+DEConditions_lose <- do.call(bind_rows, objects.list) # rowbind outfiles into one table
+colnames(DEConditions_lose)[3:4] <- c("pct.uninj", "pct.24hpa")
+
+# view table
+datatable(DEConditions_lose)
+
+# Save out table
+write.table(DEConditions_lose, "outs/DEConditions_lose.txt", sep = "\t", col.names = NA)
+
+```
+
+#### Gain uninj < 24hpa
+```{r DE gain}
+# outs
+outfiles <- paste("DEConditions_gain", unique(gsub(clusters, pattern = ".*_", replacement = "")), sep = ".")
+outfiles <- sort(outfiles)
+
+# run DE analysis
+cluster.marker.multi.2(pax.neural.subset, clusters1 = clusters_dmso, clusters2 = clusters_uninj, outfiles = outfiles)
+
+# make master table
+objects.list <- lapply(outfiles, get) # list all outfiles
+DEConditions_gain <- do.call(bind_rows, objects.list) # rowbind outfiles into one table
+colnames(DEConditions_gain)[3:4] <- c("pct.24hpa", "pct.uninj") # rename pct columns for ease
+
+# view table
+datatable(DEConditions_gain)
+
+# Save out table
+write.table(DEConditions_gain, "outs/DEConditions_gain.txt", sep = "\t", col.names = NA)
+
+```
+
+### DE between conditions when all cells in a condition are treated as an aggregate
+#### Set up
+```{r DE between clusters agg}
+
+Idents(pax.neural.subset) <- pax.neural.subset$condition
+
+# Define ins
+clusters<- levels(pax.neural.subset@active.ident)
+
+```
+
+#### Lose uninj > 24hpa
+```{r DE lose agg}
+# outs
+outfiles <- paste("DEConditions_lose_agg", unique(gsub(clusters, pattern = ".*_", replacement = "")), sep = ".")
+outfiles <- sort(outfiles)
+
+# run DE analysis
+DEConditions_lose_agg <- condition.marker.2(pax.neural.subset, "uninj", "dmso")
+colnames(DEConditions_lose_agg)[3:4] <- c("pct.uninj", "pct.24hpa")
+
+# view table
+datatable(DEConditions_lose_agg)
+
+# Save out table
+write.table(DEConditions_lose_agg, "outs/DEConditions_lose_agg.txt", sep = "\t", col.names = NA)
+
+```
+
+#### Gain uninj < 24hpa
+```{r DE gain agg}
+# outs
+outfiles <- paste("DEConditions_gain_agg", unique(gsub(clusters, pattern = ".*_", replacement = "")), sep = ".")
+outfiles <- sort(outfiles)
+
+# run DE analysis
+DEConditions_gain_agg <- condition.marker.2(pax.neural.subset, "dmso", "uninj")
+colnames(DEConditions_lose_agg)[3:4] <- c("pct.24hpa", "pct.uninj")
+
+# view table
+datatable(DEConditions_lose_agg)
+
+# Save out table
+write.table(DEConditions_lose_agg, "outs/DEConditions_gain_agg.txt", sep = "\t", col.names = NA)
+
+```
+
+
+
+## All cell types
+### DE between clusters
+```{r DE between clusters all}
+
+# Define ins
+clusters<- levels(pax.all) # define clusters to use
+
+# Outfile names
+outfiles <- paste("DEClusters", unique(gsub(clusters, pattern = "_.*", replacement = "")), sep = ".")
+
+# Run function
+cluster.marker.multi.1(object =  pax.all, clusters1 = clusters, outfiles = outfiles)
+
+# Make master table
+objects.list <- lapply(outfiles, get)
+DEClusters.neural <- do.call(bind_rows, objects.list) # row bind to make large table
+
+# view table
+datatable(DEClusters.neural)
+
+# Save out table
+write.table(DEClusters.neural, "outs/DEClusters.all.txt", sep = "\t", col.names = NA)
+
+```
+
+### Plot of heatmap for top 5 genes in DE
+```{r heatmap }
+
+de <- read.table("outs/DEClusters.all.txt", sep = "\t", header = TRUE)
+de$diff <- de$pct.1-de$pct.2
+
+genes <- as.data.frame(de %>%
+  group_by(cluster) %>%
+  top_n(20, diff)) %>%
+  group_by(cluster) %>%
+  top_n(10, p_val)
+datatable(genes)
+
+DoHeatmap(pax.all, features = as.character(genes$gene), assay = "integrated") + NoLegend()
+DotPlot(pax.all, features = as.character(unique(genes$gene)), cols = c("blue", "gold")) + RotatedAxis()
+
+```
+
+
+
+
+
+

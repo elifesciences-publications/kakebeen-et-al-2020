@@ -1,0 +1,5 @@
+*.rdb filter=lfs diff=lfs merge=lfs -text
+*.txt filter=lfs diff=lfs merge=lfs -text
+*.RDS filter=lfs diff=lfs merge=lfs -text
+*.narrowPeak filter=lfs diff=lfs merge=lfs -text
+*.html filter=lfs diff=lfs merge=lfs -text

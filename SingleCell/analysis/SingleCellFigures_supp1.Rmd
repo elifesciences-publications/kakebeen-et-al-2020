@@ -1,0 +1,159 @@
+---
+title: "Single Cell Figures"
+author: "Anneke Kakebeen"
+date: "13 Aug 2019"
+output:
+  html_document:
+    code_folding: "hide"
+    toc: true
+    toc_depth: 3
+    toc_float: true
+fig_width: 6
+fig_height: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+## Set up for scRNA-Seq Figures
+```{r scrnaseq figure set up, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+# load packages
+library(Seurat)
+library(LaCroixColoR)
+library(ggplot2)
+library(cowplot)
+library(tidyr)
+library(DT)
+library(dplyr)
+
+# load functions
+source("~/Desktop/pax6 paper/Final Markdowns/common_source_functions.R")
+
+# Set colors
+my.color.neural <-unique( c(lacroix_palette("Berry"), lacroix_palette("CranRaspberry"), lacroix_palette("Tangerine"),        lacroix_palette("PinaFraise")))
+condition.color <- c( "#6F0909", "#C0C0C0")
+cc_colors <- c((lacroix_palette("Lime"))[c(1,3)], "black")
+
+# Set working directory
+setwd("~/Desktop/pax6 paper/Final Markdowns/SingleCell/analysis/")
+
+```
+
+
+
+## Read in scRNASeq Objects
+```{r load objects, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Read in pax.all seurat object
+pax.all <- readRDS("~/Desktop/pax6 paper/Final Markdowns/SingleCell/UMAP/pax.combined_FINAL.RDS")
+
+# read in pax.neural
+pax.neural <- readRDS("~/Desktop/pax6 paper/Final Markdowns/SingleCell/UMAP/pax.neural_FINAL.RDS")
+
+# read in plotting data
+pax.all.plotting<- read.table("~/Desktop/pax6 paper/Final Markdowns/SingleCell/UMAP/pax.combined_plotting.txt", sep = "\t")
+
+# factor plotting table for plotting
+pax.all.plotting$condition <- factor(pax.all.plotting$condition, levels = c("uninj", "dmso", "iwr"))
+pax.all.plotting$Phase <- factor(pax.all.plotting$Phase, levels = c("S", "G2M", "G1"))
+```
+
+
+## Supp 4A: UMAP of all cells colored by individual cell types
+```{r supp 4a, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# change identity to cell clsuter
+Idents(pax.all) <- pax.all$AK_Names
+
+# plot cells in umap
+DimPlot(pax.all, cols = my.color.neural) +
+  NoAxes() +
+  NoLegend()
+
+```
+
+## Supp 4B: UMAP of all cells colored by cell classes
+```{r supp 4b, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+Idents(pax.all) <- pax.all$CellClass
+DimPlot(pax.all, label = FALSE, cols = my.color.neural[c(1, 3, 5, 7, 9, 11)]) +
+  NoAxes() +
+  NoLegend()
+
+
+```
+
+## Supp 4C: featureplot for neural cell markers
+```{r supp 4c, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# set assay
+DefaultAssay(pax.all) <- "RNA"
+# plot neural markers
+
+p1 <- FeaturePlot(pax.all, features = "sox2", order = TRUE) + NoAxes()
+p2 <- FeaturePlot(pax.all, features = "neurod1",  order = TRUE) + NoAxes()
+p3 <- FeaturePlot(pax.all, features = "neurog1",  order = TRUE)+ NoAxes()
+p4 <- FeaturePlot(pax.all, features = "elavl4",  order = TRUE)+ NoAxes()
+p5 <- FeaturePlot(pax.all, features = "pbx3",  order = TRUE)+ NoAxes()
+p6 <- FeaturePlot(pax.all, features = "meis1",  order = TRUE)+ NoAxes()
+
+plot_grid(p1, p2, p3, p4, p5, p6, nrow = 3)
+
+
+```
+
+## Supp 4D: Feature plot of pbx3 and meis1 in all cells
+```{r supp 4d, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# set assay
+DefaultAssay(pax.all) <- "RNA"
+Idents(pax.all) <- "AK_Names"
+# plot neural markers
+FeaturePlot(pax.all, 
+            features = c("pbx3", "meis1"), order = TRUE)
+
+
+
+```
+
+
+## Supp 4E: Average expression bar plots of pbx3 and meis1 in all cells
+```{r grn, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Predicted GRN
+" 6hpa_Gene:meis1 -> 24hpa_TF:meis1 -> 72hpa_TF:runx|etv1|klf9"
+" 6hpa_Gene:etv1 -> 24hpa_TF:etv1 -> 72hpa_TF:pbx3"
+
+# Define ins and outs for extraction function
+Idents(pax.all) <- pax.all$CellClass
+average_clusters <- t(as.data.frame(AverageExpression(pax.all, assays = "RNA", use.counts = TRUE, features = c("meis1", "pbx3"))))
+outs <- c("meis1_out", "pbx3_out")
+genes <- c("meis1", "pbx3")
+
+# Extract average expression data for plotting
+seuratTOplot(average_clusters, gene = genes, outs = outs) # run to plot function (found in sourced functions)
+objects <- ls(pattern=".*_out") # get all object names made in previous function
+objects.list <- lapply(objects, get) # get outs
+plot <- do.call(bind_rows, objects.list) # rowbind both gene data sets
+# Make metdata columns
+plot$treatment <- gsub(plot$condition, pattern = "RNA.", replacement = "") # split condition column
+
+# Factor data to order
+plot$gene <- factor(plot$gene, levels = c("pbx3", "meis1")) # order gene row for plot
+
+# # Factor for order of cell types
+# plot$treatment <- factor(plot$treatment, levels = level_cell)
+
+## plot average expression of genes across each cluster at each timepoint
+ggplot(plot, aes(x=treatment, y=expression,fill=treatment))+
+  geom_bar(stat = "identity", position = "dodge2") +
+  facet_grid(.~gene) +
+  scale_fill_manual(values = my.color.neural[c(1, 3, 5, 7, 9, 11)]) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  Seurat:::RotatedAxis() +
+  xlab("Cell Type") +
+  ylab("Average Expression")
+
+```
+
+

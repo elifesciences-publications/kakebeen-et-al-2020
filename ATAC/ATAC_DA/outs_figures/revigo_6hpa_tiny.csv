@@ -1,0 +1,41 @@
+term_ID,description,frequency,plot_X,plot_Y,plot_size,log10 p-value,uniqueness,dispensability,representative,eliminated
+GO:0007399,"nervous system development",12.770%, 5.288, 1.007,3.345,-4.0701,0.679,0.000,7399,0
+GO:0050793,"regulation of developmental process",12.949%,null,null,3.351,-1.3152,0.651,0.446,7399,1
+GO:0048468,"cell development",11.056%,null,null,3.283,-1.9281,0.691,0.607,7399,1
+GO:0048513,"animal organ development",18.719%,null,null,3.511,-2.9066,0.658,0.541,7399,1
+GO:0030154,"cell differentiation",22.095%,null,null,3.583,-4.8508,0.668,0.535,7399,1
+GO:0007275,"multicellular organism development",28.938%,null,null,3.700,-7.4225,0.649,0.595,7399,1
+GO:0009653,"anatomical structure morphogenesis",13.872%,null,null,3.381,-3.7077,0.693,0.456,7399,1
+GO:0048731,"system development",25.695%,null,null,3.649,-4.3851,0.643,0.607,7399,1
+GO:0048856,"anatomical structure development",31.558%, 6.331, 1.092,3.738,-8.4168,0.663,0.444,7399,1
+GO:0048869,"cellular developmental process",23.093%,null,null,3.602,-5.0894,0.675,0.544,7399,1
+GO:0019222,"regulation of metabolic process",35.730%,-1.481, 6.984,3.792,-5.1831,0.826,0.000,19222,0
+GO:0032501,"multicellular organismal process",41.143%,-4.058,-2.707,3.853,-2.5229,0.970,0.000,32501,0
+GO:0032502,"developmental process",33.982%, 0.579,-6.689,3.770,-10.3010,0.966,0.000,32502,0
+GO:0019219,"regulation of nucleobase-containing compound metabolic process",23.912%,-4.109, 3.416,3.618,-5.0958,0.491,0.135,19219,0
+GO:2001141,"regulation of RNA biosynthetic process",21.160%,null,null,3.564,-3.4828,0.437,0.762,19219,1
+GO:1903506,"regulation of nucleic acid-templated transcription",21.073%,null,null,3.563,-3.4828,0.436,0.785,19219,1
+GO:0097659,"nucleic acid-templated transcription",21.991%,null,null,3.581,-2.2733,0.516,0.746,19219,1
+GO:0032774,"RNA biosynthetic process",22.649%,null,null,3.594,-2.4597,0.525,0.497,19219,1
+GO:0080090,"regulation of primary metabolic process",33.566%,null,null,3.765,-4.4789,0.597,0.524,19219,1
+GO:0009889,"regulation of biosynthetic process",25.216%,null,null,3.641,-3.2211,0.538,0.536,19219,1
+GO:2000112,"regulation of cellular macromolecule biosynthetic process",23.220%,null,null,3.605,-3.3595,0.473,0.722,19219,1
+GO:0010468,"regulation of gene expression",25.084%,null,null,3.638,-4.0835,0.591,0.535,19219,1
+GO:0031323,"regulation of cellular metabolic process",33.837%,null,null,3.768,-4.4559,0.591,0.608,19219,1
+GO:0019438,"aromatic compound biosynthetic process",25.793%,null,null,3.650,-1.8570,0.604,0.494,19219,1
+GO:0018130,"heterocycle biosynthetic process",25.770%,null,null,3.650,-1.6676,0.603,0.499,19219,1
+GO:0031326,"regulation of cellular biosynthetic process",24.939%,null,null,3.636,-3.3526,0.485,0.723,19219,1
+GO:0006355,"regulation of transcription, DNA-templated",20.929%,null,null,3.560,-3.9431,0.434,0.681,19219,1
+GO:0051252,"regulation of RNA metabolic process",21.864%,null,null,3.579,-3.8416,0.477,0.706,19219,1
+GO:0010556,"regulation of macromolecule biosynthetic process",23.855%,null,null,3.616,-2.8996,0.479,0.730,19219,1
+GO:0006351,"transcription, DNA-templated",21.881%,null,null,3.579,-2.6271,0.501,0.766,19219,1
+GO:0034654,"nucleobase-containing compound biosynthetic process",25.378%,null,null,3.643,-1.7375,0.537,0.705,19219,1
+GO:1901362,"organic cyclic compound biosynthetic process",26.549%,null,null,3.663,-1.5031,0.613,0.475,19219,1
+GO:0060255,"regulation of macromolecule metabolic process",33.630%,null,null,3.766,-3.9431,0.589,0.609,19219,1
+GO:0051171,"regulation of nitrogen compound metabolic process",25.470%,null,null,3.645,-3.4547,0.586,0.538,19219,1
+GO:0043009,"chordate embryonic development",3.260%, 5.231, 3.053,2.753,-2.7423,0.694,0.322,43009,0
+GO:0009792,"embryo development ending in birth or egg hatching",3.278%,null,null,2.755,-2.6716,0.694,0.801,43009,1
+GO:0048598,"embryonic morphogenesis",3.301%,null,null,2.758,-2.3420,0.694,0.802,43009,1
+GO:0009790,"embryo development",5.505%, 6.728, 1.924,2.980,-4.0438,0.722,0.355,9790,0
+GO:0009888,"tissue development",10.912%, 6.745,-0.065,3.277,-2.1427,0.705,0.369,9888,0
+GO:0007420,"brain development",3.895%, 5.055,-0.562,2.830,-1.3757,0.731,0.381,7420,0

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Session genome="xenTro9" hasGeneTrack="false" hasSequenceTrack="false" locus="Chr01:67554131-67558913" path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/pax6_WT_6hpa.bed.xml" version="8">
+    <Resources>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/05_SG_Wills_05_W61_WT_6hpa_Run01_S5_peaks.narrowPeak"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/06_SG_Wills_05_P61_pax6_6hpa_Run01_S6.bw"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/06_SG_Wills_05_P61_pax6_6hpa_Run01_S6_peaks.narrowPeak"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/27_SG_Wills_05_W63_WT_6hpa_Run03_S5.bw"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/05_SG_Wills_05_W61_WT_6hpa_Run01_S5.bw"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/16_SG_Wills_05_W62_WT_6hpa_Run02_S5_peaks.narrowPeak"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/28_SG_Wills_05_P63_pax6_6hpa_Run03_S6.bw"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/17_SG_Wills_05_P62_pax6_6hpa_Run02_S6_peaks.narrowPeak"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/27_SG_Wills_05_W63_WT_6hpa_Run03_S5_peaks.narrowPeak"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/17_SG_Wills_05_P62_pax6_6hpa_Run02_S6.bw"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/16_SG_Wills_05_W62_WT_6hpa_Run02_S5.bw"/>
+        <Resource path="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/28_SG_Wills_05_P63_pax6_6hpa_Run03_S6_peaks.narrowPeak"/>
+    </Resources>
+    <Panel height="480" name="DataPanel" width="1133">
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.DataSourceTrack" color="0,0,178" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/28_SG_Wills_05_P63_pax6_6hpa_Run03_S6.bw" name="28_SG_Wills_05_P63_pax6_6hpa_Run03_S6.bw" normalize="false" renderer="BAR_CHART" sortable="true" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="1.4799304" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.FeatureTrack" color="0,0,178" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/28_SG_Wills_05_P63_pax6_6hpa_Run03_S6_peaks.narrowPeak" name="28_SG_Wills_05_P63_pax6_6hpa_Run03_S6_peaks.narrowPeak" renderer="BASIC_FEATURE" sortable="false" visible="true" windowFunction="count"/>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.DataSourceTrack" color="0,0,178" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/16_SG_Wills_05_W62_WT_6hpa_Run02_S5.bw" name="16_SG_Wills_05_W62_WT_6hpa_Run02_S5.bw" normalize="false" renderer="BAR_CHART" sortable="true" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="2.7185848" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.FeatureTrack" color="0,0,178" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/16_SG_Wills_05_W62_WT_6hpa_Run02_S5_peaks.narrowPeak" name="16_SG_Wills_05_W62_WT_6hpa_Run02_S5_peaks.narrowPeak" renderer="BASIC_FEATURE" sortable="false" visible="true" windowFunction="count"/>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.DataSourceTrack" color="0,0,178" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/05_SG_Wills_05_W61_WT_6hpa_Run01_S5.bw" name="05_SG_Wills_05_W61_WT_6hpa_Run01_S5.bw" normalize="false" renderer="BAR_CHART" sortable="true" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="1.8097993" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.FeatureTrack" color="0,0,178" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/05_SG_Wills_05_W61_WT_6hpa_Run01_S5_peaks.narrowPeak" name="05_SG_Wills_05_W61_WT_6hpa_Run01_S5_peaks.narrowPeak" renderer="BASIC_FEATURE" sortable="false" visible="true" windowFunction="count"/>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.DataSourceTrack" color="0,204,51" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/27_SG_Wills_05_W63_WT_6hpa_Run03_S5.bw" name="27_SG_Wills_05_W63_WT_6hpa_Run03_S5.bw" normalize="false" renderer="BAR_CHART" sortable="true" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="1.6614811" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.FeatureTrack" color="0,204,51" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/27_SG_Wills_05_W63_WT_6hpa_Run03_S5_peaks.narrowPeak" name="27_SG_Wills_05_W63_WT_6hpa_Run03_S5_peaks.narrowPeak" renderer="BASIC_FEATURE" sortable="false" visible="true" windowFunction="count"/>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.DataSourceTrack" color="0,204,51" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/17_SG_Wills_05_P62_pax6_6hpa_Run02_S6.bw" name="17_SG_Wills_05_P62_pax6_6hpa_Run02_S6.bw" normalize="false" renderer="BAR_CHART" sortable="true" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="1.5273339" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.FeatureTrack" color="0,204,51" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/17_SG_Wills_05_P62_pax6_6hpa_Run02_S6_peaks.narrowPeak" name="17_SG_Wills_05_P62_pax6_6hpa_Run02_S6_peaks.narrowPeak" renderer="BASIC_FEATURE" sortable="false" visible="true" windowFunction="count"/>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.DataSourceTrack" color="0,204,51" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/BIGWIG/06_SG_Wills_05_P61_pax6_6hpa_Run01_S6.bw" name="06_SG_Wills_05_P61_pax6_6hpa_Run01_S6.bw" normalize="false" renderer="BAR_CHART" sortable="true" visible="true" windowFunction="mean">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="1.3566694" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track altColor="0,0,178" autoScale="false" clazz="org.broad.igv.track.FeatureTrack" color="0,204,51" displayMode="COLLAPSED" featureVisibilityWindow="-1" fontSize="10" id="/Users/annekekakebeen/NeuralProgenitorFun/Sept2017DE/QC/MACS/06_SG_Wills_05_P61_pax6_6hpa_Run01_S6_peaks.narrowPeak" name="06_SG_Wills_05_P61_pax6_6hpa_Run01_S6_peaks.narrowPeak" renderer="BASIC_FEATURE" sortable="false" visible="true" windowFunction="count"/>
+    </Panel>
+    <PanelLayout dividerFractions="0.922"/>
+    <HiddenAttributes>
+        <Attribute name="DATA FILE"/>
+        <Attribute name="DATA TYPE"/>
+        <Attribute name="NAME"/>
+    </HiddenAttributes>
+</Session>

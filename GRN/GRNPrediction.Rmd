@@ -1,0 +1,493 @@
+---
+title: "Motif_network"
+author: "Anneke Kakebeen"
+date: "4/5/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## Set up
+```{r setup, cache=FALSE, warning=FALSE, message=FALSE, echo=TRUE, error=TRUE}
+
+# load packages
+library(ggplot2)
+library(LaCroixColoR)
+library(RColorBrewer)
+library(cowplot)
+library(DT)
+library(dplyr)
+library(gridExtra)
+library(tidyverse)
+library(ggplotify)
+library(knitr)
+library(treemap)
+library(gprofiler2)
+
+# source functions
+source("~/Desktop/pax6 paper/Final Markdowns/common_source_functions.R")
+
+# Set wd
+setwd("~/Desktop/pax6 paper/Final Markdowns/GRN/")
+
+```
+
+
+## Load Data
+### DA ATAC
+```{r DA ATAC, cache=TRUE, warning=FALSE, message=FALSE, echo=TRUE, error=TRUE}
+
+# read in DA timepoints ATAC table
+atac <- read.table(file="DA_timepoints.txt",
+            sep="\t", header = TRUE, row.names = 1)
+# shorten ATAC table to only pax
+atac <- atac[,c(21,33,36,37, 38, 41,82:87)]
+nrow(atac)
+
+```
+
+### RNASeq data
+```{r Chang et al RNA-Seq, warning=FALSE}
+
+# Read in Chang et al rna-seq
+rna <- read.csv("RNA-Seq_DE_fuzzyk8_masterlist.csv")
+nrow(rna)
+
+
+# wrangle rna-seq
+rna <- rna[,1:12] # remove rlog
+rna <- rna[,-1*c(12,9)] # remove 15hpa
+rna$sum <- rowSums(rna[,6:10]) # sum average log
+rna <- filter(rna, rna$sum > 10.5) # use the sum as a filter to get out lowly expressed genes
+remove <- grep(rna[,2], pattern = "LOC|Xetrov", ignore.case = TRUE) # set up vector to remove unnanotate
+rna <- rna[-1*remove,] # remove unannotated genes
+nrow(rna)
+
+```
+
+### motifs
+```{r homer motifs, warning=FALSE}
+
+# Write function to read in multiple tables
+read.multi <- function(paths, outfiles){
+  for (i in 1:length(paths)) {
+   temp <- read.table(paths[i], sep = "\t", header = TRUE)
+   assign(outfiles[i], temp, envir = .GlobalEnv)
+  }
+}
+
+# Make inputs for function
+motif_files <- list.files("annotate_outs/")
+motif_paths <- paste("~/Desktop/pax6 paper/Final Markdowns/GRN/annotate_outs/", motif_files, sep = "")
+motif_outs <- gsub(motif_files, pattern = ".bed.txt", replacement = "")
+
+# Run funtion and make large motif table
+read.multi(motif_paths, motif_outs)
+object <- lapply(motif_outs, get)
+# make motifs table
+motifs <- do.call(what = dplyr::bind_rows, args = object)
+nrow(motifs)
+
+# wrangle motifs
+# Extract TF Name into new column 
+motifs$TF <- gsub("/.*","", motifs$Motif.Name)
+motifs$TF <- gsub("\\(.*","", motifs$TF)
+nrow(motifs)
+
+```
+
+## Integrate ATAC-RNA-Motif
+```{r integrate data, warning=FALSE}
+# Merge peaks motif files with DA table
+Final.table <- merge.data.frame(motifs, atac, by.x = "PositionID", by.y = "Peak")
+# make TF names lowercase
+Final.table.short <- Final.table
+Final.table.short$TF <- tolower(Final.table$TF)
+# get rid of duplicates
+Final.table.short = Final.table.short %>% distinct()
+# get rid of unannotated genes
+remove <- grep(Final.table.short$Gene, pattern = "LOC.*|Xetrov.*")
+Final.table.short <- Final.table.short[-remove,]
+# sort tf alphabetically
+Final.table.short <- Final.table.short[order(Final.table.short$TF),]
+nrow(Final.table.short)
+
+# TFs that are expressed via RNASeq
+tf.rna <- intersect(rna$Gene, Final.table.short$TF) # idenify TFs that are expressed in rna
+tf.rna <- concat.grep(tf.rna) # convert to grep form
+Final.table.short <- Final.table.short[grep(Final.table.short$TF, pattern = tf.rna),] # reduce master table to tfs expressed
+nrow(Final.table.short)
+```
+
+## Shorten tables to only peaks that are DA at 6hpa, 24hpa, and 72hpa
+### Table for 6hpa
+```{r 6hpa, warning=FALSE}
+# Make 6hpa table
+table.6.1 <- rownames(Final.table.short[Final.table.short$DE.Pax_24hpaVSPax_6hpa == "DOWN",]) # 0< 6
+table.6.2 <- rownames(Final.table.short[Final.table.short$DE.Pax_0hpaVSPax_6hpa == "DOWN",]) # 6> 24
+table.6 <- unique(c(table.6.1, table.6.2)) # unique rows
+table.6 <- Final.table.short[table.6,] 
+table.6 <- na.omit(table.6) # remove NA
+table.6$timepoint <- "6hpa" # add timepoint identifier for later
+nrow(table.6)
+```
+
+### Table for 24hpa
+```{r 24hpa, warning=FALSE}
+table.24.1 <- rownames(Final.table.short[Final.table.short$DE.Pax_24hpaVSPax_6hpa == "UP",])
+table.24.2 <- rownames(Final.table.short[Final.table.short$DE.Pax_24hpaVSPax_72hpa == "UP",])
+table.24 <- unique(c(table.24.1, table.24.2))
+table.24 <- Final.table.short[table.24,]
+table.24 <- na.omit(table.24)
+table.24$TF <- tolower(table.24$TF)
+table.24$timepoint <- "24hpa"
+nrow(table.24)
+```
+
+### Table for 72hpa
+```{r 72hpa, warning=FALSE}
+table.72.1 <- rownames(Final.table.short[Final.table.short$DE.Pax_72hpaVSPax_Whole.Tail == "UP",])
+table.72.2 <- rownames(Final.table.short[Final.table.short$DE.Pax_24hpaVSPax_72hpa == "DOWN",])
+table.72 <- unique(c(table.72.1, table.72.2))
+table.72 <- Final.table.short[table.72,]
+# sort for flags for 24hpa
+table.72 <- na.omit(table.72)
+table.72$TF <- tolower(table.72$TF)
+table.72$timepoint <- "72hpa"
+nrow(table.72)
+```
+
+### Table for uninjured v 24
+```{r Uv24hpa, warning=FALSE}
+
+table.24.1 <- rownames(Final.table.short[Final.table.short$DE.Pax_24hpaVSPax_Whole.Tail == "UP",])
+table.u.24 <- Final.table.short[table.24.1,]
+
+```
+
+## Filter for motif scores
+```{r filter for motif scores, warning=FALSE}
+
+# save out prefiltered
+write.table(table.6, "outs/table.6.txt", sep = "\t")
+write.table(table.24, "outs/table.24.txt", sep = "\t")
+write.table(table.72, "outs/table.72.txt", sep = "\t")
+
+# motif scores were averaged over a fiven timepoint and all motifs below the average were excluded from the analysis
+table.6.grn <- filter(table.6, MotifScore > mean(table.6$MotifScore))
+table.24.grn <- filter(table.24, MotifScore > mean(table.24$MotifScore))
+table.72.grn <- filter(table.72, MotifScore > mean(table.72$MotifScore))
+
+write.table(table.6.grn, "outs/table.6.grn.txt", sep = "\t")
+write.table(table.24.grn, "outs/table.24.grn.txt", sep = "\t")
+write.table(table.72.grn, "outs/table.72.grn.txt", sep = "\t")
+```
+
+## Make one master table
+```{r master table, warning=FALSE}
+
+# Bind all DA tables to one 
+mastertable <- rbind(table.24, table.6, table.72)
+nrow(mastertable)
+
+write.table(mastertable, "outs/atac_rna_motif.txt", sep = "\t")
+mastertable <- read.table("outs/atac_rna_motif.txt", sep = "\t")
+
+
+```
+
+
+## Find timepoint gene/TF overlaps
+### Read in tables if not continuing from above
+```{r grn tables, warning=FALSE}
+
+# table.6 <- read.table("outs/table.6.txt", sep = "\t")
+# table.24 <- read.table("outs/table.24.txt", sep = "\t")
+# table.72 <- read.table("outs/table.72.txt", sep = "\t")
+# 
+# 
+# table.6.grn <- read.table("outs/table.6.grn.txt", sep = "\t")
+# table.24.grn <- read.table("outs/table.24.grn.txt", sep = "\t")
+# table.72.grn <- read.table("outs/table.72.grn.txt", sep = "\t")
+
+
+```
+
+### predict GRN
+```{r grn from filtered lists, warning=FALSE}
+
+# looking to find GRN over 6->72hpa
+# 6hpa DA region = 24hpa motif
+# 24hpa DA region = 72hpa motif
+
+# define 6 to 24hpa targets
+grn.6.24 <- intersect(as.character(table.6.grn$Gene), table.24.grn$TF) # 6hpa DA region = 24hpa motif
+grep.6.24 <- concat.grep(grn.6.24) # put into grp form
+
+# define 24hpa to 72hpa targets
+grn.24.72 <- intersect(table.24.grn$Gene, table.72.grn$TF) # 24hpa DA region = 72hpa motif
+grep.24.72 <- concat.grep(grn.24.72)
+
+# function to match 6->24 targets to 24-> 72hpa targets
+grn.search <- function(table, genes, search, outs){
+  for(i in 1:length(genes)){
+    temp.table <- filter(table, TF == genes[i])
+    intersect <- grep(temp.table[,17], pattern = search, value = TRUE, ignore.case = TRUE)
+    assign(outs[i], intersect, envir = .GlobalEnv)
+  }
+}
+
+# GRN across 6 to 72hpa
+outs <- paste(grn.6.24, "out", sep = ".")
+grn.search(table.24, grn.6.24,grep.24.72, outs) 
+
+# GRN within 6hpa
+outs <- paste(grn.6.24, "out.2", sep = ".")
+grn.search(table.6, grn.6.24,grep.6.24, outs)
+
+# GRN within 72hpa
+outs <- paste(grn.24.72, "out.3", sep = ".")
+grn.search(table.72, grn.24.72, grep.24.72, outs)
+
+# GRN witin 24hpa
+outs <- paste(grn.24.72, "out.4", sep = ".")
+grn.search(table.24, grn.6.24, grep.6.24, outs)
+
+
+
+```
+
+
+## Identify other inputs and outs of pbx3 and meis 1
+```{r pbx3 and meis1, warning=FALSE}
+
+# filter master table for rows where TF is pbx3 and the gene is pbx3
+Master_pbx <- filter(mastertable, TF == "pbx3" | Gene =="pbx3")
+# filter master table for rows where TF is meis1 and the gene is meis1
+Master_meis <- filter(mastertable, TF == "meis1" | Gene =="meis1")
+# rowbind to one table
+Master_pbx_meis <- rbind(Master_pbx, Master_meis)
+
+# view table
+datatable(Master_pbx_meis)
+
+
+```
+
+### pbx3 targets 1
+```{r pbx3 targets 1, warning=FALSE}
+
+# 6hpa
+pbx3_6 <- as.character(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3")[,17])
+length(pbx3_6)
+# 24hpa
+pbx3_24 <- as.character(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3")[,17])
+length(pbx3_24)
+# 72hpa
+pbx3_72 <- as.character(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3")[,17])
+length(pbx3_72)
+
+pbx_all <- unique(c(pbx3_6, pbx3_24, pbx3_72))
+
+#GO BP#
+GO_pbx_terms <- gost(query = as.character(pbx_all), 
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE,
+                    significant = FALSE)  ##input gene list, run GO
+
+# Make GO Table
+GO_pbx_terms <- GO2table(GO_pbx_terms)
+
+```
+
+### pbx3  2
+```{r pbx3 targets 2, warning=FALSE}
+
+# 6hpa
+pbx3_6 <- as.character(filter(Master_pbx, timepoint=="6hpa" & Gene == "pbx3")[,1])
+
+# 24hpa
+pbx3_24 <- as.character(filter(Master_pbx, timepoint=="24hpa" & Gene == "pbx3")[,1])
+
+# 72hpa
+pbx3_72 <- as.character(filter(Master_pbx, timepoint=="72hpa" & Gene == "pbx3")[,1])
+
+pbx_all_genes <- unique(c(pbx3_6, pbx3_24, pbx3_72))
+
+#GO BP#
+GO_pbx_terms <- gost(query = as.character(pbx_all), 
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE,
+                    significant = FALSE)  ##input gene list, run GO
+
+# Make GO Table
+GO_pbx_terms <- GO2table(GO_pbx_terms)
+```
+
+### meis1 targets
+```{r meis targets, warning=FALSE}
+
+# 6hpa
+meis1_6 <- as.character(filter(Master_meis, timepoint=="6hpa" & TF == "meis1")[,17])
+length(meis1_6)
+
+# 24hpa
+meis1_24 <- as.character(filter(Master_meis, timepoint=="24hpa" & TF == "meis1")[,17])
+length(meis1_24)
+
+# 72hpa
+meis1_72 <- as.character(filter(Master_meis, timepoint=="72hpa" & TF == "meis1")[,17])
+length(meis1_72)
+
+meis_all <- unique(c(meis1_6, meis1_24, meis1_72))
+
+#GO BP#
+GO_meis_terms <- gost(query = as.character(meis_all), 
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE)  ##input gene list, run GO
+
+# Make GO Table
+GO_meis_terms <- GO2table(GO_meis_terms)
+
+```
+
+
+
+## motif treegraphs
+```{r treegraph motifs, warning=FALSE}
+# plot treemaps of TF inputs to genes and TF targets
+library(treemap)
+
+# meis -> etv1/runx ->
+# inputs to meis1 expression at 6hpa
+meis.6 <- filter(table.6, Gene == "meis1")
+treegraph(meis.6, index = c("Gene", "TF"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black", edge.arrow.mode=T)# edge.arrow.mode=T changes direction of arrows
+
+# targets of meis1 TF at 24hpa
+meis.24 <- filter(table.24, TF == "meis1")
+treegraph(meis.24, index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black")
+
+# runx1 in at 24hpa
+runx1.in <- filter(table.24, Gene == "runx1")
+treegraph(runx1.in, index = c("Gene", "TF"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black", edge.arrow.mode=T)# edge.arrow.mode=T changes direction of arrows
+
+# targets of runx1 at 72hpa
+runx1 <- filter(table.72, TF == "runx1")
+treegraph(runx1, index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black")
+
+# runx2 in at 24hpa
+runx2.in <- filter(table.24, Gene == "runx2")
+treegraph(runx2.in, index = c("Gene", "TF"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black", edge.arrow.mode=T)# edge.arrow.mode=T changes direction of arrows
+
+# targets of runx2 at 72hpa
+runx2 <- filter(table.72, TF == "runx2")
+treegraph(runx2, index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black")
+
+# etv1 in at 24hpa
+etv1.in <- filter(table.24, Gene == "etv1")
+treegraph(etv1.in, index = c("Gene", "TF"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black", edge.arrow.mode=T)# edge.arrow.mode=T changes direction of arrows
+
+# targets of etv1 at 72hpa
+etv1 <- filter(table.72, TF == "etv1")
+treegraph(etv1, index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black")
+
+
+
+# etv1 ->pbx3 ->
+# inputs to etv1 at 6hpa
+etv1.6 <- filter(table.6, Gene == "etv1")
+treegraph(etv1.6, index = c("Gene", "TF"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black", edge.arrow.mode=T)# edge.arrow.mode=T changes direction of arrows
+
+# targets of etv1 at 24hpa
+etv1.24 <- filter(table.24, TF == "etv1")
+treegraph(etv1.24, index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black")
+
+# pbx3 in at 24hpa
+pbx3.in <- filter(table.24, Gene == "pbx3")
+treegraph(pbx3.in, index = c("Gene", "TF"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black", edge.arrow.mode=T)# edge.arrow.mode=T changes direction of arrows
+
+# targets of pbx3 at 72hpa
+pbx3.out <- filter(table.72, TF == "pbx3")
+treegraph(pbx3.out, index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, vertex.label.cex = 1, vertex.label.color = "black")
+
+
+
+```
+
+
+## Are meis1 or pbx3 differentially expressed?
+```{r DE at all, warning=FALSE}
+
+# read in single cell RNA-Seq DE data from uninj to 24hpa (upreg in 24hpa)
+scDE <- read.table("~/Desktop/pax6 paper/Final Markdowns/SingleCell/analysis/outs/DEConditions_gain.txt", sep = "\t", header = TRUE, row.names  = 1)
+
+# get rows for pbx3 and meis1
+scDE_meis_pbx <- scDE[grep(scDE$gene, pattern = "meis1|pbx3"),]
+
+# view rows
+datatable(scDE_meis_pbx)
+
+# How are pbx3 and meis1 expressed in bulk data
+rna_meis_pbx <- rna[grep(rna$Gene, pattern = "meis1|pbx3"),] # filter table for pbx3 and meis1 rows
+datatable(rna_meis_pbx) # view table
+
+# make rna plot table
+plot.rna <- as.data.frame(t(rna_meis_pbx[,6:10])) # transpose rna dataframe
+colnames(plot.rna) <- c("measure", "measure")
+plot.rna$timepoint <- gsub(rownames(plot.rna), pattern = "Mean_rlog_", replacement = "") # make column for timepoints
+plot.rna <- rbind(as.data.frame(plot.rna[,c(1,3)]), as.data.frame(plot.rna[,2:3])) # make one measurement column
+plot.rna$gene <- c(rep("pbx3", 5), rep("meis1",5)) # make gene column 
+plot.rna$timepoint <- factor(plot.rna$timepoint, levels = c("WT", "0hpa", "6hpa", "24hpa", "72hpa"))
+
+# plot data
+ggplot(plot.rna, aes(x=timepoint, y=measure, color=gene, group=gene)) + # read in data
+  geom_point() + # make scatter plot
+  geom_line() + # connect points with lines
+  facet_grid("gene") # facet by gene
+
+
+```
+
+## What GO terms do meis1 and pbx3 call
+### Read in GO
+```{r go terms, warning=FALSE}
+
+# Read in GO Tables
+Go6hpa <-  read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO6hpa.txt", sep = "\t", header = TRUE, row.names = 1)
+Go6hpa$Timepoint <- "6hpa"
+Go24hpa <-  read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO24hpa.txt", sep = "\t", header = TRUE, row.names = 1)
+Go24hpa$Timepoint <- "24hpa"
+Go72hpa <-  read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO72hpa.txt", sep = "\t", header = TRUE, row.names = 1)
+Go72hpa$Timepoint <- "72hpa"
+
+# rbind tables
+Go <- rbind(Go6hpa, Go24hpa, Go72hpa)
+```
+
+### meis1
+```{r meis1 GO, warning=FALSE}
+# look for meis
+Go_meis <- Go[grep(Go$intersection, pattern = "meis1"),]
+
+# view table
+datatable(Go_meis)
+
+```
+
+### pbx3
+```{r pbx3 GO}
+# look for meis
+Go_pbx3 <- Go[grep(Go$intersection, pattern = "pbx3"),]
+
+# view table
+datatable(Go_pbx3)
+
+```
+
+
+
+

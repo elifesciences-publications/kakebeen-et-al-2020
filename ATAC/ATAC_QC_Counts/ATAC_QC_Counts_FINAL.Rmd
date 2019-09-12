@@ -1,0 +1,330 @@
+---
+title: "ATAC_QC_Counts"
+author: "Anneke Kakebeen & Alex Chitsazan"
+date: "14 Aug 2017 (revised 9 Aug 2019)"
+always_allow_html: yes  
+output:
+  github_document:
+    toc: true
+    toc_depth: 5
+editor_options: 
+  chunk_output_type: console
+---
+
+## Set Up
+```{r setup, cache=TRUE, warning=TRUE, message=FALSE}
+library(ggplot2)
+library(RColorBrewer)
+library(DT)
+library(knitr)
+library(tidyr)
+library(gridExtra)
+library(GenomicRanges)
+library(ggpubr)
+library(DT)
+
+# Set Working Directory
+setwd("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_QC_Counts/")
+```
+
+
+## Load Sample Data
+```{r load sample data, cache=TRUE, warning=TRUE, message=FALSE}
+# read in bowtie outputs
+bowtie <-  read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_QC_Counts/summary_metrics.txt",
+                      header = T,
+                      sep = "\t",
+                      stringsAsFactors = F)
+# rename samples
+bowtie$SAMPLE <- gsub(".*_05_", "", bowtie$SAMPLE)
+bowtie$SAMPLE <- gsub("_Run.*", "", bowtie$SAMPLE)
+bowtie$SAMPLEID <- gsub("_.*", "", bowtie$SAMPLE)
+
+# convert percentage to 100 
+bowtie[,grep("PCT", colnames(bowtie))] <- bowtie[,grep("PCT", colnames(bowtie))] * 100
+
+# Load meta data about samples
+samples <-  read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_QC_Counts/SeptATACSummary.txt",
+                       header = T,
+                       sep = "\t",
+                       stringsAsFactors = F)
+
+# rename bowtie output to summary
+summary <- bowtie
+summary$REPS <- c(2, 2, 2, 1, 1, 1, 1, 3, 3, 1, 3, 3, 1, 2, 1, 2, 1, 3, 2, 1, 1, 3, 3, 3, 3, 1, 3, 2, 2, 2, 2, 3)
+
+# reassign misnamed sample P8F == W03_WT_0hpa
+summary <- summary[-22,] #remove Leah's sample 
+summary$SAMPLE <- gsub(summary$SAMPLE, pattern = "P8F", replacement = "W03_WT_0hpa") #reassign name of sample
+
+# add in library type
+summary$LIBRARYTYPE <- gsub(summary$SAMPLE, pattern = ".*_WT_.*", replacement = "WT") # simplify wt terms
+summary$LIBRARYTYPE <- gsub(summary$LIBRARYTYPE, pattern = ".*_pax6_.*", replacement = "pax6") # simplify pax6 terms
+
+# add in library plotting column
+summary$SAMPLEPLOT <- gsub(summary$SAMPLE, pattern = ".*_WT", replacement = "AllTissue") # simplify wt terms
+summary$SAMPLEPLOT <- gsub(summary$SAMPLEPLOT, pattern = ".*_pax6", replacement = "pax6") # simplify pax6 terms
+summary$SAMPLEPLOT <- gsub(summary$SAMPLEPLOT, pattern = "Whole-Tail", replacement = "uninjured") # simplify pax6 terms
+summary$SAMPLEPLOT <- paste(summary$SAMPLEPLOT, summary$REPS, sep = "-")
+
+# view summary
+datatable(summary, caption = "Bowtie output")
+
+# view sample meta data
+datatable(samples, caption = "Sample meta data")
+
+```
+
+
+## Summary Metric Plots
+### Total reads and Total aligned reads
+```{r READSplots, cache=TRUE, warning = FALSE}
+
+# plot total reads
+ggplot(summary, aes(x=summary$SAMPLEPLOT, y=(summary$TOTAL_READS/1000000), fill=LIBRARYTYPE)) +
+  geom_bar(stat="identity") +
+  scale_fill_manual(values = c("green4", "dodgerblue3"))+
+  coord_flip() +
+  ylab("Millions of Reads") +
+  xlab("Sample") +
+  ggtitle("Total Reads") +
+  theme_bw() +
+  theme(legend.position = "none")
+
+
+# plot Total aligned reads
+ggplot(summary, aes(x=summary$SAMPLEPLOT, y=(summary$PF_READS_ALIGNED/1000000), fill=LIBRARYTYPE)) +
+  geom_bar(stat="identity") +
+  scale_fill_manual(values = c("green4", "dodgerblue3"))+
+  coord_flip() +
+  ylab("Millions of Reads") +
+  xlab("Sample") +
+  ggtitle("Total Reads Aligned") +
+  ylim(0, 200) +
+  theme_bw()
+```
+
+### Percent reads aligned to genome
+```{r pct plots, cache=TRUE, warning = FALSE}
+
+# plot percent reads aligned to genome
+ggplot(summary, aes(x=summary$SAMPLEPLOT, y=(summary$PCT_PF_READS_ALIGNED), fill=LIBRARYTYPE)) +
+  geom_bar(stat="identity") +
+  coord_flip() +
+  ylab("Percent Reads Aligned") +
+  xlab("Sample") +
+  ggtitle("Percent Reads Aligned") +
+  ylim(0,100) +
+  theme_bw()+
+  scale_fill_manual(values = c("green4", "dodgerblue3"))+
+  theme(legend.position = "none")
+
+
+# note, W03 is wrongly named for P8f which was not one of our samples. 
+```
+
+
+
+## MACS2 Callpeak run
+### Load MACS
+```{r MACSload, cache=TRUE, warning=FALSE, message=FALSE}
+library(IRanges)
+library(biomaRt)
+library(GenomicFeatures)
+library(GenomicRanges)
+files <- list.files(path = "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_QC_Counts/MACS/", pattern=".*narrowPeak$", recursive = TRUE, full.names = T)
+
+# Fix Filenames for Output in R
+filenames <- gsub(".narrowPeak", "", files)
+filenames <- gsub(".*_05_", "", filenames)
+filenames <- gsub("_Run[0-9]+_S[0-9]+", "", filenames)
+
+
+# Function to wrangle MACS outputs: Peaks 2 GRanges
+peaks2granges <- function(peakstable) {
+  temp.gr <- with(peakstable, GRanges(chr, IRanges(start, end), strand, name, score, signalValue, pValue, qValue, peaks))
+  return(temp.gr)
+}
+loadMACS <- function(infiles, outfiles) {
+  for (i in 1:length(infiles)) {
+    if (file.info(infiles[i])$size > 0) {
+      temp.peaks <- read.table(infiles[i], sep="\t", header=FALSE)
+      colnames(temp.peaks) <- c("chr", "start", "end", "name", "score", "strand", "signalValue", "pValue", "qValue", "peaks")
+      temp.peaks$strand <- "*"
+      assign(outfiles[i], temp.peaks, envir = .GlobalEnv)
+      temp.peaks.gr <- peaks2granges(temp.peaks)
+      outnames.gr <- paste0(outfiles, ".gr")
+      assign(outnames.gr[i], temp.peaks.gr, envir = .GlobalEnv)
+    }
+  }
+}
+
+# Load MACS Outputs
+loadMACS(files, filenames)
+
+# view minimal MACS outputs
+head(loadMACS)
+```
+
+### Total Peaks
+A summary table of the MACS2 callpeaks. I used MACS2 calpeaks with the default parameters plus --extsize 200 and --shit -100. 
+```{r MACSfirstrun, cache=TRUE, warning = TRUE}
+
+# Make Summary DF
+gr.files <- ls(pattern = "peaks.gr$") # make object of peaks.gr files
+Sample <- gsub(".gr", "", gr.files) # remove suffix
+Peaks <- vector() # make vector 
+
+for (i in 1:length(gr.files)) {
+  Peaks <- c(Peaks, length(get(gr.files[i])))
+} # Get number of peaks in each MACs output file
+
+MACS_summary <- data.frame(Sample, Peaks) # make data frame from previous loop
+
+#reassign wrongly named samples P8F == W03_WT_0hpa
+MACS_summary <- MACS_summary[-16,] #remove Leah's sample 
+MACS_summary$Sample <- gsub(MACS_summary$Sample, pattern = "P8F", replacement = "W03_WT_0hpa") #reassign name of sample
+
+# remove _peaks from sample names for meging purposes
+MACS_summary$Sample <- gsub(pattern = "_peaks", replacement = "", MACS_summary$Sample)
+
+# merge macs and bowtie dataframes
+MACS_summary <- merge.data.frame(MACS_summary, summary, by.x = "Sample", by.y = "SAMPLE" )
+
+# make an aligned reads column
+MACS_summary$Aligned_Reads <- MACS_summary$PF_READS_ALIGNED / 2 # make an aligned reads column
+
+
+# View MACS summary
+datatable(MACS_summary, caption = "Summary MACS outputs")
+
+
+# Plot Number of peaks in each sample
+ggplot(MACS_summary, aes(x=MACS_summary$SAMPLEPLOT, y=(MACS_summary$Peaks/1000), fill=MACS_summary$LIBRARYTYPE)) +
+  geom_bar(stat="identity") +
+  coord_flip() +
+  ylab("Thousands of Peaks") +
+  xlab("Sample") +
+  ggtitle("Number of Peaks Called by MACS2") +
+  theme_bw()+
+  scale_fill_manual(values = c("green4", "dodgerblue3"))+
+  theme(legend.position = "none")
+  
+
+# Plot number of aligned reads
+ggplot(MACS_summary, aes(x=MACS_summary$Sample, y=(MACS_summary$Aligned_Reads/1000000))) +
+  geom_bar(stat="identity", fill="#C0C0C0") +
+  coord_flip() +
+  ylab("Millions of Peaks") +
+  xlab("Sample") +
+  ggtitle("Number of Peaks Called by MACS2") +
+  theme_bw()
+
+
+# Plot a correlation plot between number of peaks and alignment 
+cor.lm = lm((Aligned_Reads) ~ (Peaks), data=MACS_summary) # linear modeling of correlation data
+rsq <- signif(summary(cor.lm)$r.squared, 3) # get rsquared signidicance of lm
+rsqText <- paste0("italic(R) ^ 2 ==", rsq) # put rsquared into text
+
+ggplot(MACS_summary, aes(x=MACS_summary$Peaks/1000, y=MACS_summary$Aligned_Reads/1000000, color=MACS_summary$library))+ 
+  geom_point() +
+  theme_bw() +
+  ylab("Thousands of Peaks") +
+  xlab("Millions of Aligned Reads") +
+  ggtitle("Peaks v. Alignment") +
+  xlim(0,100) +
+  annotate("text", label = rsqText, size = 5, x = 87.5, y = 5, parse = T, colour = "black") +
+  scale_color_manual(values = c("green4", "dodgerblue3"))+
+  theme(legend.position = "none")
+
+
+```
+
+
+## Make final counts table
+### Load Genome Coordinates
+```{r bioMart, cache=TRUE, warning = FALSE}
+
+# Get gene annotations for 9.0 genome
+genes.gr <- readRDS("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_QC_Counts/Xtrop9.gr")
+
+# get Transcription start site positions
+TSS <- promoters(genes.gr, upstream=0, downstream = 1)
+```
+
+### Distance to TSS calculation and plot
+```{r DistanceToTSS, cache=TRUE, warning = FALSE, fig.width=12}
+# TSS Function
+DistanceToTSS <- function(peaks.gr, TSS.gr) {
+
+  ## Run DistanceToNearest (GRanges fn) to get distances from TSS for all peaks
+  TSS.distance <- data.frame(distanceToNearest(peaks.gr, TSS.gr))
+  colnames(TSS.distance) <- c("Peaks", "Genes", "Distance")
+
+  ## A really long way to figure out which peaks are upstream/downstream from TSS
+  positive.downstream <- which((start(peaks.gr[TSS.distance$Peaks]) > start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "+") == TRUE)
+  positive.upstream   <- which((end(peaks.gr[TSS.distance$Peaks]) < start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "+") == TRUE)
+  negative.upstream   <- which((start(peaks.gr[TSS.distance$Peaks]) > start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "-") == TRUE)
+  negative.downstream <- which((end(peaks.gr[TSS.distance$Peaks]) < start(TSS.gr[TSS.distance$Genes]) & strand(TSS.gr[TSS.distance$Genes]) == "-") == TRUE)
+
+  ## Change TSS.distance to integer value not absolute (both + and - distance from TSS)
+  TSS.distance$Distance[positive.upstream] <- TSS.distance$Distance[positive.upstream] * -1
+  TSS.distance$Distance[positive.downstream] <- TSS.distance$Distance[positive.downstream]
+  TSS.distance$Distance[negative.upstream] <- TSS.distance$Distance[negative.upstream] * -1
+  TSS.distance$Distance[negative.downstream] <- TSS.distance$Distance[negative.downstream]
+
+  ## Add a column to the GRanges to add the nearest GENE and DistanceToTSS of said gene
+  peaks.gr$Gene <- NA
+  peaks.gr$Gene[TSS.distance$Peaks] <- names(TSS.gr)[TSS.distance$Genes]
+  peaks.gr$DistanceToTSS <- NA
+  peaks.gr$DistanceToTSS[TSS.distance$Peaks] <- TSS.distance$Distance
+  return(peaks.gr)
+}
+
+### Run above fn on all samples
+for (i in 1:length(gr.files)) {
+  assign(gr.files[i], DistanceToTSS(get(gr.files[i]), TSS))
+}
+
+## ggplot function to wrangle data and make a hist of TSS distances
+dist_hist <- function(peaks.gr, xmin = -5000, xmax = 5000, Title) {
+  ## Title for plot
+  Title <- gsub(".gr", "", Title)
+
+  ## Put out distances and make a matrix
+  distance.mtx <- data.frame(Peak = peaks.gr$name, Distance = peaks.gr$DistanceToTSS)
+
+  ## ggplot function
+  ggplot(distance.mtx, aes(x = Distance)) +
+    geom_histogram(fill = "white", colour = "red", alpha = 0.8, binwidth = 100) +
+    xlim(xmin, xmax) +
+    ggtitle(paste("Distance To TSS", gsub("_peaks", "", Title)))
+
+}
+
+### Call above function with altering distances to TSS
+for (i in 1:length(gr.files)) {
+  p1 <- dist_hist(get(gr.files[i]), Title = gr.files[i])
+  p2 <- dist_hist(get(gr.files[i]), xmin = -20000, xmax = 20000, Title = gr.files[i])
+  grid.arrange(p1, p2, nrow = 1)
+}
+
+```
+
+
+# Session Info (VERSION CONTROL)
+## MACS2 --version output
+macs2 2.1.1.20160309
+## Bowtie --version output
+home/achits/bin/tools/bowtie2-align-s version 2.2.9
+64-bit
+Built on n0026
+Thu Jun 23 15:14:40 PDT 2016
+Compiler: gcc version 4.4.7 20120313 (Red Hat 4.4.7-16) (GCC) 
+Options: -O3 -m64 -msse2  -funroll-loops -g3 -DPOPCNT_CAPABILITY
+Sizeof {int, long, long long, void*, size_t, off_t}: {4, 8, 8, 8, 8, 8}
+
+```{r sessionInfo, cache=TRUE}
+sessionInfo()
+```
+

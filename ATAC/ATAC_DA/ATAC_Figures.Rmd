@@ -1,0 +1,939 @@
+---
+title: "ATAC Figures"
+author: "Anneke Kakebeen"
+date: "13 Aug 2019"
+output:
+  html_document:
+    code_folding: "hide"
+    toc: true
+    toc_depth: 3
+    toc_float: true
+fig_width: 6
+fig_height: 4
+editor_options: 
+  chunk_output_type: console
+---
+## Setting up project: ATAC
+```{r set up, cache=TRUE, warning=FALSE, message=FALSE}
+
+# Load packages
+library(knitr)
+library(gridExtra)
+library(dplyr)
+library(gprofiler2)
+library(ggplot2)
+library(AnnotationDbi)
+library(biomaRt)
+library(gplots)
+library(tidyverse)
+library(RColorBrewer)
+library(DT)
+library(LaCroixColoR)
+library(Seurat)
+library(VennDiagram)
+library(cowplot)
+library(imager)
+library(magick)
+library(pdftools)
+
+# source functions
+source("~/Desktop/R_working/common_source_functions.R")
+
+## color palette for heatmaps
+color.palette <- colorRampPalette(lacroix_palette("Lemon", n = 50, type = "continuous"))(256) 
+
+# setwd
+setwd("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/")
+
+```
+
+## Read in data for figures
+```{r read in data, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# read in DA tables
+paxVall_agg <- read.table("outs/DA_paxVall_ALL.txt", header = TRUE, sep = "\t", row.names = 1) # paxVall aggregate
+paxVall <- read.table("outs/DA_paxVall.txt", header = TRUE, sep = "\t", row.names = 1) # paxVall aggregate
+timepoints <- read.table("outs/DA_timepoints.txt", header = TRUE, sep = "\t", row.names = 1) # between timepoints within one condition
+
+# Read in log counts
+log.counts.paxVall <- as.matrix(read.table("outs/log.counts_paxVall_aggregate.txt", header = TRUE, sep = "\t", row.names = 1)) # log counts for paxVall aggregate
+log.counts.timepoints <- as.matrix(read.table("outs/log.counts_timepoints.txt", header = TRUE, sep = "\t", row.names = 1)) # log counts for timepoints
+
+```
+
+
+
+## Figure 2B
+```{r 2b, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.width= 8, fig.height= 8}
+
+# read in mds data
+mds <- readRDS("outs/mds.RDS")
+
+# assign color groups to pax and all-tissue
+col.group <- as.character(Group) #grouped by tissue type, ie Pax or Whole.Tail
+col.group <- gsub("All_Tissue", "All.Tissue", col.group) # adjust name for color usage
+col.group <- gsub("_.*", "", col.group)
+col.group <- gsub("All.Tissue", "royalblue3", col.group) #change Whole tail samples to blue
+col.group <- gsub("Pax", "green4", col.group) # change pax samples to green
+
+# plot MDS
+plotMDS(mds,
+        col = col.group,
+        main = "MDS Plot")
+
+```
+
+
+## Figure 2C: tss plots
+```{r 2c, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.width= 8, fig.height= 8}
+Fix when alex gets back to you
+# pax <- image_read("~/Desktop/Final_R/ATAC/tss_pax.png")
+# print(pax)
+# 
+# all <- image_read("~/Desktop/Final_R/ATAC/tss_all.png")
+# print(all)
+
+```
+
+
+## Figure 2E: # of peaks called DA between conditions
+### Number of peaks
+```{r peaks between conditions, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Make datatable for plottig
+# Get # of peaks called diffferential in each direction in contrasts of interest
+Freq <- c(nrow(paxVall_agg[paxVall_agg$DE.p.PaxVSWholeALL == "UP",]), # pax > all
+          nrow(paxVall_agg[paxVall_agg$DE.p.PaxVSWholeALL == "DOWN",]), # pax < all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_WT == "UP")), # uninjured pax > all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_WT == "DOWN")), # uninjured pax < all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_0hpa == "UP")), # 0hpa pax > all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_0hpa == "DOWN")), # 0hpa pax < all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_6hpa == "UP")), # 6hpa pax > all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_6hpa == "DOWN")), # 6hpa pax < all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_24hpa == "UP")), # 24hpa pax > all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_24hpa == "DOWN")), # 24hpa pax < all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_72hpa == "UP")), # 72hpa pax > all
+          nrow(filter(paxVall, paxVall$DE.PaxVSWhole_72hpa == "DOWN")), # 72hpa pax < all
+          length(unique(paxVall_agg[paxVall_agg$DE.p.PaxVSWholeALL == "UP",12])), # pax > all
+          length(unique(paxVall_agg[paxVall_agg$DE.p.PaxVSWholeALL == "DOWN",12])), # pax < all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_WT == "UP", 26]))), # uninjured pax > all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_WT == "DOWN",26]))), # uninjured pax < all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_0hpa == "UP",26]))), # 0hpa pax > all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_0hpa == "DOWN", 26]))), # 0hpa pax < all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_6hpa == "UP",26]))), # 6hpa pax > all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_6hpa == "DOWN",26]))), # 6hpa pax < all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_24hpa == "UP",26]))), # 24hpa pax > all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_24hpa == "DOWN",26]))), # 24hpa pax < all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_72hpa == "UP",26]))), # 72hpa pax > all
+          length(unique((paxVall[paxVall$DE.PaxVSWhole_72hpa == "DOWN",26]))) # 72hpa pax < all
+          
+          )
+
+# Make metadata columns
+Contrast <- c(rep(c("Aggregate Timepoints", "Aggregate Timepoints", "Uninjured", "Uninjured", "0hpa", "0hpa", "6hpa", "6hpa", "24hpa", "24hpa", "72hpa", "72hpa"),2)) # column for timepoint designation
+Direction <- c(rep(rep(c("pax6", "all-tissue"), 6),2)) # column for favored in accessibltiy comparison
+Measure <- c(rep("peaks",12), rep("genes",12))
+peakbreak <- data.frame(Contrast, Freq, Direction, Measure) # make dataframe
+peakbreak$Freq <- ifelse(peakbreak$Direction == "pax6", -1*peakbreak$Freq, peakbreak$Freq) # make pax6 frequency values negative for 
+
+# order table for plotting by facotring
+peakbreak$Contrast <- factor(peakbreak$Contrast, levels = rev(c("Aggregate Timepoints", "Uninjured", "0hpa", "6hpa", "24hpa", "72hpa"))) 
+peakbreak$Direction <- factor(peakbreak$Direction, levels = c("pax6", "all-tissue"))
+
+# view table
+datatable(peakbreak, caption = "Number of peaks called in pax or all tissue libraries per timepoint")
+
+
+# Plot pyramid chart of peaks 
+ggplot(filter(peakbreak, Measure == "peaks"), aes(x= Contrast, y= Freq, fill=Direction))+
+  geom_bar(stat="identity")  +
+  # facet_wrap(~Contrast, ncol = 1, scales = "free_y") +
+  # facet_grid(Contrast~., space = "free_x", scales = "free_y", switch = "x") +
+  scale_fill_manual(values = c("forestgreen","dodgerblue3", "#F7AA14", "#172869")) +
+  coord_flip() +
+  ylim(-5500, 5500) +
+  Seurat:::RotatedAxis() +
+  theme(legend.position = "bottom") +
+theme(strip.placement = "outside",
+strip.background = element_rect(fill=NA,colour="white"),
+panel.spacing.x=unit(0,"cm"),
+strip.text = element_text(hjust=0, face="bold", size=12)) +
+  theme_bw() 
+
+
+
+# Plot pyramid chart of peaks and genes
+ggplot((peakbreak), aes(x= Contrast, y= Freq, fill=Measure))+
+  geom_bar(stat="identity", position = "dodge")  +
+  # facet_wrap(~Contrast, ncol = 1, scales = "free_y") +
+  # facet_grid(Contrast~., space = "free_x", scales = "free_y", switch = "x") +
+  scale_fill_manual(values = c("forestgreen","dodgerblue3", "#F7AA14", "#172869")) +
+  coord_flip() +
+  ylim(-5500, 5500) +
+  Seurat:::RotatedAxis() +
+  theme(legend.position = "bottom") +
+theme(strip.placement = "outside",
+strip.background = element_rect(fill=NA,colour="white"),
+panel.spacing.x=unit(0,"cm"),
+strip.text = element_text(hjust=0, face="bold", size=12)) +
+  theme_bw() 
+  facet_grid(Measure~.)
+
+```
+
+
+## Figure 2F: GO analysis of aggregate pax v all regions
+### PAX > All
+```{r 2f.1 , cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Define input regions
+GO_pax <- filter(paxVall_agg, paxVall_agg$DE.p.PaxVSWholeALL == "UP") # filter table for all regions with accessiblity pax > all
+GO_pax <- GO_pax[,c(12, 3)] # get genes and flags
+
+# view inputs for GO
+datatable(GO_pax, caption = "regions more accessible in pax than all-tissue")
+
+# Run gprofileR2
+GO_out <- gost(query = as.character(GO_pax$Gene), 
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE)  ##input gene list, run GO
+
+# Make table of GO terms (Funciton in common source functions)
+GO_PAX_use <- GO2table(GOResults = GO_out)
+
+# View GO outputs
+datatable(GO_PAX_use)
+
+# Plot go terms in barplot
+ggplot(GO_PAX_use[1:5,], aes(x= term_name, y= logp))  +
+  geom_bar(stat = "identity", fill = "green4") +
+  coord_flip()+
+  labs(x = "GO Terms", y = "-log(pvalue)", title = "Pax6 Top GO Terms") +
+  blank_theme
+
+```
+
+### ALL v pax GO
+Goal : Show that regions that are more accessible in pax libraries vs all-tissue libraries have neural character
+Method: Identify differential regions of the chromatin between Pax and AT, use these regions for GO
+Conclusions: Regions prioritized in all tissue show more generic GO terms. 
+```{r ALL , cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+
+# Define input regions
+GO_all <- filter(paxVall_agg, paxVall_agg$DE.p.PaxVSWholeALL == "DOWN") # filter table for all regions with accessiblity pax < all
+GO_all <- GO_all[,c(12, 3)] # get genes and flags
+
+# view table
+datatable(GO_all, caption = "regions more accessible in all than pax")
+
+
+# Run gprofileR2
+GO_out <- gost(query = as.character(GO_all$Gene), 
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE)  ##input gene list, run GO
+
+# Make table of GO terms (Funciton in common source functions)
+GO_ALL_use <- GO2table(GOResults = GO_out)
+
+# View GO outputs
+datatable(GO_ALL_use)
+
+# Plot go terms in barplot
+ggplot(GO_ALL_use[1:5,], aes(x= term_name, y= logp))  +
+  geom_bar(stat = "identity", fill = "dodgerblue3") +
+  coord_flip()+
+  labs(x = "GO Terms", y = "-log(pvalue)", title = "All Tissue Top GO Terms") +
+  blank_theme
+
+```
+
+## Figure 2G: heat map of terms in neurogenesis
+```{r PaxVAll, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+# Define regions where npax > all
+pax <- paxVall_agg[paxVall_agg$DE.p.PaxVSWholeALL == "UP",]
+
+# define genes 
+gene <- concat.GO(GO_PAX_use[7,4])[1:10]
+# gene <- c("SEMA3F,DVL2,PROM1,PAX6,ISL1,CNTN1,MUSK,USH2A,HDAC9,ARID1B") # list for "neurogenesis"
+# print(gene)
+gene <- concat.grep(gene)
+GOGenes <- grep(gene, pax$Gene, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- pax[GOGenes, ]
+paxGoGenes.cpm <- log.counts.paxVall[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6,8,7,9,10,1,3,2,4,5)])
+
+# Plot heatmap     
+heatmap.2(t(mcounts), 
+          scale="none",
+          trace="none",
+          Colv = TRUE,
+          Rowv = FALSE, 
+          dendrogram = 'none',
+          density.info=c("none"),
+          col=rev(color.palette),
+          key = FALSE,
+          cexRow=0.7, 
+          cexCol=0.75)  
+
+```
+
+
+
+## Figure 3A: heatmaps for all DA regions at 6hpa, 24hpa, 72hpa
+### 6hpa Heatmap 
+```{r 6hpa heat, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+# Get regions
+tss_6hpa_1_Peaks <- rownames(timepoints[timepoints$DE.Pax_0hpaVSPax_6hpa == "DOWN",]) # regions 6 > 0
+tss_6hpa_2_Peaks <- rownames(timepoints[timepoints$DE.Pax_24hpaVSPax_6hpa == "DOWN",]) # regions 6 > 24
+tss_6hpa_Peaks <- unique(c(tss_6hpa_1_Peaks, tss_6hpa_2_Peaks)) # unique peaks
+tss_6hpa <- timepoints[tss_6hpa_Peaks,] # make table with only these peaks
+
+# Make 6hpa heatmap matrix
+paxGoGenes <- tss_6hpa[1:nrow(tss_6hpa),]
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+# library(dplyr)
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+mcounts <- mcounts[,c(6,8,7,9,10)]
+      
+# plot heatmap        
+heatmap.2(t(mcounts), 
+          scale="none",
+          trace="none",
+          Colv = TRUE,
+          Rowv = FALSE,
+          dendrogram = 'none',
+          main = "6hpa TSS REGIONS",
+          density.info=c("none"),
+          col=rev(color.palette),
+          cexRow=0.7, cexCol=0.75, 
+          labCol = FALSE) ##3takes 10 minues
+```
+
+### 24hpa Heatmap 
+```{r 6hpa heat, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Get regions
+tss_24hpa_1_Peaks <- rownames(timepoints[timepoints$DE.Pax_24hpaVSPax_6hpa == "UP",]) # 24 > 6
+tss_24hpa_2_Peaks <- rownames(timepoints[timepoints$DE.Pax_24hpaVSPax_72hpa == "UP",]) # 24 > 72
+tss_24hpa_Peaks <- unique(c(tss_24hpa_1_Peaks, tss_24hpa_2_Peaks))
+tss_24hpa <- timepoints[tss_24hpa_Peaks,]
+
+# make heatmap matrix
+paxGoGenes <- tss_24hpa[1:nrow(tss_24hpa),]
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+# library(dplyr)
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+mcounts <- mcounts[,c(6,8,7,9,10)]
+      
+# plot heatmap        
+heatmap.2(t(mcounts), 
+          scale="none",
+          trace="none",
+          Colv = TRUE,
+          Rowv = FALSE,
+          dendrogram = 'none',
+          main = "24hpa TSS REGIONS",
+          density.info=c("none"),
+          col=rev(color.palette),
+          cexRow=0.7, cexCol=0.75, 
+          labCol = FALSE) ##3takes 10 minues
+```
+
+### 72hpa Heatmap 
+```{r 6hpa heat, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Get regions
+tss_72hpa_1_Peaks <- rownames(timepoints[timepoints$DE.Pax_24hpaVSPax_72hpa == "DOWN",]) # 72 > 24
+tss_72hpa_2_Peaks <- rownames(timepoints[timepoints$DE.Pax_72hpaVSPax_Whole.Tail == "UP",]) # 72 > uninj
+tss_72hpa_Peaks <- unique(c(tss_72hpa_1_Peaks, tss_72hpa_2_Peaks))
+tss_72hpa <- timepoints[tss_72hpa_Peaks,]
+
+# make heatmap matrix
+paxGoGenes <- tss_72hpa[1:nrow(tss_72hpa),]
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+# library(dplyr)
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+mcounts <- mcounts[,c(6,8,7,9,10)]
+      
+# plot heatmap        
+heatmap.2(t(mcounts), 
+          scale="none",
+          trace="none",
+          Colv = TRUE,
+          Rowv = FALSE,
+          dendrogram = 'none',
+          main = "72hpa TSS REGIONS",
+          density.info=c("none"),
+          col=rev(color.palette),
+          cexRow=0.7, cexCol=0.75, 
+          labCol = FALSE) ##3takes 10 minues
+```
+
+## Figure 3B: venn diagrams for # of regions
+### Venn diagram data set up
+```{r 3b.1, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+# Frequency of regions DA
+Freq <- c(nrow(filter(timepoints, DE.Pax_0hpaVSPax_uninjured == "DOWN")),
+          nrow(filter(timepoints, DE.Pax_0hpaVSPax_uninjured == "UP")),
+          nrow(filter(timepoints, DE.Pax_0hpaVSPax_6hpa == "UP")), 
+          nrow(filter(timepoints, DE.Pax_0hpaVSPax_6hpa == "DOWN")), 
+          nrow(filter(timepoints, DE.Pax_24hpaVSPax_6hpa == "UP")), 
+          nrow(filter(timepoints, DE.Pax_24hpaVSPax_6hpa == "DOWN")), 
+          nrow(filter(timepoints, DE.Pax_24hpaVSPax_72hpa == "UP")),
+          nrow(filter(timepoints, DE.Pax_24hpaVSPax_72hpa == "DOWN")), 
+          nrow(filter(timepoints, timepoints$DE.Pax_72hpaVSPax_uninjured == "UP")), 
+          nrow(filter(timepoints, timepoints$DE.Pax_72hpaVSPax_uninjured == "DOWN")),
+          nrow(filter(timepoints, DE.All_Tissue_0hpaVSAll_Tissue_uninjured == "DOWN")),
+          nrow(filter(timepoints, DE.All_Tissue_0hpaVSAll_Tissue_uninjured == "UP")),
+          nrow(filter(timepoints, DE.All_Tissue_0hpaVSAll_Tissue_6hpa == "UP")), 
+          nrow(filter(timepoints, DE.All_Tissue_0hpaVSAll_Tissue_6hpa == "DOWN")), 
+          nrow(filter(timepoints, DE.All_Tissue_24hpaVSAll_Tissue_6hpa == "UP")), 
+          nrow(filter(timepoints, DE.All_Tissue_24hpaVSAll_Tissue_6hpa == "DOWN")), 
+          nrow(filter(timepoints, DE.All_Tissue_24hpaVSAll_Tissue_72hpa == "UP")),
+          nrow(filter(timepoints, DE.All_Tissue_24hpaVSAll_Tissue_72hpa == "DOWN")), 
+          nrow(filter(timepoints, timepoints$DE.All_Tissue_72hpaVSAll_Tissue_uninjured == "UP")), 
+          nrow(filter(timepoints, timepoints$DE.All_Tissue_72hpaVSAll_Tissue_uninjured =="DOWN")),
+          c(length(unique(timepoints[timepoints$DE.Pax_0hpaVSPax_uninjured == "DOWN",86])),
+          length(unique(timepoints[timepoints$DE.Pax_0hpaVSPax_uninjured == "UP",86])),
+          length(unique(timepoints[timepoints$DE.Pax_0hpaVSPax_6hpa == "UP",86])), 
+          length(unique(timepoints[timepoints$DE.Pax_0hpaVSPax_6hpa == "DOWN",86])), 
+          length(unique(timepoints[timepoints$DE.Pax_24hpaVSPax_6hpa == "UP",86])), 
+          length(unique(timepoints[timepoints$DE.Pax_24hpaVSPax_6hpa == "DOWN",86])), 
+          length(unique(timepoints[timepoints$DE.Pax_24hpaVSPax_72hpa == "UP",86])),
+          length(unique(timepoints[timepoints$DE.Pax_24hpaVSPax_72hpa == "DOWN",86])), 
+          length(unique(timepoints[timepoints$DE.Pax_72hpaVSPax_uninjured == "UP",86])), 
+          length(unique(timepoints[timepoints$DE.Pax_72hpaVSPax_uninjured == "DOWN",86])),
+          length(unique(timepoints[timepoints$DE.All_Tissue_0hpaVSAll_Tissue_uninjured == "DOWN",86])),
+          length(unique(timepoints[timepoints$DE.All_Tissue_0hpaVSAll_Tissue_uninjured == "UP",86])),
+          length(unique(timepoints[timepoints$DE.All_Tissue_0hpaVSAll_Tissue_6hpa == "UP",86])), 
+          length(unique(timepoints[timepoints$DE.All_Tissue_0hpaVSAll_Tissue_6hpa == "DOWN",86])), 
+          length(unique(timepoints[timepoints$DE.All_Tissue_24hpaVSAll_Tissue_6hpa == "UP",86])), 
+          length(unique(timepoints[timepoints$DE.All_Tissue_24hpaVSAll_Tissue_6hpa == "DOWN",86])), 
+          length(unique(timepoints[timepoints$DE.All_Tissue_24hpaVSAll_Tissue_72hpa == "UP",86])),
+          length(unique(timepoints[timepoints$DE.All_Tissue_24hpaVSAll_Tissue_72hpa == "DOWN",86])), 
+          length(unique(timepoints[timepoints$DE.All_Tissue_72hpaVSAll_Tissue_uninjured == "UP",86])), 
+          length(unique(timepoints[timepoints$DE.All_Tissue_72hpaVSAll_Tissue_uninjured =="DOWN",86]))))
+
+
+# Metadata
+Timepoint <- c(rep(rep(c("uninjured","0hpa","0hpa","6hpa", "24hpa", "6hpa", "24hpa", "72hpa", "72hpa", "uninjured"), 2),2))
+Contrast <- c(rep(rep(c("0vWht", "0vWht", "0v6", "0v6", "24v6", "24v6", "24v72", "24v72", "72vWht", "72vWht"), 2),2))
+Condition <- rep(c(rep("pax6", 10), rep("all-tissue", 10)),2)
+Direction <- c(rep(rep(c("lose","gain", "lose", "gain", "gain", "lose", "lose", "gain", "lose", "gain"), 2),2))
+Measure <- c(rep("peaks",20), rep("genes",20))
+peakbreak <- data.frame(Timepoint, Contrast, Condition, Freq, Measure, Direction)
+#peakbreak <- peakbreak[order(peakbreak$Contrast),]
+# adjust gain direction for pyramid plot
+peakbreak$Freq <- ifelse(peakbreak$Direction %in% c("pax6","gain"), -1*peakbreak$Freq, peakbreak$Freq)
+
+# factor for plot ordering
+peakbreak$Condition <- factor(peakbreak$Condition, levels = c("pax6", "all-tissue"))
+peakbreak$Timepoint <- factor(peakbreak$Timepoint, levels = c("uninjured", "0hpa", "6hpa", "24hpa", "72hpa"))
+peakbreak$Direction <- factor(peakbreak$Direction, levels = c("gain", "lose"))
+
+# view data table
+datatable(peakbreak, caption = "Break down of peaks for timepoints within a condition")
+
+```
+
+### 6hpa venn diagram
+```{r 3b.2, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+grid.newpage()
+# values from venn diagram from table
+draw.pairwise.venn(area1 = 753,
+                   area2 = 1350,
+                   cross.area = 170,
+                   category = c("0v6hpa", "24v6hpa"),
+                   cat.pos = c(0, 0),
+                   fill = c("#F7AA14", "#172869"),
+                   alpha = c(0.5, 0.5)
+                   )
+
+```
+
+### 24hpa venn diagram
+```{r 3b.3, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+grid.newpage()
+draw.pairwise.venn(area1 = 1758,
+                   area2 = 1208,
+                   cross.area = 191,
+                   category = c("24v6hpa", "24v72hpa"),
+                   cat.pos = c(0, 0),
+                  fill = c("#F7AA14", "#172869"),
+                  alpha = c(0.5, 0.5))
+
+```
+
+### 24hpa venn diagram
+```{r 3b.4, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+grid.newpage()
+draw.pairwise.venn(area1 = 1002,
+                   area2 = 803,
+                   cross.area = 118,
+                   category = c("24v72hpa", "72vWht"),
+                   cat.pos = c(0, 0), 
+                   fill = c("#F7AA14", "#172869"),
+                   alpha = c(0.5, 0.5)
+                   )
+
+```
+
+
+
+## Figure 3C: Gene ontology analysis
+### 6hpa
+#### GO
+```{r 3c.1 6hpa, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+# input tss
+tss_6hpa_1_Peaks <- rownames(timepoints[timepoints$DE.Pax_0hpaVSPax_6hpa == "DOWN",])
+tss_6hpa_2_Peaks <- rownames(timepoints[timepoints$DE.Pax_24hpaVSPax_6hpa == "DOWN",])
+tss_6hpa_Peaks <- unique(c(tss_6hpa_1_Peaks, tss_6hpa_2_Peaks))
+tss_6hpa <- timepoints[tss_6hpa_Peaks,]
+GO_6hpa <- as.data.frame(tss_6hpa$Gene)
+
+input_6hpa <- tss_6hpa[,c(23, 26, 86)]
+
+# view inputs
+datatable(input_6hpa, caption = "Input DA regions to GO")
+
+#GO BP 
+GO_6hpa_terms <- gost(query = as.character(input_6hpa$Gene), 
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE)  ##input gene list, run GO
+
+# Make GO Table
+Go_6hpa_use <- GO2table(GO_6hpa_terms)
+
+# View GO table
+datatable(Go_6hpa_use)
+
+# Save out GO
+write.table(Go_6hpa_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO6hpa.txt", sep = "\t")
+
+```
+#### ReviGO
+```{r 3c.2 6hpa, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+ print(Go_6hpa_use[,c(2,1)])
+# Place in Revigo (http://revigo.irb.hr/)
+# Allowed SImilarity: small (0.5)
+# p-values
+# database with GO term sizes: Homo sapiens
+# Semantic similarity measure: SimRel
+# Save out first page as .csv
+
+# Read in .csv
+revi_6hpa <- read.csv("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/revigo_6hpa.csv") # .csv
+revi_6hpa <- revi_6hpa[-1*grep(revi_6hpa$plot_X, pattern ="null"),] # remove nested GO terms
+revi_6hpa$log10.p.value <- -1*revi_6hpa$log10.p.value
+revi_6hpa$description <- tolower(revi_6hpa$description)
+# order for barplot
+revi_6hpa <- revi_6hpa[order(-revi_6hpa$log10.p.value),]
+TermLevels <- concat.GO((revi_6hpa[, 2]))
+revi_6hpa$description <- factor(revi_6hpa$description, levels = c(TermLevels))
+revi_6hpa <- merge.data.frame(Go_6hpa_use, revi_6hpa, by.x = "term_id", by.y = "term_ID")
+
+# view revigo output
+datatable(revi_6hpa)
+
+# plot main GO terms
+ggplot(revi_6hpa, aes(x= description, y= log10.p.value))  +
+  geom_bar(stat = "identity", fill = "green4") +
+  coord_flip()+
+  labs(x = "GO Terms", y = "-log(pvalue)", title = "6hpa GO Terms") +
+  blank_theme +
+  theme(text = element_text(size=20))
+
+
+# Allowed SImilarity: tiny (0.4)
+# p-values
+# database with GO term sizes: Homo sapiens
+# Semantic similarity measure: SimRel
+# Save out first page as .csv
+
+# Read in .csv
+revi_6hpa <- read.csv("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/revigo_6hpa_tiny.csv") # .csv
+revi_6hpa <- revi_6hpa[-1*grep(revi_6hpa$plot_X, pattern ="null"),] # remove nested GO terms
+revi_6hpa$log10.p.value <- -1*revi_6hpa$log10.p.value
+revi_6hpa$description <- tolower(revi_6hpa$description)
+# order for barplot
+revi_6hpa <- revi_6hpa[order(-revi_6hpa$log10.p.value),]
+TermLevels <- concat.GO((revi_6hpa[, 2]))
+revi_6hpa$description <- factor(revi_6hpa$description, levels = c(TermLevels))
+revi_6hpa <- merge.data.frame(Go_6hpa_use, revi_6hpa, by.x = "term_id", by.y = "term_ID")
+
+# view revigo output
+datatable(revi_6hpa)
+
+# plot main GO terms
+ggplot(revi_6hpa, aes(x= description, y= log10.p.value))  +
+  geom_bar(stat = "identity", fill = "green4") +
+  coord_flip()+
+  labs(x = "GO Terms", y = "-log(pvalue)", title = "6hpa GO Terms") +
+  blank_theme +
+  theme(text = element_text(size=20))
+  
+
+
+
+
+```
+
+
+### 24hpa
+#### GO
+```{r 3c.1 24hpa, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Input to GO
+tss_24hpa_1_Peaks <- rownames(timepoints[timepoints$DE.Pax_24hpaVSPax_6hpa == "UP",])
+tss_24hpa_2_Peaks <- rownames(timepoints[timepoints$DE.Pax_24hpaVSPax_72hpa == "UP",])
+tss_24hpa_Peaks <- unique(c(tss_24hpa_2_Peaks))
+tss_24hpa <- timepoints[tss_24hpa_Peaks,]
+GO_24hpa <- as.data.frame(tss_24hpa$Gene)
+
+input_24hpa <- tss_24hpa[,c(26, 27, 86)]
+
+# View inputs
+datatable(input_24hpa, caption = "24hpa DA region GO input")
+
+#GO 
+GO_24hpa_terms <- gost(query = as.character(input_24hpa$Gene), 
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE)  ##input gene list, run GO
+
+# Make GO Table
+Go_24hpa_use <- GO2table(GO_24hpa_terms)
+
+# View GO table
+datatable(Go_24hpa_use)
+
+# Save out GO
+write.table(Go_24hpa_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO24hpa.txt", sep = "\t")
+
+```
+#### ReviGO
+```{r 3c.2 24hpa, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+print(Go_24hpa_use[,c(2,1)])
+# Place in Revigo (http://revigo.irb.hr/)
+# Allowed SImilarity: small (0.5)
+# p-values
+# database with GO term sizes: Homo sapiens
+# Semantic similarity measure: SimRel
+# Save out first page as .csv
+
+# Read in .csv
+revi_24hpa <- read.csv("outs_figures/revigo_24hpa.csv") # .csv
+revi_24hpa <- revi_24hpa[-1*grep(revi_24hpa$plot_X, pattern ="null"),] # remove nested GO terms
+revi_24hpa$log10.p.value <- -1*revi_24hpa$log10.p.value
+# order for barplot
+revi_24hpa <- revi_24hpa[order(-revi_24hpa$log10.p.value),]
+TermLevels <- as.character((revi_24hpa[, 2]))
+revi_24hpa$description <- factor(revi_24hpa$description, levels = c(TermLevels))
+revi_24hpa <- merge.data.frame(Go_24hpa_use, revi_24hpa, by.x = "term_id", by.y = "term_ID")
+
+# view revigo output
+datatable(revi_24hpa)
+
+# plot main GO terms
+ggplot(revi_24hpa, aes(x= description, y= log10.p.value))  +
+  geom_bar(stat = "identity", fill = "green4") +
+  coord_flip()+
+  labs(x = "GO Terms", y = "-log(pvalue)", title = "24hpa GO Terms") +
+  blank_theme+
+  theme(text = element_text(size=20))
+
+
+
+# Place in Revigo (http://revigo.irb.hr/)
+# Allowed SImilarity: tiny (0.4)
+# p-values
+# database with GO term sizes: Homo sapiens
+# Semantic similarity measure: SimRel
+# Save out first page as .csv
+
+# Read in .csv
+revi_24hpa <- read.csv("outs_figures/revigo_24hpa_tiny.csv") # .csv
+revi_24hpa <- revi_24hpa[-1*grep(revi_24hpa$plot_X, pattern ="null"),] # remove nested GO terms
+revi_24hpa$log10.p.value <- -1*revi_24hpa$log10.p.value
+# order for barplot
+revi_24hpa <- revi_24hpa[order(-revi_24hpa$log10.p.value),]
+TermLevels <- as.character((revi_24hpa[, 2]))
+revi_24hpa$description <- factor(revi_24hpa$description, levels = c(TermLevels))
+revi246hpa <- merge.data.frame(Go_24hpa_use, revi_24hpa, by.x = "term_id", by.y = "term_ID")
+
+# view revigo output
+datatable(revi_24hpa)
+
+# plot main GO terms
+ggplot(revi_24hpa, aes(x= description, y= log10.p.value))  +
+  geom_bar(stat = "identity", fill = "green4") +
+  coord_flip()+
+  labs(x = "GO Terms", y = "-log(pvalue)", title = "24hpa GO Terms") +
+  blank_theme+
+  theme(text = element_text(size=20))
+
+
+
+```
+
+### 72hpa
+#### GO
+```{r 3c.1 72hpa, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Inputs
+tss_72hpa_1_Peaks <- rownames(timepoints[timepoints$DE.Pax_24hpaVSPax_72hpa == "DOWN",])
+tss_72hpa_2_Peaks <- rownames(timepoints[timepoints$DE.Pax_72hpaVSPax_Whole.Tail == "UP",])
+tss_72hpa_Peaks <- unique(c(tss_72hpa_1_Peaks, tss_72hpa_2_Peaks))
+tss_72hpa <- timepoints[tss_72hpa_Peaks,]
+GO_72hpa <- as.data.frame(tss_72hpa$Gene)
+
+
+input_72hpa <- tss_72hpa[,c(27, 31, 86)]
+
+# view inputs
+datatable(input_72hpa, caption = "72hpa DA region GO input")
+
+#GO BP#
+GO_72hpa_terms <- gost(query = as.character(input_72hpa$Gene), 
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE)  ##input gene list, run GO
+
+# Make GO Table
+Go_72hpa_use <- GO2table(GO_72hpa_terms)
+
+# View GO table
+datatable(Go_72hpa_use)
+
+# Save out GO
+write.table(Go_72hpa_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO72hpa.txt", sep = "\t")
+
+```
+
+#### ReviGO
+```{r 3c.2 72hpa, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+print(Go_72hpa_use[,c(2,1)])
+# Place in Revigo (http://revigo.irb.hr/)
+# Allowed SImilarity: small (0.5)
+# p-values
+# database with GO term sizes: Homo sapiens
+# Semantic similarity measure: SimRel
+# Save out first page as .csv
+
+# Read in .csv
+revi_72hpa <- read.csv("outs_figures/revigo_72hpa.csv") # .csv
+revi_72hpa <- revi_72hpa[-1*grep(revi_72hpa$plot_X, pattern ="null"),] # remove nested GO terms
+revi_72hpa$log10.p.value <- -1*revi_72hpa$log10.p.value
+# order for barplot
+revi_72hpa <- revi_72hpa[order(-revi_72hpa$log10.p.value),]
+TermLevels <- as.character((revi_72hpa[, 2]))
+revi_72hpa$description <- factor(revi_72hpa$description, levels = c(TermLevels))
+revi_72hpa <- merge.data.frame(Go_72hpa_use, revi_72hpa, by.x = "term_id", by.y = "term_ID")
+
+# view revigo output
+datatable(revi_72hpa)
+
+# plot main GO terms
+ggplot(revi_72hpa, aes(x= description, y= log10.p.value))  +
+  geom_bar(stat = "identity", fill = "green4") +
+  coord_flip()+
+  labs(x = "GO Terms", y = "-log(pvalue)", title = "72hpa GO Terms") +
+  blank_theme+
+  theme(text = element_text(size=20))
+
+
+# Place in Revigo (http://revigo.irb.hr/)
+# Allowed SImilarity: small (0.5)
+# p-values
+# database with GO term sizes: Homo sapiens
+# Semantic similarity measure: SimRel
+# Save out first page as .csv
+
+# Read in .csv
+revi_72hpa <- read.csv("outs_figures/revigo_72hpa_tiny.csv") # .csv
+revi_72hpa <- revi_72hpa[-1*grep(revi_72hpa$plot_X, pattern ="null"),] # remove nested GO terms
+revi_72hpa$log10.p.value <- -1*revi_72hpa$log10.p.value
+# order for barplot
+revi_72hpa <- revi_72hpa[order(-revi_72hpa$log10.p.value),]
+TermLevels <- as.character((revi_72hpa[, 2]))
+revi_72hpa$description <- factor(revi_72hpa$description, levels = c(TermLevels))
+revi_72hpa <- merge.data.frame(Go_72hpa_use, revi_72hpa, by.x = "term_id", by.y = "term_ID")
+
+# view revigo output
+datatable(revi_72hpa)
+
+# plot main GO terms
+ggplot(revi_72hpa, aes(x= description, y= log10.p.value))  +
+  geom_bar(stat = "identity", fill = "green4") +
+  coord_flip()+
+  labs(x = "GO Terms", y = "-log(pvalue)", title = "72hpa GO Terms") +
+  blank_theme+
+  theme(text = element_text(size=25))
+
+
+```
+
+## Figure 5B: heatmap of all meis1 and pbx3 peaks
+### meis1 heatmap
+```{r 5b meis, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# heatmap for meis1 from atac
+paxGoGenes <- filter(timepoints, timepoints$Gene %in% c("meis1")) # find all meis1 related peaks in timepoints contrast
+rownames(paxGoGenes) <- gsub(paxGoGenes$Peak, pattern = "All", replacement = "ALL")
+paxGoGenes <- paxGoGenes[1:nrow(paxGoGenes),]
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+# library(dplyr)
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+# all timepoints
+colnames(mcounts)
+mcounts <- mcounts[,c( 10,6,8,7,9 )]
+
+# run heatmap  
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE,
+          dendrogram = 'none',
+          density.info=c("none"),
+          col=rev(color.palette),
+          cexRow=0.7, cexCol=0.75,key = FALSE
+            ) ##3takes 10 minues
+
+# uninj and 24hpa
+colnames(mcounts)
+mcounts <- mcounts[,c(1,4)]
+
+
+# run heatmap  
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE,
+          dendrogram = "none",
+          density.info=c("none"),
+          col=rev(color.palette),
+          cexRow=0.7, cexCol=0.75,key = FALSE
+            ) ##3takes 10 minues
+
+```
+
+### pbx3 heatmap
+```{r 5b pbx3, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# heatmap for meis1 from atac
+paxGoGenes <- filter(timepoints, timepoints$Gene %in% c("pbx3")) # find all meis1 related peaks in timepoints contrast
+rownames(paxGoGenes) <- gsub(paxGoGenes$Peak, pattern = "All", replacement = "ALL")
+paxGoGenes <- paxGoGenes[1:nrow(paxGoGenes),]
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+# library(dplyr)
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+# all timepoints
+colnames(mcounts)
+mcounts <- mcounts[,c( 10,6,8,7,9 )]
+
+
+# run heatmap  
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE,
+          dendrogram = "none",
+          density.info=c("none"),
+          col=rev(color.palette),
+          cexRow=0.7, cexCol=0.75,key = FALSE
+            ) ##3takes 10 minues
+
+# uninj and 24hpa
+colnames(mcounts)
+mcounts <- mcounts[,c(1,4)]
+
+
+# run heatmap  
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE,
+          dendrogram = "none",
+          density.info=c("none"),
+          col=rev(color.palette),
+          cexRow=0.7, cexCol=0.75,key = FALSE
+            ) ##3takes 10 minues
+```

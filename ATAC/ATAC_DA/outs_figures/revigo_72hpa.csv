@@ -1,0 +1,54 @@
+term_ID,description,frequency,plot_X,plot_Y,plot_size,log10 p-value,uniqueness,dispensability,representative,eliminated
+GO:0007610,"behavior",3.254%,-3.433,-4.175,2.752,-1.5607,0.963,0.000,7610,0
+GO:0010557,"positive regulation of macromolecule biosynthetic process",9.406%,-1.050, 6.840,3.212,-3.5800,0.621,0.000,10557,0
+GO:1903508,"positive regulation of nucleic acid-templated transcription",7.905%,null,null,3.137,-3.2366,0.605,0.914,10557,1
+GO:0010604,"positive regulation of macromolecule metabolic process",16.613%,null,null,3.459,-2.3449,0.629,0.701,10557,1
+GO:0009891,"positive regulation of biosynthetic process",10.340%,null,null,3.254,-2.8239,0.656,0.615,10557,1
+GO:1902680,"positive regulation of RNA biosynthetic process",8.027%,null,null,3.144,-3.2269,0.606,0.902,10557,1
+GO:0045944,"positive regulation of transcription from RNA polymerase II promoter",6.111%,null,null,3.025,-3.8477,0.620,0.789,10557,1
+GO:0031328,"positive regulation of cellular biosynthetic process",10.167%,null,null,3.246,-3.1215,0.616,0.875,10557,1
+GO:0031325,"positive regulation of cellular metabolic process",16.590%,null,null,3.459,-1.5735,0.628,0.793,10557,1
+GO:0051254,"positive regulation of RNA metabolic process",8.304%,null,null,3.158,-2.7773,0.623,0.795,10557,1
+GO:0045935,"positive regulation of nucleobase-containing compound metabolic process",9.763%,null,null,3.229,-3.0329,0.620,0.842,10557,1
+GO:0051173,"positive regulation of nitrogen compound metabolic process",10.404%,null,null,3.256,-1.4123,0.656,0.702,10557,1
+GO:0010628,"positive regulation of gene expression",9.833%,null,null,3.232,-2.9208,0.653,0.639,10557,1
+GO:0045893,"positive regulation of transcription, DNA-templated",7.905%,null,null,3.137,-3.0000,0.605,0.876,10557,1
+GO:0043009,"chordate embryonic development",3.260%, 3.543,-0.893,2.753,-5.2573,0.572,0.000,43009,0
+GO:0040019,"positive regulation of embryonic development",0.202%,null,null,1.556,-2.6556,0.575,0.569,43009,1
+GO:0048704,"embryonic skeletal system morphogenesis",0.537%,null,null,1.973,-2.1518,0.570,0.764,43009,1
+GO:0048706,"embryonic skeletal system development",0.704%,null,null,2.090,-3.2426,0.602,0.789,43009,1
+GO:0048568,"embryonic organ development",2.435%,null,null,2.626,-3.9318,0.556,0.768,43009,1
+GO:0009792,"embryo development ending in birth or egg hatching",3.278%,null,null,2.755,-4.8861,0.580,0.801,43009,1
+GO:0048598,"embryonic morphogenesis",3.301%,null,null,2.758,-2.1746,0.546,0.802,43009,1
+GO:1901700,"response to oxygen-containing compound",8.679%,-1.150,-7.054,3.178,-1.4056,0.965,0.000,1901700,0
+GO:0061351,"neural precursor cell proliferation",0.762%,-4.289, 0.948,2.124,-1.5834,0.935,0.013,61351,0
+GO:0003013,"circulatory system process",2.851%, 3.961,-6.063,2.695,-2.3410,0.789,0.150,3013,0
+GO:0008015,"blood circulation",2.827%,null,null,2.691,-2.0079,0.789,0.535,3013,1
+GO:0051239,"regulation of multicellular organismal process",15.268%, 5.739,-4.732,3.423,-3.6126,0.713,0.197,51239,0
+GO:0001822,"kidney development",1.535%, 7.697, 0.599,2.427,-3.2899,0.630,0.232,1822,0
+GO:0072001,"renal system development",1.621%,null,null,2.450,-2.8928,0.652,0.948,1822,1
+GO:0001655,"urogenital system development",1.823%, 3.812, 1.313,2.501,-3.1878,0.670,0.247,1655,0
+GO:0001501,"skeletal system development",2.810%, 4.262, 0.496,2.688,-2.8268,0.654,0.267,1501,0
+GO:0009790,"embryo development",5.505%, 4.667,-1.702,2.980,-6.2262,0.644,0.279,9790,0
+GO:0048705,"skeletal system morphogenesis",1.200%, 7.396, 1.543,2.320,-2.4145,0.597,0.317,48705,0
+GO:0009653,"anatomical structure morphogenesis",13.872%, 5.723, 2.435,3.381,-5.8239,0.650,0.324,9653,0
+GO:0007423,"sensory organ development",2.972%, 6.608, 0.792,2.713,-2.3726,0.626,0.354,7423,0
+GO:0050793,"regulation of developmental process",12.949%, 5.705, 3.254,3.351,-3.4168,0.639,0.355,50793,0
+GO:0043010,"camera-type eye development",1.691%, 7.722,-0.420,2.468,-1.4389,0.617,0.359,43010,0
+GO:0090596,"sensory organ morphogenesis",1.443%,null,null,2.400,-1.3862,0.591,0.820,43010,1
+GO:0048593,"camera-type eye morphogenesis",0.606%,null,null,2.025,-1.4634,0.620,0.840,43010,1
+GO:2000177,"regulation of neural precursor cell proliferation",0.427%,-4.342, 0.096,1.875,-1.5391,0.903,0.374,2000177,0
+GO:0009888,"tissue development",10.912%, 4.931, 2.636,3.277,-2.8962,0.662,0.377,9888,0
+GO:0007507,"heart development",2.891%, 7.015,-0.648,2.701,-2.3382,0.627,0.386,7507,0
+GO:0009893,"positive regulation of metabolic process",17.715%,-1.792, 6.161,3.487,-1.5258,0.739,0.395,9893,0
+GO:0048513,"animal organ development",18.719%, 5.560,-0.227,3.511,-3.9281,0.554,0.432,48513,0
+GO:0007275,"multicellular organism development",28.938%,null,null,3.700,-1.8477,0.574,0.607,48513,1
+GO:0048731,"system development",25.695%,null,null,3.649,-2.8239,0.556,0.581,48513,1
+GO:0072359,"circulatory system development",5.361%, 6.240,-1.457,2.968,-2.1261,0.625,0.439,72359,0
+GO:2000026,"regulation of multicellular organismal development",9.821%, 5.388,-1.367,3.231,-3.3401,0.555,0.441,2000026,0
+GO:0051094,"positive regulation of developmental process",6.815%,null,null,3.073,-3.1811,0.535,0.711,2000026,1
+GO:0051240,"positive regulation of multicellular organismal process",8.327%,null,null,3.160,-1.7620,0.550,0.663,2000026,1
+GO:0009887,"animal organ morphogenesis",5.666%, 6.313, 0.203,2.993,-6.0429,0.568,0.467,9887,0
+GO:0048646,"anatomical structure formation involved in morphogenesis",5.591%,null,null,2.987,-1.3028,0.642,0.591,9887,1
+GO:0030182,"neuron differentiation",7.178%, 5.024,-0.228,3.095,-1.3161,0.600,0.469,30182,0
+GO:0022008,"neurogenesis",8.442%,null,null,3.166,-1.4214,0.592,0.703,30182,1
