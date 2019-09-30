@@ -1,0 +1,36 @@
+term_ID,description,frequencyInDb,log10pvalue,uniqueness,dispensability,representative
+GO:0032502,developmental process,33.98%,-3.8125,0.986,0,developmental process
+GO:0048522,positive regulation of cellular process,27.73%,-6.1891,0.759,0,positive regulation of cellular process
+GO:0050789,regulation of biological process,63.46%,-2.0835,0.887,0.17,positive regulation of cellular process
+GO:0048523,negative regulation of cellular process,24.95%,-4.3045,0.87,0.149,positive regulation of cellular process
+GO:0048519,negative regulation of biological process,26.86%,-3.9586,0.888,0.128,positive regulation of cellular process
+GO:0048518,positive regulation of biological process,30.97%,-5.2197,0.884,0.135,positive regulation of cellular process
+GO:0023051,regulation of signaling,17.95%,-3.2248,0.891,0.111,positive regulation of cellular process
+GO:0080090,regulation of primary metabolic process,33.57%,-2.7645,0.723,0.147,positive regulation of cellular process
+GO:0051240,positive regulation of multicellular organismal process,8.33%,-2.7852,0.663,0.429,positive regulation of cellular process
+GO:0009966,regulation of signal transduction,15.92%,-1.5045,0.864,0.358,positive regulation of cellular process
+GO:0010646,regulation of cell communication,17.65%,-3.1599,0.881,0.132,positive regulation of cellular process
+GO:0045934,negative regulation of nucleobase-containing compound metabolic process,7.81%,-1.3536,0.719,0.488,positive regulation of cellular process
+GO:0045935,positive regulation of nucleobase-containing compound metabolic process,9.76%,-5.7645,0.619,0.448,positive regulation of cellular process
+GO:0032879,regulation of localization,14.41%,-2.1707,0.901,0.103,positive regulation of cellular process
+GO:0019222,regulation of metabolic process,35.73%,-1.475,0.867,0.177,positive regulation of cellular process
+GO:0065007,biological regulation,67.07%,-1.7399,0.993,0,biological regulation
+GO:0071840,cellular component organization or biogenesis,36.53%,-4.6655,0.986,0,cellular component organization or biogenesis
+GO:0072078,nephron tubule morphogenesis,0.42%,-1.475,0.679,0,nephron tubule morphogenesis
+GO:0050793,regulation of developmental process,12.95%,-3.9508,0.657,0.355,nephron tubule morphogenesis
+GO:0031175,neuron projection development,4.88%,-5.2299,0.56,0.238,nephron tubule morphogenesis
+GO:0007399,nervous system development,12.77%,-7.0182,0.648,0.398,nephron tubule morphogenesis
+GO:0009888,tissue development,10.91%,-4.1599,0.701,0.377,nephron tubule morphogenesis
+GO:0060322,head development,4.09%,-3.1931,0.74,0.254,nephron tubule morphogenesis
+GO:0016043,cellular component organization,35.68%,-4.6478,0.916,0.316,nephron tubule morphogenesis
+GO:0051239,regulation of multicellular organismal process,15.27%,-3.6968,0.785,0.142,nephron tubule morphogenesis
+GO:0043009,chordate embryonic development,3.26%,-2.6198,0.708,0.273,nephron tubule morphogenesis
+GO:0030154,cell differentiation,22.10%,-3.8508,0.616,0.498,nephron tubule morphogenesis
+GO:0030030,cell projection organization,7.96%,-2.9586,0.901,0.359,nephron tubule morphogenesis
+GO:0009653,anatomical structure morphogenesis,13.87%,-5.7595,0.689,0.316,nephron tubule morphogenesis
+GO:0009790,embryo development,5.51%,-2.6216,0.707,0.324,nephron tubule morphogenesis
+GO:0045597,positive regulation of cell differentiation,4.89%,-1.7825,0.533,0.39,nephron tubule morphogenesis
+GO:0048869,cellular developmental process,23.09%,-4.9469,0.672,0.414,nephron tubule morphogenesis
+GO:0032990,cell part morphogenesis,3.57%,-4.3487,0.624,0.387,nephron tubule morphogenesis
+GO:0019438,aromatic compound biosynthetic process,25.79%,-1.7905,0.776,0.007,aromatic compound biosynthesis
+GO:1901362,organic cyclic compound biosynthetic process,26.55%,-1.4815,0.784,0.469,aromatic compound biosynthesis

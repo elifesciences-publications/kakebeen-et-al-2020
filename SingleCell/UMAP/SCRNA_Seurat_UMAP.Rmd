@@ -227,32 +227,32 @@ Idents(pax.combined) <- pax.combined$seurat_clusters # set identites of pax as s
 pax.combined <- RenameIdents(pax.combined, 
                            `0` = "Small Secretory Cell 1", # "Non-neural ectoderm"
                            `1` = "Sattelite Cells/Differentiating Myocyte", # "Mesoderm"
-                             `2` = "NSC", #"Neural"
+                             `2` = "Spinal Cord Progenitor", #"Neural"
                              `3` = "Notocord", #"Mesoderm"
                              `4` = "Dermomyotome", #"Mesoderm"
                              `5` = "Myotome", #"Mesoderm"
-                             `6` = "Neural.B", #"Neural"
+                             `6` = "Vulnerable Motor Neuron", #"Neural"
                            `7`= "ROCs", #"Non-neural ectoderm"
                            `8`= "Skeletal Muscle", #"Mesoderm"
-                           `9`= "Neural.A", #"Neural"
+                           `9`= "Interneuron", #"Neural"
                            `10`= "Differentiating Neuron", #"Neural"
                            `11`= "Goblet Cell", #"Non-neural ectoderm"
-                           `12`= "Somite-Related", #"Mesoderm"
-                           `13`= "Neural.D", #"Neural"
+                           `12`= "Bipotent Progenitor", #"Mesoderm"
+                           `13`= "Motor Neuron (Leptin+)", #"Neural"
                            `14`= "Mesenchyme", #"Mesoderm"
                            `15`= "Scleretome", #"Mesoderm"
-                           `16`= "Prdm14", #"Neural"
+                           `16`= "Motor Neuron", #"Neural"
                            `17`= "Small Secretory Cell 2", #"Non-neural ectoderm"
                            `18`= "Other 1", #"Other"
                            `19`= "Other 2") #"Other"
 
 pax.combined$AK_Names <- Idents(pax.combined)
 # order clusters
-pax.combined$AK_Names <- factor(pax.combined$AK_Names, levels = c("NSC", "Differentiating Neuron", "Neural.A", "Neural.B", "Neural.D", "Prdm14", "Notocord", "Mesenchyme", "Myotome", "Scleretome", "Sattelite Cells/Differentiating Myocyte", "Dermomyotome", "Skeletal Muscle", "Somite-Related", "Small Secretory Cell 1", "Small Secretory Cell 2", "ROCs", "Goblet Cell", "Other 1", "Other 2"))
+pax.combined$AK_Names <- factor(pax.combined$AK_Names, levels = c("Spinal Cord Progenitor", "Differentiating Neuron", "Interneuron", "Vulnerable Motor Neuron", "Motor Neuron (Leptin+)", "Motor Neuron", "Notocord", "Mesenchyme", "Myotome", "Scleretome", "Sattelite Cells/Differentiating Myocyte", "Dermomyotome", "Skeletal Muscle", "Bipotent Progenitor", "Small Secretory Cell 1", "Small Secretory Cell 2", "ROCs", "Goblet Cell", "Other 1", "Other 2"))
 
 
 Idents(pax.combined) <- pax.combined$AK_Names
-DimPlot(pax.combined, reduction = "umap", label = TRUE, cols = my.color) +NoAxes() 
+DimPlot(pax.combined, reduction = "umap", label = TRUE) +NoAxes() 
 
 ```
 
@@ -461,14 +461,31 @@ DimPlot(pax.neural, label = TRUE)
 
 ### assign three state condition 
 ```{r three state neural}
+# three state and condition
 Idents(pax.neural) <- "three_state"
 pax.neural$threestate_condition <- paste(pax.neural$condition, Idents(pax.neural), sep = "_")
 Idents(pax.neural) <- "threestate_condition"
 pax.neural$threestate_condition <- factor(pax.neural$threestate_condition, levels = c("uninj_NSC", "dmso_NSC", "iwr_NSC", "uninj_Differentiating", "dmso_Differentiating", "iwr_Differentiating", "uninj_Neuron", "dmso_Neuron", "iwr_Neuron"))
 
+# three state and condition and cell
+pax.neural$threestate_condition_cell <- paste(pax.neural$threestate_condition, pax.neural$Laevis, sep = "__")
+Idents(pax.neural) <- pax.neural$threestate_condition_cell
+
 DimPlot(pax.neural, label = TRUE)
 
 ```
+
+### assign phase condition cell
+```{r phase condition cell}
+
+pax.neural$phase_condition_cell <- paste(pax.neural$condition, pax.neural$Phase, sep = "_")
+pax.neural$phase_condition_cell <- paste(pax.neural$phase_condition_cell, pax.neural$Laevis, sep = "__")
+Idents(pax.neural) <- pax.neural$phase_condition_cell
+
+
+```
+
+
 
 ### Neural cell type analysis based on Laevis singel cell
 ```{r renames laevis}

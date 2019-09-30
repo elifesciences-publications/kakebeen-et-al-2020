@@ -1,0 +1,11 @@
+base
+ggplot2
+tidyr
+DT
+LaCroixColoR
+dplyr
+magrittr
+ggpubr
+cowplot
+Seurat
+scales

@@ -1,0 +1,433 @@
+---
+title: "ATAC Figures"
+author: "Anneke Kakebeen"
+date: "13 Aug 2019"
+output:
+  html_document:
+    code_folding: "hide"
+    toc: true
+    toc_depth: 3
+    toc_float: true
+editor_options: 
+  chunk_output_type: console
+---
+## Setting up project: ATAC
+```{r set up, cache=FALSE, warning=FALSE, message=FALSE}
+
+# Load packages
+library(knitr)
+library(gridExtra)
+library(dplyr)
+library(gprofiler2)
+library(ggplot2)
+library(AnnotationDbi)
+library(biomaRt)
+library(gplots)
+library(tidyverse)
+library(RColorBrewer)
+library(DT)
+library(LaCroixColoR)
+library(Seurat)
+library(VennDiagram)
+library(cowplot)
+library(imager)
+library(magick)
+library(pdftools)
+library(limma)
+library(treemap)
+
+
+# source functions
+source("~/Desktop/R_working/common_source_functions.R")
+
+## color palette for heatmaps
+color.palette <- colorRampPalette(lacroix_palette("Lemon", n = 50, type = "continuous"))(256) 
+
+# setwd
+setwd("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/")
+
+```
+
+## Read in data for figures
+```{r read in data, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# read in DA tables
+paxVall_agg <- read.table("outs/DA_paxVall_ALL.txt", header = TRUE, sep = "\t", row.names = 1) # paxVall aggregate
+paxVall <- read.table("outs/DA_paxVall.txt", header = TRUE, sep = "\t", row.names = 1) # paxVall aggregate
+timepoints <- read.table("outs/DA_timepoints.txt", header = TRUE, sep = "\t", row.names = 1) # between timepoints within one condition
+
+# Read in log counts
+log.counts.paxVall <- as.matrix(read.table("outs/log.counts_paxVall_aggregate.txt", header = TRUE, sep = "\t", row.names = 1)) # log counts for paxVall aggregate
+log.counts.timepoints <- as.matrix(read.table("outs/log.counts_timepoints.txt", header = TRUE, sep = "\t", row.names = 1)) # log counts for timepoints
+
+```
+
+## 5B/C: pbx3 and meis1 target heatmaps
+### Read in tables if not continuing from above
+```{r grn tables, warning=FALSE}
+
+# read in DA motif tables from GRN prediction
+table.6 <- read.table("~/Desktop/pax6 paper/Final Markdowns/GRN/outs/table.6.txt", sep = "\t")
+table.24 <- read.table("~/Desktop/pax6 paper/Final Markdowns/GRN/outs/table.24.txt", sep = "\t")
+table.72 <- read.table("~/Desktop/pax6 paper/Final Markdowns/GRN/outs/table.72.txt", sep = "\t")
+
+# make master list of tables
+mastertable <- rbind(table.24, table.6, table.72)
+
+
+```
+
+### Identify other inputs and outs of pbx3 and meis 1
+```{r pbx3 and meis1, warning=FALSE}
+
+# filter master table for rows where TF is pbx3 and the gene is pbx3
+Master_pbx <- filter(mastertable, TF == "pbx3" | Gene =="pbx3")
+# filter master table for rows where TF is meis1 and the gene is meis1
+Master_meis <- filter(mastertable, TF == "meis1" | Gene =="meis1")
+# rowbind to one table
+Master_pbx_meis <- rbind(Master_pbx, Master_meis)
+
+# view table
+datatable(Master_pbx_meis)
+
+
+```
+
+### pbx3 targets 1
+#### 6hpa
+```{r pbx3 targets 1 6hpa, warning=FALSE}
+# Identify genes that pbx3 targets at each timepoint
+# 6hpa
+treegraph(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "6hpa pbx3 targets")
+pbx3_6 <- as.character(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3")[,1]) # target peaks
+pbx3_6_gene <- as.character(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3")[,17]) # target genes
+# GO
+GO_pbx6_terms <- gost(query = pbx3_6_gene,
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE,
+                    significant = FALSE)  ##input gene list, run GO
+
+# Make GO Table
+GO_pbx6_terms <- GO2table(GO_pbx6_terms)
+datatable(GO_pbx6_terms, caption = "pbx3 6hpa go")
+```
+
+
+#### 24hpa
+```{r pbx3 targets 1 24hpa, warning=FALSE}
+# 24hpa
+treegraph(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "24hpa pbx3 targets")
+pbx3_24 <- as.character(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3")[,1]) # target peaks
+pbx3_24_gene <- as.character(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3")[,17]) # target genes
+# GO
+GO_pbx24_terms <- gost(query = pbx3_24_gene,
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE,
+                    significant = FALSE)  ##input gene list, run GO
+# Make GO Table
+GO_pbx24_terms <- GO2table(GO_pbx24_terms)
+datatable(GO_pbx24_terms, caption = "pbx3 24hpa go")
+```
+
+#### 72hpa
+```{r pbx3 targets 1 72hpa, warning=FALSE}
+# 72hpa
+treegraph(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "72hpa pbx3 targets")
+pbx3_72 <- as.character(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3")[,1]) # target peaks
+pbx3_72_gene <- as.character(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3")[,17]) # target genes
+# GO
+GO_pbx72_terms <- gost(query = pbx3_72_gene,
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE,
+                    significant = FALSE)  ##input gene list, run GO
+# Make GO Table
+GO_pbx72_terms <- GO2table(GO_pbx72_terms)
+datatable(GO_pbx72_terms, caption = "pbx3 72hpa go")
+```
+
+#### pbx heatmap
+```{r pbx3 targets 1 heatmap, warning=FALSE}
+pbx_all <- unique(c(pbx3_6, pbx3_24, pbx3_72))
+# Make heatmap for pbx3 targets
+gene <- concat.grep(pbx3_72)
+GOGenes <- grep(gene, timepoints$Peak, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- timepoints[GOGenes, ]
+paxGoGenes <- paxGoGenes[-grep(paxGoGenes$Gene, pattern = "Xetrov|LOC", ignore.case = TRUE),] # remove unannotated
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+#colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
+
+# Plot heatmap     
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE, 
+          dendrogram = 'none',
+          density.info=c("none"),
+          col=rev(color.palette),
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10)) 
+
+```
+
+
+### meis1 targets
+#### 6hpa
+```{r meis targets 6hpa, warning=FALSE}
+# Identify genes that meis1 targets at each timepoint
+# 6hpa
+treegraph(filter(Master_meis, timepoint=="6hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "6hpa meis1 targets")
+meis1_6 <- as.character(filter(Master_meis, timepoint=="6hpa" & TF == "meis1")[,1]) # target peaks
+meis1_6_gene <- as.character(filter(Master_meis, timepoint=="6hpa" & TF == "meis1")[,17]) # target genes
+# GO
+GO_meis6_terms <- gost(query = meis1_6_gene,
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE,
+                    significant = FALSE)  ##input gene list, run GO
+# Make GO Table
+GO_meis6_terms <- GO2table(GO_meis6_terms)
+datatable(GO_meis6_terms, caption = "meis 6hpa go")
+```
+
+#### 24hpa
+```{r meis targets 1 24hpa, warning=FALSE}
+
+# 24hpa
+treegraph(filter(Master_meis, timepoint=="24hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "24hpa meis1 targets")
+meis1_24 <- as.character(filter(Master_meis, timepoint=="24hpa" & TF == "meis1")[,1]) # target peaks
+meis1_24_gene <- as.character(filter(Master_meis, timepoint=="24hpa" & TF == "meis1")[,17]) # target genes
+# GO
+GO_meis24_terms <- gost(query = meis1_24_gene,
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE,
+                    significant = FALSE)  ##input gene list, run GO
+# Make GO Table
+GO_meis24_terms <- GO2table(GO_meis24_terms)
+datatable(GO_meis24_terms, caption = "meis 24hpa go")
+```
+
+#### 72hpa
+```{r meis targets 1 72hpa, warning=FALSE}
+# 72hpa
+treegraph(filter(Master_meis, timepoint=="72hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "72hpa meis1 targets")
+meis1_72 <- as.character(filter(Master_meis, timepoint=="72hpa" & TF == "meis1")[,1]) #target peaks
+meis1_72_gene <- as.character(filter(Master_meis, timepoint=="72hpa" & TF == "meis1")[,17]) # target genes
+# GO
+GO_meis72_terms <- gost(query = meis1_72_gene,
+                    organism = "hsapiens",
+                    sources = "GO:BP",
+                    evcodes = TRUE,
+                    significant = FALSE)  ##input gene list, run GO
+# Make GO Table
+GO_meis72_terms <- GO2table(GO_meis72_terms)
+datatable(GO_meis72_terms, caption = "meis 72hpa go")
+```
+
+
+#### meis1 heatmap
+```{r meis targets 1 heatmap, warning=FALSE}
+meis_all <- unique(c(meis1_6, meis1_24, meis1_72)) # target peaks
+# Make heatmap for pbx3 targets
+gene <- concat.grep(meis1_24)
+GOGenes <- grep(gene, timepoints$Peak, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- timepoints[GOGenes, ]
+paxGoGenes <- paxGoGenes[-grep(paxGoGenes$Gene, pattern = "Xetrov|LOC|-like", ignore.case = TRUE),] # remove unannotated
+paxGoGenes <- paxGoGenes[1:20,]
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+# colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
+
+# Plot heatmap     
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE, 
+          dendrogram = 'none',
+          density.info=c("none"),
+          col=rev(color.palette),
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10)) 
+
+```
+
+### Peaks with both meis1 and pbx3 sites
+#### 6hpa
+```{r 6hpa pbx3 and meis1 sites}
+
+length(meis_all)
+length(pbx_all)
+
+co6hpa <- intersect(meis_all, pbx_all)
+length(co6hpa)
+
+grid.newpage()
+draw.pairwise.venn(area1 = 282,
+                   area2 = 61,
+                   cross.area = 26,
+                   cat.pos = c(0, 0),
+                   alpha = c(0.5, 0.5), 
+                   rotation.degree = 270
+                   )
+
+
+# Make heatmap for pbx3 targets
+gene <- concat.grep(co6hpa)
+GOGenes <- grep(gene, timepoints$Peak, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- timepoints[GOGenes, ]
+paxGoGenes <- paxGoGenes[-grep(paxGoGenes$Gene, pattern = "Xetrov|LOC|-like", ignore.case = TRUE),] # remove unannotated
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+# colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
+
+# Plot heatmap     
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE, 
+          dendrogram = 'none',
+          density.info=c("none"),
+          col=rev(color.palette),
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10)) 
+
+```
+
+#### 24hpa
+```{r 24hpa pbx3 and meis1 sites}
+
+co24hpa <- intersect(meis1_24, pbx3_24)
+
+# Make heatmap for pbx3 targets
+gene <- concat.grep(co24hpa)
+GOGenes <- grep(gene, timepoints$Peak, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- timepoints[GOGenes, ]
+paxGoGenes <- paxGoGenes[-grep(paxGoGenes$Gene, pattern = "Xetrov|LOC|-like", ignore.case = TRUE),] # remove unannotated
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+# colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
+
+# Plot heatmap     
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE, 
+          dendrogram = 'none',
+          density.info=c("none"),
+          col=rev(color.palette),
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10)) 
+
+```
+
+
+#### 72hpa
+```{r 72hpa pbx3 and meis1 sites}
+
+co72hpa <- intersect(meis1_72, pbx3_72)
+
+# Make heatmap for pbx3 targets
+gene <- concat.grep(co72hpa)
+GOGenes <- grep(gene, timepoints$Peak, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- timepoints[GOGenes, ]
+paxGoGenes <- paxGoGenes[-grep(paxGoGenes$Gene, pattern = "Xetrov|LOC|-like", ignore.case = TRUE),] # remove unannotated
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+# colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
+
+# Plot heatmap     
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE, 
+          dendrogram = 'none',
+          density.info=c("none"),
+          col=rev(color.palette),
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10)) 
+
+```

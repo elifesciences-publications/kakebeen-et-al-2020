@@ -1,0 +1,12 @@
+term_ID,description,frequencyInDb,log10pvalue,uniqueness,dispensability,representative
+GO:0048666,neuron development,5.71%,-1.4385,0.593,0,neuron development
+GO:0001503,ossification,2.15%,-1.3137,0.781,0.203,neuron development
+GO:0045778,positive regulation of ossification,0.47%,-3.1425,0.528,0.165,neuron development
+GO:0003002,regionalization,1.92%,-1.3221,0.704,0.259,neuron development
+GO:0048645,animal organ formation,0.35%,-2.0788,0.659,0.237,neuron development
+GO:0007399,nervous system development,12.77%,-1.3886,0.641,0.41,neuron development
+GO:0045935,positive regulation of nucleobase-containing compound metabolic process,9.76%,-1.9425,0.614,0.211,neuron development
+GO:0070167,regulation of biomineral tissue development,0.43%,-2.1494,0.601,0.295,neuron development
+GO:0048729,tissue morphogenesis,3.57%,-1.5309,0.613,0.45,neuron development
+GO:0071495,cellular response to endogenous stimulus,7.14%,-2.3269,0.895,0,cellular response to endogenous stimulus
+GO:0071310,cellular response to organic substance,12.98%,-2.0194,0.838,0.153,cellular response to endogenous stimulus

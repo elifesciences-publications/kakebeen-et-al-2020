@@ -14,7 +14,7 @@ editor_options:
   chunk_output_type: console
 ---
 ## Setting up project: ATAC
-```{r set up, cache=TRUE, warning=FALSE, message=FALSE}
+```{r set up, cache=FALSE, warning=FALSE, message=FALSE}
 
 # Load packages
 library(knitr)
@@ -36,6 +36,8 @@ library(imager)
 library(magick)
 library(pdftools)
 library(limma)
+library(treemap)
+
 
 # source functions
 source("~/Desktop/R_working/common_source_functions.R")
@@ -89,7 +91,7 @@ plotMDS(mds,
 
 ## Figure 2C: tss plots
 ```{r 2c, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.width= 8, fig.height= 8}
-Fix when alex gets back to you
+# Fix when alex gets back to you
 # pax <- image_read("~/Desktop/Final_R/ATAC/tss_pax.png")
 # print(pax)
 # 
@@ -149,19 +151,17 @@ datatable(peakbreak, caption = "Number of peaks called in pax or all tissue libr
 
 # Plot pyramid chart of peaks 
 ggplot(filter(peakbreak, Measure == "peaks"), aes(x= Contrast, y= Freq, fill=Direction))+
-  geom_bar(stat="identity")  +
+  geom_bar(stat="identity", width = 0.8)  +
   # facet_wrap(~Contrast, ncol = 1, scales = "free_y") +
   # facet_grid(Contrast~., space = "free_x", scales = "free_y", switch = "x") +
   scale_fill_manual(values = c("forestgreen","dodgerblue3", "#F7AA14", "#172869")) +
   coord_flip() +
   ylim(-5500, 5500) +
-  Seurat:::RotatedAxis() +
-  theme(legend.position = "bottom") +
-theme(strip.placement = "outside",
-strip.background = element_rect(fill=NA,colour="white"),
-panel.spacing.x=unit(0,"cm"),
-strip.text = element_text(hjust=0, face="bold", size=12)) +
-  theme_bw() 
+  xlab("") +
+  ylab("Frequency") +
+  theme_bw(base_size = 30) +
+    Seurat:::RotatedAxis() +
+    theme(legend.position = "none") 
 
 
 
@@ -179,7 +179,7 @@ theme(strip.placement = "outside",
 strip.background = element_rect(fill=NA,colour="white"),
 panel.spacing.x=unit(0,"cm"),
 strip.text = element_text(hjust=0, face="bold", size=12)) +
-  theme_bw() 
+  theme_bw() +
   facet_grid(Measure~.)
 
 ```
@@ -279,7 +279,7 @@ mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
   tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
 }))
 
-colnames(mcounts) # view colnames to pick columns and order for heatmap
+# colnames(mcounts) # view colnames to pick columns and order for heatmap
 mcounts <- (mcounts[,c(6,8,7,9,10,1,3,2,4,5)])
 
 # Plot heatmap     
@@ -292,8 +292,10 @@ heatmap.2(t(mcounts),
           density.info=c("none"),
           col=rev(color.palette),
           key = FALSE,
-          cexRow=0.7, 
-          cexCol=0.75)  
+          cexCol=2, 
+          labRow = FALSE,
+          margins = c(10,2), 
+          srtCol = 45 )   # angle of labels
 
 ```
 
@@ -626,10 +628,66 @@ ggplot(revi_6hpa, aes(x= description, y= log10.p.value))  +
   labs(x = "GO Terms", y = "-log(pvalue)", title = "6hpa GO Terms") +
   blank_theme +
   theme(text = element_text(size=20))
-  
 
 
+## Tree map
+# Place in Revigo (http://revigo.irb.hr/)
+# Allowed SImilarity: small (0.5)
+# p-values
+# database with GO term sizes: Homo sapiens
+# Semantic similarity measure: SimRel
+# pin "nephron tubule morphogenesis"
+# Save out treemap as .csv
+revi_tree_6hpa <- read.csv("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/REVIGO_treemap_6hpa_091319.csv", header = 1)
+treegraph(dtf = revi_tree_6hpa, 
+          index = c("representative", "description"), show.labels = TRUE)
 
+treegraph(dtf = revi_tree_6hpa, 
+          index = c("representative", "description"), 
+          show.labels = FALSE, 
+          vertex.size = 10,
+          rootlabel = "6hpa")
+          #vertex.layout="fruchterman.reingold")
+
+
+## Heatmap of nephron tubule morphogenesis
+# define genes 
+# combine treemap and go table
+revi_heatmap_6 <- merge.data.frame(Go_6hpa_use, revi_tree_6hpa, by.x = "term_id", by.y = "term_ID" )
+gene <- concat.GO(filter(revi_heatmap_6, term_name == "nephron tubule morphogenesis")[,4])
+gene <- concat.grep(gene)
+GOGenes <- grep(gene, tss_6hpa$Gene, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- tss_6hpa[GOGenes, ]
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+# colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
+
+# Plot heatmap     
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE, 
+          dendrogram = 'none',
+          density.info=c("none"),
+          col=rev(color.palette),
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10), ) 
 
 ```
 
@@ -728,6 +786,64 @@ ggplot(revi_24hpa, aes(x= description, y= log10.p.value))  +
   blank_theme+
   theme(text = element_text(size=20))
 
+
+## Tree map
+# Place in Revigo (http://revigo.irb.hr/)
+# Allowed SImilarity: small (0.5)
+# p-values
+# database with GO term sizes: Homo sapiens
+# Semantic similarity measure: SimRel
+# pin "neuron development"
+# Save out treemap as .csv
+
+revi_tree_24hpa <- read.csv("~/Desktop/REVIGO_treemap_24hpa_091319.csv", header = 1)
+treegraph(dtf = revi_tree_24hpa, 
+          index = c("representative", "description"), show.labels = TRUE)
+treegraph(dtf = revi_tree_24hpa, 
+          index = c("representative", "description"), 
+          show.labels = FALSE,
+          vertex.size = 10,
+          rootlabel = "24hpa")
+
+
+## Heatmap of neuron development
+# define genes 
+# combine treemap and go table
+revi_heatmap_24 <- merge.data.frame(Go_24hpa_use, revi_tree_24hpa, by.x = "term_id", by.y = "term_ID" )
+gene <- concat.GO(filter(revi_heatmap_24, term_name == "neuron development")[,4])
+gene <- concat.grep(gene)
+GOGenes <- grep(gene, tss_24hpa$Gene, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- tss_24hpa[GOGenes[1:20], ]
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+# colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
+
+# Plot heatmap     
+heatmap.2((mcounts), 
+          scale="none",
+          trace="none",
+          Colv = FALSE,
+          Rowv = TRUE, 
+          dendrogram = 'none',
+          density.info=c("none"),
+          col=rev(color.palette),
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10))
 
 
 ```
@@ -828,22 +944,39 @@ ggplot(revi_72hpa, aes(x= description, y= log10.p.value))  +
   theme(text = element_text(size=25))
 
 
-```
+## Tree map
+# Place in Revigo (http://revigo.irb.hr/)
+# Allowed SImilarity: small (0.5)
+# p-values
+# database with GO term sizes: Homo sapiens
+# Semantic similarity measure: SimRel
+# Save out treemap as .csv
 
-## Figure 5B: heatmap of all meis1 and pbx3 peaks
-### meis1 heatmap
-```{r 5b meis, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+revi_tree_72hpa <- read.csv("~/Desktop/REVIGO_treemap_72hpa_091319.csv", header = 1)
+treegraph(dtf = revi_tree_72hpa, 
+          index = c("representative", "description"), show.labels = TRUE)
+treegraph(dtf = revi_tree_72hpa, 
+          index = c("representative", "description"), 
+          show.labels = FALSE, 
+          vertex.size = 10,
+          rootlabel = "72hpa")
 
-# heatmap for meis1 from atac
-paxGoGenes <- filter(timepoints, timepoints$Gene %in% c("meis1")) # find all meis1 related peaks in timepoints contrast
-rownames(paxGoGenes) <- gsub(paxGoGenes$Peak, pattern = "All", replacement = "ALL")
-paxGoGenes <- paxGoGenes[1:nrow(paxGoGenes),]
+
+## Heatmap of neuron development
+# define genes 
+# combine treemap and go table
+revi_heatmap_72 <- merge.data.frame(Go_72hpa_use, revi_tree_72hpa, by.x = "term_id", by.y = "term_ID" )
+gene <- concat.GO(filter(revi_heatmap_72, term_name == "neural precursor cell proliferation")[,4])
+gene <- concat.grep(gene)
+GOGenes <- grep(gene, tss_72hpa$Gene, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- tss_72hpa[GOGenes, ]
 paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
 rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
 paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
 paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
 
-# library(dplyr)
 colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
 colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
 
@@ -851,54 +984,236 @@ mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
   tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
 }))
 
-# all timepoints
-colnames(mcounts)
-mcounts <- mcounts[,c( 10,6,8,7,9 )]
+# colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
 
-# run heatmap  
+# Plot heatmap     
 heatmap.2((mcounts), 
           scale="none",
           trace="none",
           Colv = FALSE,
-          Rowv = TRUE,
+          Rowv = TRUE, 
           dendrogram = 'none',
           density.info=c("none"),
           col=rev(color.palette),
-          cexRow=0.7, cexCol=0.75,key = FALSE
-            ) ##3takes 10 minues
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10))
 
-# uninj and 24hpa
-colnames(mcounts)
-mcounts <- mcounts[,c(1,4)]
-
-
-# run heatmap  
-heatmap.2((mcounts), 
-          scale="none",
-          trace="none",
-          Colv = FALSE,
-          Rowv = TRUE,
-          dendrogram = "none",
-          density.info=c("none"),
-          col=rev(color.palette),
-          cexRow=0.7, cexCol=0.75,key = FALSE
-            ) ##3takes 10 minues
 
 ```
 
-### pbx3 heatmap
-```{r 5b pbx3, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 
-# heatmap for meis1 from atac
-paxGoGenes <- filter(timepoints, timepoints$Gene %in% c("pbx3")) # find all meis1 related peaks in timepoints contrast
-rownames(paxGoGenes) <- gsub(paxGoGenes$Peak, pattern = "All", replacement = "ALL")
-paxGoGenes <- paxGoGenes[1:nrow(paxGoGenes),]
+
+<!-- ### meis1 heatmap -->
+<!-- ```{r 5b meis, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE} -->
+
+<!-- # heatmap for meis1 from atac -->
+<!-- paxGoGenes <- filter(timepoints, timepoints$Gene %in% c("meis1")) # find all meis1 related peaks in timepoints contrast -->
+<!-- rownames(paxGoGenes) <- gsub(paxGoGenes$Peak, pattern = "All", replacement = "ALL") -->
+<!-- paxGoGenes <- paxGoGenes[1:nrow(paxGoGenes),] -->
+<!-- paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),] -->
+<!-- rownames(paxGoGenes.cpm) <- paxGoGenes$Gene -->
+<!-- paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm) -->
+<!-- paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T)) -->
+
+<!-- # library(dplyr) -->
+<!-- colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm)) -->
+<!-- colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm)) -->
+
+<!-- mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) { -->
+<!--   tapply(x, factor(colnames(paxGoGenes.cpm)), mean) -->
+<!-- })) -->
+
+<!-- # all timepoints -->
+<!-- # colnames(mcounts) -->
+<!-- mcounts <- mcounts[,c( 10,6,8,7,9 )] -->
+
+<!-- # run heatmap   -->
+<!-- heatmap.2((mcounts),  -->
+<!--           scale="none", -->
+<!--           trace="none", -->
+<!--           Colv = FALSE, -->
+<!--           Rowv = TRUE, -->
+<!--           dendrogram = 'none', -->
+<!--           density.info=c("none"), -->
+<!--           col=rev(color.palette), -->
+<!--           cexRow=0.7, cexCol=0.75,key = FALSE, margins = c(3,10) -->
+<!--             ) ##3takes 10 minues -->
+
+<!-- # uninj and 24hpa -->
+<!-- # colnames(mcounts) -->
+<!-- mcounts <- mcounts[,c(1,4)] -->
+
+
+<!-- # run heatmap   -->
+<!-- heatmap.2((mcounts),  -->
+<!--           scale="none", -->
+<!--           trace="none", -->
+<!--           Colv = FALSE, -->
+<!--           Rowv = TRUE, -->
+<!--           dendrogram = "none", -->
+<!--           density.info=c("none"), -->
+<!--           col=rev(color.palette), -->
+<!--           cexRow=0.7, cexCol=0.75,key = FALSE -->
+<!--             ) ##3takes 10 minues -->
+
+<!-- # DA peak: All_merged_peak_48316 -->
+<!-- ``` -->
+
+<!-- ### pbx3 heatmap -->
+<!-- ```{r 5b pbx3, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE} -->
+
+<!-- # heatmap for meis1 from atac -->
+<!-- paxGoGenes <- filter(timepoints, timepoints$Gene %in% c("pbx3")) # find all meis1 related peaks in timepoints contrast -->
+<!-- rownames(paxGoGenes) <- gsub(paxGoGenes$Peak, pattern = "All", replacement = "ALL") -->
+<!-- paxGoGenes <- paxGoGenes[1:nrow(paxGoGenes),] -->
+<!-- paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),] -->
+<!-- rownames(paxGoGenes.cpm) <- paxGoGenes$Gene -->
+<!-- paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm) -->
+<!-- paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T)) -->
+
+<!-- # library(dplyr) -->
+<!-- colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm)) -->
+<!-- colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm)) -->
+
+<!-- mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) { -->
+<!--   tapply(x, factor(colnames(paxGoGenes.cpm)), mean) -->
+<!-- })) -->
+
+<!-- # all timepoints -->
+<!-- # colnames(mcounts) -->
+<!-- mcounts <- mcounts[,c( 10,6,8,7,9 )] -->
+
+
+<!-- # run heatmap   -->
+<!-- heatmap.2((mcounts),  -->
+<!--           scale="none", -->
+<!--           trace="none", -->
+<!--           Colv = FALSE, -->
+<!--           Rowv = TRUE, -->
+<!--           dendrogram = "none", -->
+<!--           density.info=c("none"), -->
+<!--           col=rev(color.palette), -->
+<!--           cexRow=0.7, cexCol=0.75,key = FALSE -->
+<!--             ) ##3takes 10 minues -->
+
+<!-- # uninj and 24hpa -->
+<!-- # colnames(mcounts) -->
+<!-- mcounts <- mcounts[,c(1,4)] -->
+
+
+<!-- # run heatmap   -->
+<!-- heatmap.2((mcounts),  -->
+<!--           scale="none", -->
+<!--           trace="none", -->
+<!--           Colv = FALSE, -->
+<!--           Rowv = TRUE, -->
+<!--           dendrogram = "none", -->
+<!--           density.info=c("none"), -->
+<!--           col=rev(color.palette), -->
+<!--           cexRow=0.7, cexCol=0.75,key = FALSE -->
+<!--             ) ##3takes 10 minues -->
+
+
+<!--  #DA peak: All_merged_peak_75383	,  -->
+<!-- ``` -->
+
+
+## 5C/D: pbx3 and meis1 target heatmaps
+### Read in tables if not continuing from above
+```{r grn tables, warning=FALSE}
+
+# read in DA motif tables from GRN prediction
+table.6 <- read.table("~/Desktop/pax6 paper/Final Markdowns/GRN/outs/table.6.txt", sep = "\t")
+table.24 <- read.table("~/Desktop/pax6 paper/Final Markdowns/GRN/outs/table.24.txt", sep = "\t")
+table.72 <- read.table("~/Desktop/pax6 paper/Final Markdowns/GRN/outs/table.72.txt", sep = "\t")
+
+# make master list of tables
+mastertable <- rbind(table.24, table.6, table.72)
+
+
+```
+
+### Identify other inputs and outs of pbx3 and meis 1
+```{r pbx3 and meis1, warning=FALSE}
+
+# filter master table for rows where TF is pbx3 and the gene is pbx3
+Master_pbx <- filter(mastertable, TF == "pbx3" | Gene =="pbx3")
+# filter master table for rows where TF is meis1 and the gene is meis1
+Master_meis <- filter(mastertable, TF == "meis1" | Gene =="meis1")
+# rowbind to one table
+Master_pbx_meis <- rbind(Master_pbx, Master_meis)
+
+# view table
+datatable(Master_pbx_meis)
+
+
+```
+
+### pbx3 targets 1
+```{r pbx3 targets 1, warning=FALSE}
+# Identify genes that pbx3 targets at each timepoint
+# 6hpa
+treegraph(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "6hpa pbx3 targets")
+pbx3_6 <- as.character(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3")[,1]) # target peaks
+pbx3_6_gene <- as.character(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3")[,17]) # target genes
+# GO
+# GO_pbx6_terms <- gost(query = pbx3_6_gene,
+#                     organism = "hsapiens",
+#                     sources = "GO:BP",
+#                     evcodes = TRUE,
+#                     significant = FALSE)  ##input gene list, run GO
+# 
+# # Make GO Table
+# GO_pbx6_terms <- GO2table(GO_pbx6_terms)
+# DT::datatable(GO_pbx6_terms, caption = "pbx3 6hpa go")
+# 
+
+# 24hpa
+treegraph(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "24hpa pbx3 targets")
+pbx3_24 <- as.character(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3")[,1]) # target peaks
+pbx3_24_gene <- as.character(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3")[,17]) # target genes
+# GO
+# GO_pbx24_terms <- gost(query = pbx3_24_gene,
+#                     organism = "hsapiens",
+#                     sources = "GO:BP",
+#                     evcodes = TRUE,
+#                     significant = FALSE)  ##input gene list, run GO
+# # Make GO Table
+# GO_pbx24_terms <- GO2table(GO_pbx24_terms)
+# DT::datatable(GO_pbx24_terms, caption = "pbx3 24hpa go")
+# 
+
+# 72hpa
+treegraph(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "72hpa pbx3 targets")
+pbx3_72 <- as.character(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3")[,1]) # target peaks
+pbx3_72_gene <- as.character(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3")[,17]) # target genes
+# GO
+# GO_pbx72_terms <- gost(query = pbx3_72_gene,
+#                     organism = "hsapiens",
+#                     sources = "GO:BP",
+#                     evcodes = TRUE,
+#                     significant = FALSE)  ##input gene list, run GO
+# # Make GO Table
+# GO_pbx72_terms <- GO2table(GO_pbx72_terms)
+# DT::datatable(GO_pbx72_terms, caption = "pbx3 72hpa go")
+# 
+
+pbx_all <- unique(c(pbx3_6, pbx3_24, pbx3_72))
+# Make heatmap for pbx3 targets
+gene <- concat.grep(pbx3_72)
+GOGenes <- grep(gene, timepoints$Peak, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- timepoints[GOGenes, ]
+paxGoGenes <- paxGoGenes[-grep(paxGoGenes$Gene, pattern = "Xetrov|LOC", ignore.case = TRUE),] # remove unannotated
 paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
 rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
 paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
 paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
 
-# library(dplyr)
 colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
 colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
 
@@ -906,37 +1221,133 @@ mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
   tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
 }))
 
-# all timepoints
-colnames(mcounts)
-mcounts <- mcounts[,c( 10,6,8,7,9 )]
+#colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
 
-
-# run heatmap  
+# Plot heatmap     
 heatmap.2((mcounts), 
           scale="none",
           trace="none",
           Colv = FALSE,
-          Rowv = TRUE,
-          dendrogram = "none",
+          Rowv = TRUE, 
+          dendrogram = 'none',
           density.info=c("none"),
           col=rev(color.palette),
-          cexRow=0.7, cexCol=0.75,key = FALSE
-            ) ##3takes 10 minues
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10)) 
 
-# uninj and 24hpa
-colnames(mcounts)
-mcounts <- mcounts[,c(1,4)]
+```
 
 
-# run heatmap  
+### meis1 targets
+```{r meis targets, warning=FALSE}
+# Identify genes that meis1 targets at each timepoint
+# 6hpa
+treegraph(filter(Master_meis, timepoint=="6hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "6hpa meis1 targets")
+meis1_6 <- as.character(filter(Master_meis, timepoint=="6hpa" & TF == "meis1")[,1]) # target peaks
+meis1_6_gene <- as.character(filter(Master_meis, timepoint=="6hpa" & TF == "meis1")[,17]) # target genes
+# GO
+# GO_meis6_terms <- gost(query = meis1_6_gene,
+#                     organism = "hsapiens",
+#                     sources = "GO:BP",
+#                     evcodes = TRUE,
+#                     significant = FALSE)  ##input gene list, run GO
+# # Make GO Table
+# GO_meis6_terms <- GO2table(GO_meis6_terms)
+# DT::datatable(GO_meis6_terms, caption = "meis 6hpa go")
+
+# 24hpa
+treegraph(filter(Master_meis, timepoint=="24hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "24hpa meis1 targets")
+meis1_24 <- as.character(filter(Master_meis, timepoint=="24hpa" & TF == "meis1")[,1]) # target peaks
+meis1_24_gene <- as.character(filter(Master_meis, timepoint=="24hpa" & TF == "meis1")[,17]) # target genes
+# GO
+# GO_meis24_terms <- gost(query = meis1_24_gene,
+#                     organism = "hsapiens",
+#                     sources = "GO:BP",
+#                     evcodes = TRUE,
+#                     significant = FALSE)  ##input gene list, run GO
+# # Make GO Table
+# GO_meis24_terms <- GO2table(GO_meis24_terms)
+# DT::datatable(GO_meis24_terms, caption = "meis 24hpa go")
+
+# 72hpa
+treegraph(filter(Master_meis, timepoint=="72hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "72hpa meis1 targets")
+meis1_72 <- as.character(filter(Master_meis, timepoint=="72hpa" & TF == "meis1")[,1]) #target peaks
+meis1_72_gene <- as.character(filter(Master_meis, timepoint=="72hpa" & TF == "meis1")[,17]) # target genes
+# GO
+# GO_meis72_terms <- gost(query = meis1_72_gene,
+#                     organism = "hsapiens",
+#                     sources = "GO:BP",
+#                     evcodes = TRUE,
+#                     significant = FALSE)  ##input gene list, run GO
+# # Make GO Table
+# GO_meis72_terms <- GO2table(GO_meis72_terms)
+# DT::datatable(GO_meis72_terms, caption = "meis 72hpa go")
+
+
+meis_all <- unique(c(meis1_6, meis1_24, meis1_72)) # target peaks
+# Make heatmap for pbx3 targets
+gene <- concat.grep(meis1_24)
+GOGenes <- grep(gene, timepoints$Peak, ignore.case = T) # get gene name rows from table
+
+# Create heatmap matrix from counts data and input genes
+paxGoGenes <- timepoints[GOGenes, ]
+paxGoGenes <- paxGoGenes[-grep(paxGoGenes$Gene, pattern = "Xetrov|LOC|-like", ignore.case = TRUE),] # remove unannotated
+paxGoGenes <- paxGoGenes[1:20,]
+paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),]
+rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
+paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
+paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T))
+
+colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm))
+colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm))
+
+mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) {
+  tapply(x, factor(colnames(paxGoGenes.cpm)), mean)
+}))
+
+# colnames(mcounts) # view colnames to pick columns and order for heatmap
+mcounts <- (mcounts[,c(6, 8, 7, 9 , 10)])
+
+# Plot heatmap     
 heatmap.2((mcounts), 
           scale="none",
           trace="none",
           Colv = FALSE,
-          Rowv = TRUE,
-          dendrogram = "none",
+          Rowv = TRUE, 
+          dendrogram = 'none',
           density.info=c("none"),
           col=rev(color.palette),
-          cexRow=0.7, cexCol=0.75,key = FALSE
-            ) ##3takes 10 minues
+          key = FALSE,
+          cexRow=2, 
+          cexCol=1, 
+          labCol = FALSE, margins = c(0,10)) 
+
+```
+
+## Figure 5B: peaks with both meis1 and pbx3 sites
+### Peaks with both meis1 and pbx3 sites
+```{r Figure 5B, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+pbx_all <- unique(c(pbx3_6, pbx3_24, pbx3_72))
+meis_all <- unique(c(meis1_6, meis1_24, meis1_72))
+
+length(meis_all)
+length(pbx_all)
+
+co6hpa <- intersect(meis_all, pbx_all)
+length(co6hpa)
+
+grid.newpage()
+draw.pairwise.venn(area1 = 282,
+                   area2 = 61,
+                   cross.area = 26,
+                   cat.pos = c(0, 0),
+                   alpha = c(0.5, 0.5), 
+                   rotation.degree = 270,
+                   fill = c("#B574A7","#FBB58F")
+                   )
+
 ```
