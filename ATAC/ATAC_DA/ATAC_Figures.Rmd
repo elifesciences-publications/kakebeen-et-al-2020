@@ -215,6 +215,9 @@ ggplot(GO_PAX_use[1:5,], aes(x= term_name, y= logp))  +
   labs(x = "GO Terms", y = "-log(pvalue)", title = "Pax6 Top GO Terms") +
   blank_theme
 
+# write out table
+write.table(GO_PAX_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO_PAX_use.txt")
+
 ```
 
 ### ALL v pax GO
@@ -1005,125 +1008,9 @@ heatmap.2((mcounts),
 ```
 
 
-
-<!-- ### meis1 heatmap -->
-<!-- ```{r 5b meis, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE} -->
-
-<!-- # heatmap for meis1 from atac -->
-<!-- paxGoGenes <- filter(timepoints, timepoints$Gene %in% c("meis1")) # find all meis1 related peaks in timepoints contrast -->
-<!-- rownames(paxGoGenes) <- gsub(paxGoGenes$Peak, pattern = "All", replacement = "ALL") -->
-<!-- paxGoGenes <- paxGoGenes[1:nrow(paxGoGenes),] -->
-<!-- paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),] -->
-<!-- rownames(paxGoGenes.cpm) <- paxGoGenes$Gene -->
-<!-- paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm) -->
-<!-- paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T)) -->
-
-<!-- # library(dplyr) -->
-<!-- colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm)) -->
-<!-- colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm)) -->
-
-<!-- mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) { -->
-<!--   tapply(x, factor(colnames(paxGoGenes.cpm)), mean) -->
-<!-- })) -->
-
-<!-- # all timepoints -->
-<!-- # colnames(mcounts) -->
-<!-- mcounts <- mcounts[,c( 10,6,8,7,9 )] -->
-
-<!-- # run heatmap   -->
-<!-- heatmap.2((mcounts),  -->
-<!--           scale="none", -->
-<!--           trace="none", -->
-<!--           Colv = FALSE, -->
-<!--           Rowv = TRUE, -->
-<!--           dendrogram = 'none', -->
-<!--           density.info=c("none"), -->
-<!--           col=rev(color.palette), -->
-<!--           cexRow=0.7, cexCol=0.75,key = FALSE, margins = c(3,10) -->
-<!--             ) ##3takes 10 minues -->
-
-<!-- # uninj and 24hpa -->
-<!-- # colnames(mcounts) -->
-<!-- mcounts <- mcounts[,c(1,4)] -->
-
-
-<!-- # run heatmap   -->
-<!-- heatmap.2((mcounts),  -->
-<!--           scale="none", -->
-<!--           trace="none", -->
-<!--           Colv = FALSE, -->
-<!--           Rowv = TRUE, -->
-<!--           dendrogram = "none", -->
-<!--           density.info=c("none"), -->
-<!--           col=rev(color.palette), -->
-<!--           cexRow=0.7, cexCol=0.75,key = FALSE -->
-<!--             ) ##3takes 10 minues -->
-
-<!-- # DA peak: All_merged_peak_48316 -->
-<!-- ``` -->
-
-<!-- ### pbx3 heatmap -->
-<!-- ```{r 5b pbx3, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE} -->
-
-<!-- # heatmap for meis1 from atac -->
-<!-- paxGoGenes <- filter(timepoints, timepoints$Gene %in% c("pbx3")) # find all meis1 related peaks in timepoints contrast -->
-<!-- rownames(paxGoGenes) <- gsub(paxGoGenes$Peak, pattern = "All", replacement = "ALL") -->
-<!-- paxGoGenes <- paxGoGenes[1:nrow(paxGoGenes),] -->
-<!-- paxGoGenes.cpm <- log.counts.timepoints[rownames(paxGoGenes),] -->
-<!-- rownames(paxGoGenes.cpm) <- paxGoGenes$Gene -->
-<!-- paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm) -->
-<!-- paxGoGenes.cpm <- t(scale(t(paxGoGenes.cpm), scale = T)) -->
-
-<!-- # library(dplyr) -->
-<!-- colnames(paxGoGenes.cpm) <- gsub("_[0-9]$", "", colnames(paxGoGenes.cpm)) -->
-<!-- colnames(paxGoGenes.cpm) <- gsub("_2.1$", "", colnames(paxGoGenes.cpm)) -->
-
-<!-- mcounts <- t(apply(paxGoGenes.cpm, 1, function(x) { -->
-<!--   tapply(x, factor(colnames(paxGoGenes.cpm)), mean) -->
-<!-- })) -->
-
-<!-- # all timepoints -->
-<!-- # colnames(mcounts) -->
-<!-- mcounts <- mcounts[,c( 10,6,8,7,9 )] -->
-
-
-<!-- # run heatmap   -->
-<!-- heatmap.2((mcounts),  -->
-<!--           scale="none", -->
-<!--           trace="none", -->
-<!--           Colv = FALSE, -->
-<!--           Rowv = TRUE, -->
-<!--           dendrogram = "none", -->
-<!--           density.info=c("none"), -->
-<!--           col=rev(color.palette), -->
-<!--           cexRow=0.7, cexCol=0.75,key = FALSE -->
-<!--             ) ##3takes 10 minues -->
-
-<!-- # uninj and 24hpa -->
-<!-- # colnames(mcounts) -->
-<!-- mcounts <- mcounts[,c(1,4)] -->
-
-
-<!-- # run heatmap   -->
-<!-- heatmap.2((mcounts),  -->
-<!--           scale="none", -->
-<!--           trace="none", -->
-<!--           Colv = FALSE, -->
-<!--           Rowv = TRUE, -->
-<!--           dendrogram = "none", -->
-<!--           density.info=c("none"), -->
-<!--           col=rev(color.palette), -->
-<!--           cexRow=0.7, cexCol=0.75,key = FALSE -->
-<!--             ) ##3takes 10 minues -->
-
-
-<!--  #DA peak: All_merged_peak_75383	,  -->
-<!-- ``` -->
-
-
 ## 5C/D: pbx3 and meis1 target heatmaps
 ### Read in tables if not continuing from above
-```{r grn tables, warning=FALSE}
+```{r grn tables, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 
 # read in DA motif tables from GRN prediction
 table.6 <- read.table("~/Desktop/pax6 paper/Final Markdowns/GRN/outs/table.6.txt", sep = "\t")
@@ -1137,7 +1024,7 @@ mastertable <- rbind(table.24, table.6, table.72)
 ```
 
 ### Identify other inputs and outs of pbx3 and meis 1
-```{r pbx3 and meis1, warning=FALSE}
+```{r pbx3 and meis1, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 
 # filter master table for rows where TF is pbx3 and the gene is pbx3
 Master_pbx <- filter(mastertable, TF == "pbx3" | Gene =="pbx3")
@@ -1153,7 +1040,7 @@ datatable(Master_pbx_meis)
 ```
 
 ### pbx3 targets 1
-```{r pbx3 targets 1, warning=FALSE}
+```{r pbx3 targets 1, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 # Identify genes that pbx3 targets at each timepoint
 # 6hpa
 treegraph(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "6hpa pbx3 targets")
@@ -1242,7 +1129,7 @@ heatmap.2((mcounts),
 
 
 ### meis1 targets
-```{r meis targets, warning=FALSE}
+```{r meis targets, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 # Identify genes that meis1 targets at each timepoint
 # 6hpa
 treegraph(filter(Master_meis, timepoint=="6hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "6hpa meis1 targets")
