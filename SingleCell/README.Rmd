@@ -65,27 +65,23 @@ Idents(pax.neural) <- pax.neural$Laevis
 DimPlot(pax.neural, cols = my.color.neural) + NoAxes() + NoLegend()
 
 
-# UMAP with all cells aligned in one plot with ggplot
-ggplot(pax.neural.plotting, aes(x=UMAP_1, y=UMAP_2, color=Laevis)) +
-  geom_point(stat="identity") + 
-  scale_color_manual(values = my.color.neural) +
-  Seurat:::NoAxes() + 
-  theme(legend.position = "none") + 
-  blank_theme
-
 ```
 
 
 
 ## Figure 4b: UMAP of all neural cells colored for condition (uninjured or 24hpa)
 ```{r 4b, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+# change idents of suerat object
+condition.neural <- subset(pax.neural, condition %in% c("uninj", "dmso"))
+Idents(condition.neural) <- condition.neural$condition
+DimPlot(condition.neural, cols = condition.color) + NoAxes() + NoLegend()
 
-ggplot(pax.neural.plotting, aes(x=UMAP_1, y=UMAP_2, color=pax.neural.plotting$mock_24))+
-  geom_point(stat="identity", aes(alpha = 0.6)) + 
-  scale_color_manual(values = condition.color) + 
-  Seurat:::NoAxes() + 
-  blank_theme +
-  theme(legend.position = "none")
+# ggplot(pax.neural.plotting, aes(x=UMAP_1, y=UMAP_2, color=pax.neural.plotting$mock_24))+
+#   geom_point(stat="identity", aes(alpha = 0.6)) + 
+#   scale_color_manual(values = condition.color) + 
+#   Seurat:::NoAxes() + 
+#   blank_theme +
+#   theme(legend.position = "none")
 
 ```
 
@@ -98,7 +94,7 @@ DEClusters.neural <- read.table("~/Desktop/pax6 paper/Final Markdowns/SingleCell
 # reassign class of genes to factors
 DEClusters.neural$gene <- as.character(DEClusters.neural$gene)
 # inspect table
-datatable(DEClusters.neural)
+#datatable(DEClusters.neural)
 # get
 markers <- unique(c("sox2", (filter(DEClusters.neural, cluster =="DEClusters.NSC")[1:3,7]),
              (filter(DEClusters.neural, cluster == "DEClusters.Transition")[1:3,7]),
@@ -205,8 +201,8 @@ ggplot(filter(pax.neural.plotting, condition %in% c("uninj", "dmso")), aes(x=UMA
   scale_color_manual(values = my.color.neural) +
   facet_grid(.~condition) +
   blank_theme +
-  theme(legend.position = "right")
-  Seurat:::NoAxes()
+  theme(legend.position = "right", axis.text = element_text(colour = "white"))
+
 
 
 ```
@@ -292,8 +288,8 @@ ggplot(filter(pax.neural.plotting, condition %in% c("uninj", "dmso")), aes(x=UMA
   scale_color_manual(values = cc_colors) +
   facet_grid(.~condition) +
   blank_theme +
-  theme(legend.position = "right")
-  Seurat:::NoAxes()
+  theme(legend.position = "right", axis.text = element_text(colour = "white"))
+
 
 
 ```
@@ -341,17 +337,8 @@ ggplot(time.plot, aes(x=treament, y=expression, group=treament, fill=celltype))+
 ```
 
 
-## featuremap to show expression of pbx3 and meis1 across neural clusters
-```{r 5d, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
-
-# Plot feature plot of pbx3 and meis 1 and split by condition 
-FeaturePlot(pax.neural , features = c("pbx3", "meis1"), split.by = "mock_24", order = TRUE, combine = TRUE, cols=c("grey89", "#172869" 
-)) + NoAxes()
-
-```
-
-## Figure 5F: sunbiurst of number of cells that express pbx3 and meis 1
-```{r 5f}
+## Figure 5F: sunburst of number of cells that express pbx3 and meis 1
+```{r 5f, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 
 # get pax meta data
 pax.meta <- pax.neural[[]] # get datat
@@ -407,7 +394,8 @@ ggplot(pbx3.neural.plot,
   blank_theme +
   facet_grid(.~condition)+
   scale_fill_manual(values = plotcolors) +
-  theme(legend.position = "none")
+  theme(legend.position = "none", axis.text = element_text(colour = "white")) +
+  ggtitle("pbx3")
 
 # plot meis1
 ggplot(meis1.neural.plot, 
@@ -418,7 +406,9 @@ ggplot(meis1.neural.plot,
   blank_theme +
   facet_grid(.~condition)+
     scale_fill_manual(values = plotcolors) +
-  theme(legend.position = "none")
+  theme(legend.position = "none", axis.text = element_text(colour = "white")) +
+  ggtitle("meis1")
+
 
 
 ```
