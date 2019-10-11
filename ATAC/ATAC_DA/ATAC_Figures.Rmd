@@ -135,33 +135,40 @@ Freq <- c(nrow(paxVall_agg[paxVall_agg$DE.p.PaxVSWholeALL == "UP",]), # pax > al
           )
 
 # Make metadata columns
-Contrast <- c(rep(c("Aggregate Timepoints", "Aggregate Timepoints", "Uninjured", "Uninjured", "0hpa", "0hpa", "6hpa", "6hpa", "24hpa", "24hpa", "72hpa", "72hpa"),2)) # column for timepoint designation
+Contrast <- c(rep(c("All Timepoints", "All Timepoints", "Uninjured", "Uninjured", "0hpa", "0hpa", "6hpa", "6hpa", "24hpa", "24hpa", "72hpa", "72hpa"),2)) # column for timepoint designation
 Direction <- c(rep(rep(c("pax6", "all-tissue"), 6),2)) # column for favored in accessibltiy comparison
 Measure <- c(rep("peaks",12), rep("genes",12))
 peakbreak <- data.frame(Contrast, Freq, Direction, Measure) # make dataframe
 peakbreak$Freq <- ifelse(peakbreak$Direction == "pax6", -1*peakbreak$Freq, peakbreak$Freq) # make pax6 frequency values negative for 
 
 # order table for plotting by facotring
-peakbreak$Contrast <- factor(peakbreak$Contrast, levels = rev(c("Aggregate Timepoints", "Uninjured", "0hpa", "6hpa", "24hpa", "72hpa"))) 
+peakbreak$Contrast <- factor(peakbreak$Contrast, levels = (c("All Timepoints", "Uninjured", "0hpa", "6hpa", "24hpa", "72hpa"))) 
 peakbreak$Direction <- factor(peakbreak$Direction, levels = c("pax6", "all-tissue"))
+
+# Make frequency into percentage
+# get totals per contrast and measurement type
+total <- as.data.frame(peakbreak %>%
+  group_by(Contrast, Measure) %>%
+  summarize(total = sum(abs(Freq))))
+# merge total and peak dataframes
+peakbreak <- merge.data.frame(peakbreak, total, by = c("Contrast", "Measure"))
+# make percentage column
+peakbreak$Percent <- abs(peakbreak$Freq)/peakbreak$total*100
+
 
 # view table
 datatable(peakbreak, caption = "Number of peaks called in pax or all tissue libraries per timepoint")
 
 
 # Plot pyramid chart of peaks 
-ggplot(filter(peakbreak, Measure == "peaks"), aes(x= Contrast, y= Freq, fill=Direction))+
+ggplot(filter(peakbreak, Measure == "peaks"), aes(x= Contrast, y= Percent, fill=Direction))+
   geom_bar(stat="identity", width = 0.8)  +
-  # facet_wrap(~Contrast, ncol = 1, scales = "free_y") +
-  # facet_grid(Contrast~., space = "free_x", scales = "free_y", switch = "x") +
   scale_fill_manual(values = c("forestgreen","dodgerblue3", "#F7AA14", "#172869")) +
-  coord_flip() +
-  ylim(-5500, 5500) +
   xlab("") +
-  ylab("Frequency") +
+  ylab("% of DA Peaks (all-tissue vs. pax6)") +
   theme_bw(base_size = 30) +
     Seurat:::RotatedAxis() +
-    theme(legend.position = "none") 
+    theme(legend.position = "none", axis.text = element_text(colour = "black")) 
 
 
 
@@ -216,7 +223,7 @@ ggplot(GO_PAX_use[1:5,], aes(x= term_name, y= logp))  +
   blank_theme
 
 # write out table
-write.table(GO_PAX_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO_PAX_use.txt")
+write.table(GO_PAX_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO_PAX_use.txt", sep = "\t")
 
 ```
 
@@ -254,22 +261,29 @@ ggplot(GO_ALL_use[1:5,], aes(x= term_name, y= logp))  +
   labs(x = "GO Terms", y = "-log(pvalue)", title = "All Tissue Top GO Terms") +
   blank_theme
 
+# write out table
+write.table(GO_ALL_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO_ALL_use.txt", sep = "\t")
+
 ```
 
 ## Figure 2G: heat map of terms in neurogenesis
 ```{r PaxVAll, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+# read in go terms
+GO_PAX_use <- read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO_PAX_use.txt", header = TRUE, sep = " ")
+
 # Define regions where npax > all
 pax <- paxVall_agg[paxVall_agg$DE.p.PaxVSWholeALL == "UP",]
 
 # define genes 
-gene <- concat.GO(GO_PAX_use[7,4])[1:10]
+gene <- concat.GO(GO_PAX_use[7,4])
 # gene <- c("SEMA3F,DVL2,PROM1,PAX6,ISL1,CNTN1,MUSK,USH2A,HDAC9,ARID1B") # list for "neurogenesis"
 # print(gene)
 gene <- concat.grep(gene)
 GOGenes <- grep(gene, pax$Gene, ignore.case = T) # get gene name rows from table
 
 # Create heatmap matrix from counts data and input genes
-paxGoGenes <- pax[GOGenes, ]
+paxGoGenes <- pax[GOGenes, ] # get dataframe with genes from neurogenesis go term
+paxGoGenes <- paxGoGenes[sample(nrow(paxGoGenes), 20),] # randomly sample 20 rows for heatmap
 paxGoGenes.cpm <- log.counts.paxVall[rownames(paxGoGenes),]
 rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
 paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
@@ -799,7 +813,7 @@ ggplot(revi_24hpa, aes(x= description, y= log10.p.value))  +
 # pin "neuron development"
 # Save out treemap as .csv
 
-revi_tree_24hpa <- read.csv("~/Desktop/REVIGO_treemap_24hpa_091319.csv", header = 1)
+revi_tree_24hpa <- read.csv("outs_figures/REVIGO_treemap_24hpa_091319.csv", header = 1)
 treegraph(dtf = revi_tree_24hpa, 
           index = c("representative", "description"), show.labels = TRUE)
 treegraph(dtf = revi_tree_24hpa, 
@@ -955,7 +969,7 @@ ggplot(revi_72hpa, aes(x= description, y= log10.p.value))  +
 # Semantic similarity measure: SimRel
 # Save out treemap as .csv
 
-revi_tree_72hpa <- read.csv("~/Desktop/REVIGO_treemap_72hpa_091319.csv", header = 1)
+revi_tree_72hpa <- read.csv("outs_figures/REVIGO_treemap_72hpa_091319.csv", header = 1)
 treegraph(dtf = revi_tree_72hpa, 
           index = c("representative", "description"), show.labels = TRUE)
 treegraph(dtf = revi_tree_72hpa, 
@@ -1026,12 +1040,19 @@ mastertable <- rbind(table.24, table.6, table.72)
 ### Identify other inputs and outs of pbx3 and meis 1
 ```{r pbx3 and meis1, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 
-# filter master table for rows where TF is pbx3 and the gene is pbx3
-Master_pbx <- filter(mastertable, TF == "pbx3" | Gene =="pbx3")
-# filter master table for rows where TF is meis1 and the gene is meis1
-Master_meis <- filter(mastertable, TF == "meis1" | Gene =="meis1")
-# rowbind to one table
-Master_pbx_meis <- rbind(Master_pbx, Master_meis)
+# # filter master table for rows where TF is pbx3 and the gene is pbx3
+# Master_pbx <- filter(mastertable, TF == "pbx3" | Gene =="pbx3")
+# # filter master table for rows where TF is meis1 and the gene is meis1
+# Master_meis <- filter(mastertable, TF == "meis1" | Gene =="meis1")
+
+#Master_pbx_meis <- rbind(Master_pbx, Master_meis)
+
+# filter master table for rows where TF is pbx3 
+Master_pbx <- filter(mastertable, TF == "pbx3")
+# filter master table for rows where TF is meis1 
+Master_meis <- filter(mastertable, TF == "meis1")
+Master_pbx_meis <- filter(mastertable, TF == "pbx3" | TF == "meis1")
+
 
 # view table
 datatable(Master_pbx_meis)
@@ -1044,54 +1065,28 @@ datatable(Master_pbx_meis)
 # Identify genes that pbx3 targets at each timepoint
 # 6hpa
 treegraph(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "6hpa pbx3 targets")
-pbx3_6 <- as.character(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3")[,1]) # target peaks
-pbx3_6_gene <- as.character(filter(Master_pbx, timepoint=="6hpa" & TF == "pbx3")[,17]) # target genes
-# GO
-# GO_pbx6_terms <- gost(query = pbx3_6_gene,
-#                     organism = "hsapiens",
-#                     sources = "GO:BP",
-#                     evcodes = TRUE,
-#                     significant = FALSE)  ##input gene list, run GO
-# 
-# # Make GO Table
-# GO_pbx6_terms <- GO2table(GO_pbx6_terms)
-# DT::datatable(GO_pbx6_terms, caption = "pbx3 6hpa go")
-# 
+pbx3_6 <- as.character(filter(Master_pbx, timepoint=="6hpa")[,1]) # target peaks
+pbx3_6_gene <- as.character(filter(Master_pbx, timepoint=="6hpa")[,17]) # target genes
+
 
 # 24hpa
 treegraph(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "24hpa pbx3 targets")
-pbx3_24 <- as.character(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3")[,1]) # target peaks
-pbx3_24_gene <- as.character(filter(Master_pbx, timepoint=="24hpa" & TF == "pbx3")[,17]) # target genes
-# GO
-# GO_pbx24_terms <- gost(query = pbx3_24_gene,
-#                     organism = "hsapiens",
-#                     sources = "GO:BP",
-#                     evcodes = TRUE,
-#                     significant = FALSE)  ##input gene list, run GO
-# # Make GO Table
-# GO_pbx24_terms <- GO2table(GO_pbx24_terms)
-# DT::datatable(GO_pbx24_terms, caption = "pbx3 24hpa go")
-# 
+pbx3_24 <- as.character(filter(Master_pbx, timepoint=="24hpa")[,1]) # target peaks
+pbx3_24_gene <- as.character(filter(Master_pbx, timepoint=="24hpa")[,17]) # target genes
+
+ 
 
 # 72hpa
 treegraph(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "72hpa pbx3 targets")
-pbx3_72 <- as.character(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3")[,1]) # target peaks
-pbx3_72_gene <- as.character(filter(Master_pbx, timepoint=="72hpa" & TF == "pbx3")[,17]) # target genes
-# GO
-# GO_pbx72_terms <- gost(query = pbx3_72_gene,
-#                     organism = "hsapiens",
-#                     sources = "GO:BP",
-#                     evcodes = TRUE,
-#                     significant = FALSE)  ##input gene list, run GO
-# # Make GO Table
-# GO_pbx72_terms <- GO2table(GO_pbx72_terms)
-# DT::datatable(GO_pbx72_terms, caption = "pbx3 72hpa go")
-# 
+pbx3_72 <- as.character(filter(Master_pbx, timepoint=="72hpa")[,1]) # target peaks
+pbx3_72_gene <- as.character(filter(Master_pbx, timepoint=="72hpa")[,17]) # target genes
+
 
 pbx_all <- unique(c(pbx3_6, pbx3_24, pbx3_72))
+pbx_all_gene <- unique(c(pbx3_6_gene, pbx3_24_gene, pbx3_72_gene))
 # Make heatmap for pbx3 targets
 gene <- concat.grep(pbx3_72)
-GOGenes <- grep(gene, timepoints$Peak, ignore.case = T) # get gene name rows from table
+GOGenes <- grep(pattern = gene, timepoints$Peak, ignore.case = T) # get gene name rows from table
 
 # Create heatmap matrix from counts data and input genes
 paxGoGenes <- timepoints[GOGenes, ]
@@ -1125,6 +1120,8 @@ heatmap.2((mcounts),
           cexCol=1, 
           labCol = FALSE, margins = c(0,10)) 
 
+
+
 ```
 
 
@@ -1133,45 +1130,20 @@ heatmap.2((mcounts),
 # Identify genes that meis1 targets at each timepoint
 # 6hpa
 treegraph(filter(Master_meis, timepoint=="6hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "6hpa meis1 targets")
-meis1_6 <- as.character(filter(Master_meis, timepoint=="6hpa" & TF == "meis1")[,1]) # target peaks
-meis1_6_gene <- as.character(filter(Master_meis, timepoint=="6hpa" & TF == "meis1")[,17]) # target genes
-# GO
-# GO_meis6_terms <- gost(query = meis1_6_gene,
-#                     organism = "hsapiens",
-#                     sources = "GO:BP",
-#                     evcodes = TRUE,
-#                     significant = FALSE)  ##input gene list, run GO
-# # Make GO Table
-# GO_meis6_terms <- GO2table(GO_meis6_terms)
-# DT::datatable(GO_meis6_terms, caption = "meis 6hpa go")
+meis1_6 <- as.character(filter(Master_meis, timepoint=="6hpa")[,1]) # target peaks
+meis1_6_gene <- as.character(filter(Master_meis, timepoint=="6hpa")[,17]) # target genes
 
 # 24hpa
 treegraph(filter(Master_meis, timepoint=="24hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "24hpa meis1 targets")
-meis1_24 <- as.character(filter(Master_meis, timepoint=="24hpa" & TF == "meis1")[,1]) # target peaks
-meis1_24_gene <- as.character(filter(Master_meis, timepoint=="24hpa" & TF == "meis1")[,17]) # target genes
-# GO
-# GO_meis24_terms <- gost(query = meis1_24_gene,
-#                     organism = "hsapiens",
-#                     sources = "GO:BP",
-#                     evcodes = TRUE,
-#                     significant = FALSE)  ##input gene list, run GO
-# # Make GO Table
-# GO_meis24_terms <- GO2table(GO_meis24_terms)
-# DT::datatable(GO_meis24_terms, caption = "meis 24hpa go")
+meis1_24 <- as.character(filter(Master_meis, timepoint=="24hpa")[,1]) # target peaks
+meis1_24_gene <- as.character(filter(Master_meis, timepoint=="24hpa")[,17]) # target genes
+
 
 # 72hpa
 treegraph(filter(Master_meis, timepoint=="72hpa" & TF == "meis1"), index = c("TF", "Gene"), directed = TRUE, show.labels = TRUE, rootlabel = "72hpa meis1 targets")
-meis1_72 <- as.character(filter(Master_meis, timepoint=="72hpa" & TF == "meis1")[,1]) #target peaks
-meis1_72_gene <- as.character(filter(Master_meis, timepoint=="72hpa" & TF == "meis1")[,17]) # target genes
-# GO
-# GO_meis72_terms <- gost(query = meis1_72_gene,
-#                     organism = "hsapiens",
-#                     sources = "GO:BP",
-#                     evcodes = TRUE,
-#                     significant = FALSE)  ##input gene list, run GO
-# # Make GO Table
-# GO_meis72_terms <- GO2table(GO_meis72_terms)
-# DT::datatable(GO_meis72_terms, caption = "meis 72hpa go")
+meis1_72 <- as.character(filter(Master_meis, timepoint=="72hpa")[,1]) #target peaks
+meis1_72_gene <- as.character(filter(Master_meis, timepoint=="72hpa")[,17]) # target genes
+
 
 
 meis_all <- unique(c(meis1_6, meis1_24, meis1_72)) # target peaks

@@ -148,6 +148,16 @@ pax.neural <- ScaleData(object = pax.neural, verbose = TRUE, features = rownames
 pax.neural@assays$RNA@scale.data
 FeaturePlot(pax.neural, features = c("sox2", "neurog1", "elavl4", "prdm14")) # plot neural markers under RNA assay
 
+## remove outlier cells
+select.cells <- c("CGATGTAAGAGATGAG_1", "CTGGTCTAGCGTTGCC_2", "AGGGAGTCATCACGAT_3", "CATGGCGCACTGTCGG_3", "CCCAATCGTGGTTTCA_3", "GGCTGGTAGTGTGAAT_3","TAAACCGCAGTTCATG_3", "TTCTACACAGGGATTG_3", "ACATACGGTTCATGGT_3") # define cells to remove, identified with hover feature
+pax.neural$cellID <- rownames(pax.neural@meta.data) # make identity column of cell ids
+Idents(pax.neural) <- "cellID" # set idents to cellID
+pax.neural <- subset(pax.neural, idents = select.cells, invert=TRUE) # subset out all cells except for outliers
+
+# Check subset
+Idents(pax.neural) <- "Laevis" # return idents to laevis
+DimPlot(pax.neural) # plot UMAP
+
 ```
 
 To identify canonical cell type marker genes that are conserved across conditions, we provide the FindConservedMarkers function. This function performs differential gene expression testing for each dataset/group and combines the p-values using meta-analysis methods from the MetaDE R package. For example, we can calculated the genes that are conserved markers irrespective of iwrulation condition in cluster 6 (NK cells).
@@ -524,7 +534,7 @@ DimPlot(pax.neural, label = TRUE)
 # # Save out all cells
 # saveRDS(pax.combined, "pax.combined_FINAL.RDS") # saved 3 Sept 2019
 # # Save out all cells
-# saveRDS(pax.neural, "pax.neural_FINAL.RDS") # save 12 Aug 2019
+# saveRDS(pax.neural, "pax.neural_FINAL.RDS") # save 4 Oct 2019 (remove outliers)
 
 ```
 

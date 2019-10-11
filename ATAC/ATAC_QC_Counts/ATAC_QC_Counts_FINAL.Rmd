@@ -68,10 +68,10 @@ summary$SAMPLEPLOT <- gsub(summary$SAMPLEPLOT, pattern = "Whole-Tail", replaceme
 summary$SAMPLEPLOT <- paste(summary$SAMPLEPLOT, summary$REPS, sep = "-")
 
 # view summary
-datatable(summary, caption = "Bowtie output")
+kable(summary, caption = "Bowtie output", align = "c")
 
 # view sample meta data
-datatable(samples, caption = "Sample meta data")
+kable(samples, caption = "Sample meta data", align = "c")
 
 ```
 
@@ -163,7 +163,7 @@ loadMACS <- function(infiles, outfiles) {
 loadMACS(files, filenames)
 
 # view minimal MACS outputs
-head(loadMACS)
+#head(loadMACS)
 ```
 
 ### Total Peaks
@@ -195,9 +195,15 @@ MACS_summary <- merge.data.frame(MACS_summary, summary, by.x = "Sample", by.y = 
 MACS_summary$Aligned_Reads <- MACS_summary$PF_READS_ALIGNED / 2 # make an aligned reads column
 
 
-# View MACS summary
-datatable(MACS_summary, caption = "Summary MACS outputs")
+# Save out summary metrics
+QCSummary <- MACS_summary[,c(1,2,4,8,9)]
+colnames(QCSummary) <- c("Sample", "Peaks", "Total Reads", "Total Reads Aligned", "Pct Reads Aligned")
 
+# write table
+write.table(QCSummary, "QCSummary.txt", sep = "\t")
+
+# View MACS summary
+kable(QCSummary, caption = "Summary MACS outputs", align = "c")
 
 # Plot Number of peaks in each sample
 ggplot(MACS_summary, aes(x=MACS_summary$SAMPLEPLOT, y=(MACS_summary$Peaks/1000), fill=MACS_summary$LIBRARYTYPE)) +

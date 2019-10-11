@@ -334,11 +334,78 @@ ggplot(time.plot, aes(x=treament, y=expression, group=treament, fill=celltype))+
   scale_fill_manual(values = my.color.neural) +
   theme_bw() +
   facet_grid(gene~celltype) +
-  theme(legend.position = "none", text = element_text(size=20), axis.text.x = element_text(size = 30), axis.text.y = element_text(size = 30), axis.title.x = element_text(size = 25), axis.title.y = element_text(size = 25)  ) +
+  theme(legend.position = "none", 
+        text = element_text(size=20), 
+        axis.text.x = element_text(size = 30), 
+        axis.title.y = element_text(size = 25), 
+        axis.text = element_text(colour = "black", size = 30), 
+        strip.background = element_blank(), 
+        strip.text = element_blank()) +
   Seurat:::RotatedAxis()
 
+Idents(pax.neural) <- pax.neural$Laevis
+VlnPlot(pax.neural, features = c("meis1"), split.by = "mock_24", log = TRUE)
+VlnPlot(pax.neural, features = c("pbx3"), split.by = "mock_24", log = TRUE)
+```
+
+```{r meis1 pbx3 neural}
+
+# get data from seurat for violin plot
+vlndata <- FetchData(pax.neural, c("ident", "Laevis", "mock_24", "pbx3", "meis1"))
+
+
+plot_grid(pm, pp, nrow = 2)
+
+### 2 violin
+pm <- ggplot(vlndata, aes(x=Laevis, y=meis1, fill=mock_24)) +
+  geom_violin() +
+  geom_jitter(size=0.2) +
+  theme_bw(base_size = 20) +
+  scale_fill_manual(values = c("#c51b8a","#B574A7")) +
+  xlab("")+
+  ylab("meis1 expression")+
+  theme(legend.position = "none", axis.text = element_text(colour = "black"), axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), strip.background = element_blank(), strip.text = element_blank())
+
+pp <- ggplot(vlndata, aes(x=Laevis, y=pbx3, fill=mock_24)) +
+  geom_violin() +
+  geom_jitter(size=0.2) +
+  theme_bw(base_size = 20) +
+  scale_fill_manual(values =  c("#e6550d", "#FBB58F")) +
+  xlab("")+
+  ylab("pbx3 expression")+
+  theme(legend.position = "none", axis.text = element_text(colour = "black"), axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), strip.background = element_blank(), strip.text = element_blank())
+
+### split violin
+pp <- ggplot(vlndata, aes(x=Laevis, y=pbx3, fill=mock_24)) +
+  geom_split_violin() +
+  geom_jitter(size=0.2) +
+  theme_bw(base_size = 20) +
+  scale_fill_manual(values =  c("#e6550d", "#FBB58F")) +
+  xlab("")+
+  ylab("pbx3 expression")+
+  theme(legend.position = "none", axis.text = element_text(colour = "black"), axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), strip.background = element_blank(), strip.text = element_blank())
+
+pm <- ggplot(vlndata, aes(x=Laevis, y=meis1, fill=mock_24)) +
+  geom_split_violin() +
+  geom_jitter(size=0.2) +
+  theme_bw(base_size = 20) +
+  scale_fill_manual(values = c("#c51b8a","#B574A7")) +
+  xlab("")+
+  ylab("meis1 expression")+
+  theme(legend.position = "none", axis.text = element_text(colour = "black"), axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(), strip.background = element_blank(), strip.text = element_blank())
 
 ```
+
+
+
 
 
 ## Figure 5F: sunburst of number of cells that express pbx3 and meis 1
@@ -412,5 +479,9 @@ ggplot(meis1.neural.plot,
     scale_fill_manual(values = plotcolors) +
   theme(legend.position = "none", axis.text = element_text(colour = "white")) +
   ggtitle("meis1")
+
+meis1.neural.plot %>% group_by(condition, expression) %>% summarise(sum = sum(percent))
+pbx3.neural.plot %>% group_by(condition, expression) %>% summarise(sum = sum(percent))
+
 
 ```
