@@ -1,0 +1,105 @@
+---
+title: "FACS Analysis of Neural Progenitor Cells Over Regeneration"
+author: "Anneke Kakebeen"
+date: "11/15/2019"
+always_allow_html: yes
+output:
+  github_document:
+    toc: true
+    toc_depth: 3
+    self_contained: no
+    
+---
+
+Reviewer 3's minor comment:
+"How does the number of pax6+ cells change during regeneration? According to the authors' conclusions, the number of NPCs would decrease at 6 hpa and increase at 72 hpa. A supplemental figure showing the number of GFP+ cells sorted and a description of how many animals were used to collect that many cells would also support this claim."
+
+In response, I elected to analyze and plot existing data from the ATAC-Seq collections and most recent collections related to a different project, but including necessary samples. 
+
+# Set up
+```{r setup,echo=FALSE, warning=FALSE, cache=TRUE}
+
+# Set working directory
+setwd("~/Desktop/pax6 paper/Final Markdowns/FACS/")
+
+# load libraries
+library(DT)
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
+library(tidyverse)
+library(LaCroixColoR)
+
+
+# source common functions
+source("~/Desktop/R_working/common_source_functions.R")
+
+# color
+my.color <-(lacroix_palette("Lemon"))
+
+
+```
+
+
+# Flowjo Analysis
+
+All pax regeneration samples that were run on FACS have been re-analyzed on flowjo to idenitfy more accurate numbers sorted (does not relate to number of cells  collected).
+
+## Read in all FACS data
+```{r flowjo output 1, echo=FALSE, warning=FALSE, cache=TRUE}
+
+# read in table of values
+flow <- read.csv("pax6paper_analysis.csv") # read in data
+flow <- flow[-c((grep(flow$Genotype, pattern = "gating")), 60),] # remove gating samples
+
+# Subset out pax6 data
+flow_pax <- subset(flow, Genotype == "pax") # subset
+flow_pax$TimePoint <- factor(flow_pax$TimePoint, levels = c("uninj", "0hpa", "6hpa", "24hpa", "72hpa"))
+
+#datatable(flow)
+```
+
+
+## ATAC-Seq samples and Most recent FACS analysis for higher N
+
+These plots take into account each biological replicate sorted for atac-seq libraries as well as biological replicates measured in a different experiment performed summer of 2019. 
+
+### Subset table
+```{r flowjo output subset, echo=FALSE, warning=FALSE, cache=TRUE}
+
+# subset data for dates of interest
+flow_pax_1 <- subset(flow_pax, flow_pax$date %in% c("2/6/19", "9/5/17", "9/6/17", "9/8/19"))  # subset data from pax table
+flow_pax_1$cpt <- flow_pax_1$Count_GFPPos/as.numeric(flow_pax_1$tail) # add column for cells/tail input
+#table(flow_pax_1$TimePoint)  # show number of each timepoint present in data for information
+# datatable(flow_pax_1) # inspect data
+
+```
+
+Based on our ATAC-Seq analysis and scRNA-Seq analysis, we hypothesized that the 72hpa timepoint has more proliferative neural progenitor cells than at 6hpa or 24hpa. To quantify the number of cells per regenerating tail, we identified the GFP+ cells in each flow cytometry analysis and divided this number by the number of input tails.
+
+### Plot table
+```{r flowjo output  plot, echo=FALSE, warning=FALSE, cache=TRUE}
+
+# Define pairwise comparisons for statistical testing with ggpubr on the ggplot
+comparisons <- list(c("uninj", "0hpa"),c("0hpa", "6hpa"), c("0hpa", "72hpa"), c("6hpa", "24hpa"), c("6hpa", "72hpa"), c("24hpa", "72hpa")) # list comparison for stats
+
+# plot data in boxplot
+p1 <- ggplot(flow_pax_1, aes(x=TimePoint, y=cpt)) +
+  geom_boxplot(fill="#2CB11B") +
+  geom_jitter(color="black") +
+  stat_compare_means(comparisons = comparisons, method = "t.test") +
+  ggtitle("GFP+ Cells Per Tail Over Regeneration") +
+  theme(axis.title.x = element_text(size = 12), axis.title.y = element_text(size = 12), axis.text.x = element_text(colour = "black"), axis.text.y = element_text(colour = "black")) +
+  ylab("Cells per Tail") +
+  xlab("Timepoint") +
+  theme_bw()
+
+plot(p1)
+```
+
+From this data, we conclude that there is an increase in the number of GFP+ cells per tail detectet at 72hpa compared to 6hpa and 24hpa. 
+
+
+
+
+

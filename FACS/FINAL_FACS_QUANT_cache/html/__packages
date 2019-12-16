@@ -1,0 +1,15 @@
+base
+DT
+ggplot2
+magrittr
+ggpubr
+dplyr
+tidyverse
+tibble
+tidyr
+readr
+purrr
+stringr
+forcats
+LaCroixColoR
+scales

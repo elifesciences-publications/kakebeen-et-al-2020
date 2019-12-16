@@ -22,6 +22,8 @@ library(gridExtra)
 
 ## This is where files will save ##
 setwd("/Users/annekekakebeen/Desktop/pax6 paper/Final Markdowns/SingleCell/analysis/")
+source("~/Desktop/pax6 paper/Final Markdowns/common_source_functions.R")
+
 ```
 
 ## DE functions
@@ -137,6 +139,7 @@ write.table(DEClusters.neural, "outs/DEClusters.neural.txt", sep = "\t", col.nam
 pax.neural.subset <- subset(pax.neural, condition %in% c("uninj", "dmso"))
 
 # Define ins
+Idents(pax.neural.subset) <- pax.neural.subset$threestate_condition
 clusters<- levels(pax.neural.subset@active.ident)
 
 # Uninjured in
@@ -283,6 +286,80 @@ datatable(genes)
 
 DoHeatmap(pax.all, features = as.character(genes$gene), assay = "integrated") + NoLegend()
 DotPlot(pax.all, features = as.character(unique(genes$gene)), cols = c("blue", "gold")) + RotatedAxis()
+
+```
+
+### All markers between clusters using Seurat "FindAllMarkers" command
+```{r all markers in neural and all}
+
+## Get all markers for neural subset
+Idents(pax.neural) <- pax.neural$Laevis
+allneural <- FindAllMarkers(pax.neural, verbose = TRUE)
+allneural$deltapct <- allneural$pct.1 - allneural$pct.2
+allneural <- subset(allneural, deltapct > 0)
+datatable(allneural, caption = "all neural markers")
+
+insitu <- as.data.frame(allneural %>%
+                          group_by(cluster) %>%
+                          top_n(n = 20, wt = c(deltapct & p_val_adj)))
+
+datatable(insitu)
+write.table(insitu, "~/Desktop/insitu.txt", sep = "\t")
+
+# general sense of genes on xenbase
+xenbase <- read.csv("~/Desktop/xenbase.csv")
+
+# input range of markers table to invesitage
+xenbase_mine <- function(df){
+  table <- merge.data.frame(df, xenbase, by.x = "gene", by.y = "GENE")
+  return(table)
+}
+
+test <- xenbase_mine(insitu))
+datatable(test)
+
+
+## Get all markers for neural subset
+Idents(pax.all) <- pax.all$AK_Names
+allall$deltapct <- allall$pct.1 - allall$pct.2
+allall <- FindAllMarkers(pax.all, verbose = TRUE)
+datatable(allall, caption = "all  markers")
+
+
+## Get all markers for neural subset
+Idents(pax.all) <- pax.neural$AK_Names
+allall$deltapct <- allall$pct.1 - allall$pct.2
+allall <- FindAllMarkers(pax.all, verbose = TRUE)
+datatable(allall, caption = "all  markers")
+
+
+```
+
+### De between dmso neuron and uninj neuron
+```{r de neuron}
+
+## DE
+deneuron <- FindMarkers(pax.neural.subset, ident.1 = "dmso_Neuron", ident.2 = "uninj_Neuron", verbose = TRUE, only.pos = TRUE)
+deneuron$deltapct <- deneuron$pct.1 - deneuron$pct.2
+deneuron$gene <- rownames(deneuron)
+deneuron1 <- as.data.frame(deneuron %>%
+                          top_n(n = 20, wt = -p_val_adj ))
+deneuron1_xen <- xenbase_mine(deneuron1)
+test <- bulk_mine(deneuron1, 1:nrow(deneuron1))
+bulk_trans(subset = test, 4)
+
+datatable(deneuron1_xen, caption = "Up in expression in neurons at 24hpa")
+
+
+dediff <- FindMarkers(pax.neural.subset, ident.1 = "dmso_Differentiating", ident.2 = "uninj_Differentiating", verbose = TRUE, only.pos = TRUE)
+dediff$deltapct <- dediff$pct.1 - dediff$pct.2
+dediff$gene <- rownames(dediff)
+dediff1 <- as.data.frame(dediff %>%
+                          top_n(n = 20, wt = -p_val_adj ))
+datatable(dediff1, caption = "Up in expression in differentiating neurons at 24hpa")
+
+
+FeaturePlot(pax.neural, "pycard", split.by = "mock_24")
 
 ```
 

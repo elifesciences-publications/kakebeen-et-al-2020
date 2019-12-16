@@ -272,10 +272,10 @@ write.table(GO_ALL_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_
 GO_PAX_use <- read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO_PAX_use.txt", header = TRUE, sep = " ")
 
 # Define regions where npax > all
-pax <- paxVall_agg[paxVall_agg$DE.p.PaxVSWholeALL == "UP",]
+pax <- paxVall_agg[c(paxVall_agg$DE.p.PaxVSWholeALL == "UP", paxVall_agg$Gene == "pax6"),]
 
 # define genes 
-gene <- concat.GO(GO_PAX_use[7,4])
+gene <- c(concat.GO(GO_PAX_use[7,4]), "pax6")
 # gene <- c("SEMA3F,DVL2,PROM1,PAX6,ISL1,CNTN1,MUSK,USH2A,HDAC9,ARID1B") # list for "neurogenesis"
 # print(gene)
 gene <- concat.grep(gene)
@@ -283,7 +283,7 @@ GOGenes <- grep(gene, pax$Gene, ignore.case = T) # get gene name rows from table
 
 # Create heatmap matrix from counts data and input genes
 paxGoGenes <- pax[GOGenes, ] # get dataframe with genes from neurogenesis go term
-paxGoGenes <- paxGoGenes[sample(nrow(paxGoGenes), 20),] # randomly sample 20 rows for heatmap
+paxGoGenes <- paxGoGenes[c(sample(nrow(paxGoGenes), 19), grep(paxGoGenes$Gene, pattern = "pax6")),] # randomly sample 20 rows for heatmap
 paxGoGenes.cpm <- log.counts.paxVall[rownames(paxGoGenes),]
 rownames(paxGoGenes.cpm) <- paxGoGenes$Gene
 paxGoGenes.cpm <- data.matrix(paxGoGenes.cpm)
@@ -583,6 +583,7 @@ datatable(Go_6hpa_use)
 # Save out GO
 write.table(Go_6hpa_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO6hpa.txt", sep = "\t")
 
+
 ```
 #### ReviGO
 ```{r 3c.2 6hpa, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
@@ -861,7 +862,6 @@ heatmap.2((mcounts),
           cexRow=2, 
           cexCol=1, 
           labCol = FALSE, margins = c(0,10))
-
 
 ```
 

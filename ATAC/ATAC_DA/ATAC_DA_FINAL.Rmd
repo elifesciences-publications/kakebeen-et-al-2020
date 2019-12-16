@@ -158,7 +158,7 @@ write.table(countData, "outs/countData.txt", sep = "\t")
 ### Barplot of total counts
 ```{r barplot1, include=FALSE}
 # Bar plot to look at coverage
-normalize mapped counts (fcounts)
+#normalize mapped counts (fcounts)
 totalcounts   <- colSums(countData)/10^6 #make totalcounts as sum of all (peaks/sample)/10^6 #how much library size variation
 
 # get colors
