@@ -7,7 +7,7 @@ output:
   github_document:
     toc: true
     toc_depth: 3
-    self_contained: no
+    
     
 ---
 
@@ -78,13 +78,13 @@ flow_pax_1$cpt <- flow_pax_1$Count_GFPPos/as.numeric(flow_pax_1$tail) # add colu
 Based on our ATAC-Seq analysis and scRNA-Seq analysis, we hypothesized that the 72hpa timepoint has more proliferative neural progenitor cells than at 6hpa or 24hpa. To quantify the number of cells per regenerating tail, we identified the GFP+ cells in each flow cytometry analysis and divided this number by the number of input tails.
 
 ### Plot table
-```{r flowjo output  plot, echo=FALSE, warning=FALSE, cache=TRUE}
+```{r flowjooutputplot, echo=FALSE, warning=FALSE, cache=TRUE}
 
 # Define pairwise comparisons for statistical testing with ggpubr on the ggplot
 comparisons <- list(c("uninj", "0hpa"),c("0hpa", "6hpa"), c("0hpa", "72hpa"), c("6hpa", "24hpa"), c("6hpa", "72hpa"), c("24hpa", "72hpa")) # list comparison for stats
 
 # plot data in boxplot
-p1 <- ggplot(flow_pax_1, aes(x=TimePoint, y=cpt)) +
+ggplot(flow_pax_1, aes(x=TimePoint, y=cpt)) +
   geom_boxplot(fill="#2CB11B") +
   geom_jitter(color="black") +
   stat_compare_means(comparisons = comparisons, method = "t.test") +
@@ -94,7 +94,6 @@ p1 <- ggplot(flow_pax_1, aes(x=TimePoint, y=cpt)) +
   xlab("Timepoint") +
   theme_bw()
 
-plot(p1)
 ```
 
 From this data, we conclude that there is an increase in the number of GFP+ cells per tail detectet at 72hpa compared to 6hpa and 24hpa. 

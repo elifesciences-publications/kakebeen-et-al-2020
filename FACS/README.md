@@ -36,6 +36,6 @@ Based on our ATAC-Seq analysis and scRNA-Seq analysis, we hypothesized that the 
 
 ### Plot table
 
-![](README_files/figure-markdown_github/flowjo%20output%20plot-1.png)
+![](README_files/figure-markdown_github/flowjooutputplot-1.png)
 
 From this data, we conclude that there is an increase in the number of GFP+ cells per tail detectet at 72hpa compared to 6hpa and 24hpa.
