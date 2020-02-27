@@ -28,7 +28,13 @@ This folder contains the Seurat integrative clustering analysis used to cluster 
 This folder contains the code used to integrated the ATAC-Seq, scRNA-Seq, and Change et al Bulk RNA-Seq for grn prediction and analaysis. 
 
 ## Tail Measurement
-This folder contains the tail measurement data and graphical representations of this data. 
+This folder contains the tail measurement data and graphical representations of this data for vivo-morphants  and embryonic morphants. 
+
+## FACS
+This folder contains the data representing cells collected by FACS. The code for the figure quantifying the number of sorted cells per tail lives here. 
+
+## Regen PH3
+This folder contains data and visuali representations of the number of PH3 + cells per reenerated area of the spinal cord in normal regeneration as well as morphant regeneration. 
 
 
 

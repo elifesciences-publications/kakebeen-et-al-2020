@@ -1,27 +1,31 @@
-Tail Measurements
+Test
 ================
 Anneke Kakebeen
-8/14/2019 (Revised 09/27/19)
+2/26/2020
 
--   [Set up](#set-up)
--   [Load in data](#load-in-data)
+-   [load settings](#load-settings)
+-   [load data](#load-data)
 -   [Figure 6AA: Plot tail measurement data](#figure-6aa-plot-tail-measurement-data)
+    -   [Vivo-MO measurements](#vivo-mo-measurements)
+-   [Figure Supp 6AA: Plot tail measurement data](#figure-supp-6aa-plot-tail-measurement-data)
     -   [All Timepoints](#all-timepoints)
     -   [Plot only 72hpa for figure](#plot-only-72hpa-for-figure)
--   [Plot phenotypic analysis of coded phenotypes](#plot-phenotypic-analysis-of-coded-phenotypes)
-    -   [Descriptors](#descriptors)
-    -   [Plot Phenotype Morphology: Histogram](#plot-phenotype-morphology-histogram)
-    -   [Plot Phenotype Morphology:Stacked bar](#plot-phenotype-morphologystacked-bar)
-    -   [Plot Phenotype Morphology: Waffle chart](#plot-phenotype-morphology-waffle-chart)
 
-Set up
-------
+load settings
+-------------
 
-Load in data
-------------
+load data
+---------
 
 Figure 6AA: Plot tail measurement data
 --------------------------------------
+
+### Vivo-MO measurements
+
+![](README_files/figure-markdown_github/plot%20data-1.png)
+
+Figure Supp 6AA: Plot tail measurement data
+-------------------------------------------
 
 ### All Timepoints
 
@@ -30,20 +34,3 @@ Figure 6AA: Plot tail measurement data
 ### Plot only 72hpa for figure
 
 ![](README_files/figure-markdown_github/6AA-1.png)
-
-Plot phenotypic analysis of coded phenotypes
---------------------------------------------
-
-### Descriptors
-
-### Plot Phenotype Morphology: Histogram
-
-![](README_files/figure-markdown_github/phenotype2-1.png)
-
-### Plot Phenotype Morphology:Stacked bar
-
-![](README_files/figure-markdown_github/phenotype3-1.png)
-
-### Plot Phenotype Morphology: Waffle chart
-
-![](README_files/figure-markdown_github/phenotype4-1.png)

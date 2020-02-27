@@ -1,7 +1,7 @@
 ---
-title: "Tail Measurements"
+title: "Test"
 author: "Anneke Kakebeen"
-date: "8/14/2019 (Revised 09/27/19)"
+date: "2/26/2020"
 always_allow_html: yes
 output:
   github_document:
@@ -9,8 +9,8 @@ output:
     toc_depth: 3
 ---
 
-## Set up 
-```{r set up, echo=FALSE, warning=FALSE, message=FALSE}
+## load settings
+```{r load libraries, echo=FALSE, warning=FALSE, message=FALSE}
 
 # load packages 
 library(ggplot2)
@@ -21,8 +21,11 @@ library(dplyr)
 library(ggpubr)
 library(cowplot)
 library(Seurat)
+library(patchwork)
 
 # colors 
+uninjColor <- "white"
+tracerColor <- "#D9565C"
 meisColor <- "#FBB58F"
 pbxColor <- "#B574A7"
 color <- lacroix_palette("CranRaspberry")
@@ -34,13 +37,15 @@ source("~/Desktop/R_working/common_source_functions.R")
 # set wd
 setwd("~/Desktop/pax6 paper/Final Markdowns/TailMeasurement/")
 
+
 ```
 
-## Load in data
+
+## load data
 ```{r load data, echo=FALSE, warning=FALSE, cache=TRUE}
 
 # read in data
-MOdata <- read.csv("pbx3_meis1MO_regenmeasures_090919.csv")
+MOdata <- read.csv("pbx3_meis1MO_regenmeasures_021220.csv")
 MOdata$SampleFull <- paste(MOdata$Sample, MOdata$Timepoint, MOdata$Replicate, MOdata$Clutch, sep = ".") # make column with sampleID
 MOdata$Clutch <- as.character(MOdata$Clutch) # set numerical values of clutch as a character 
 
@@ -53,17 +58,40 @@ MOdata$Clutch <- as.character(MOdata$Clutch) # set numerical values of clutch as
 MOdata$MeasureType <- (gsub(MOdata$MeasureType, pattern = "sc", replacement = "Spinal Cord"))
 MOdata$MeasureType <- factor(MOdata$MeasureType, levels = c("Tail", "Spinal Cord", "Spinal Cord_width")) # factor measurement type for plot 
 
-# view data
-#datatable(MOdata)
+```
+## Figure 6AA: Plot tail measurement data
+### Vivo-MO measurements
+```{r plot data, echo=FALSE, warning=FALSE, cache=TRUE}
+# filter data for last clutch with correct doses
+vmo_022120 <- filter(MOdata, Clutch == "22120")
+#factor data to order sample variables correctly
+vmo_022120$SampleID <- factor(vmo_022120$SampleID, levels = c("uninjected", "tracer", "meis1_VMO", "pbx3_VMO"))
+# define comparisons for statistics
+comparisons <- list(c("uninjected", "tracer"),c("uninjected", "meis1_VMO"),c("uninjected", "pbx3_VMO"),c("tracer", "meis1_VMO"), c("tracer", "pbx3_VMO")) # define comparisons for statistics
+
+ggplot(vmo_022120, aes(x=SampleID, y=Measurement, fill=SampleID)) +
+  geom_boxplot() +
+  geom_jitter() +
+  theme_bw(base_size = 20) +
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(colour = "black"), axis.text.y = element_text(colour = "black")) +
+  ylab(expression(paste("Length ", mu, "m"))) +
+  xlab("") +
+  facet_grid("MeasureType") +
+   stat_compare_means(comparisons = comparisons, method = "t.test", label = "p.signif") +
+    Seurat:::RotatedAxis() +
+  scale_fill_manual(values = c(uninjColor,tracerColor, pbxColor, meisColor))
+
 
 ```
 
-## Figure 6AA: Plot tail measurement data
+
+## Figure Supp 6AA: Plot tail measurement data
 ### All Timepoints
 ```{r plot1 data, echo=FALSE, warning=FALSE, cache=TRUE}
 
 # boxplot to compare measurement data across cntrl, meis1MO, and pbx3 MO 
-TailS <- filter(MOdata, MeasureType %in% c("Tail", "Spinal Cord")) # filter table for only tail and spinal cord measurements
+TailS <- filter(MOdata, SampleID %in% c("cntrl", "meis1MO1", "pbx3MO1", "meis1MO2", "pbx3MO2"))
+TailS <- filter(TailS, MeasureType %in% c("Tail", "Spinal Cord")) # filter table for only tail and spinal cord measurements
 comparisons <- list(c("cntrl", "meis1MO1"),c("cntrl", "meis1MO2"),c("cntrl", "pbx3MO1"),c("cntrl", "pbx3MO2")) # define comparisons for statistics
 
 
@@ -87,8 +115,14 @@ ggplot(TailS, aes(x=SampleID, y=Measurement, fill=SampleID)) + # define datafram
 ### Plot only 72hpa for figure
 ```{r 6AA, echo=FALSE, warning=FALSE, cache=TRUE}
 
+# boxplot to compare measurement data across cntrl, meis1MO, and pbx3 MO 
+TailS <- filter(MOdata, SampleID %in% c("cntrl", "meis1MO1", "pbx3MO1", "meis1MO2", "pbx3MO2"))
+TailS <- filter(TailS, MeasureType %in% c("Tail", "Spinal Cord")) # filter table for only tail and spinal cord measurements
+TailS <- filter(TailS, Timepoint == "72hpa")
+comparisons <- list(c("cntrl", "meis1MO1"),c("cntrl", "meis1MO2"),c("cntrl", "pbx3MO1"),c("cntrl", "pbx3MO2")) # define comparisons for statistics
+
 # plot 72hpa
-ggplot(filter(TailS, Timepoint == "72hpa"), aes(x=SampleID, y=Measurement, fill=SampleID)) +
+ggplot(TailS, aes(x=SampleID, y=Measurement, fill=SampleID)) +
   geom_boxplot() +
   geom_jitter() +
   theme_bw(base_size = 20) +
@@ -104,88 +138,4 @@ ggplot(filter(TailS, Timepoint == "72hpa"), aes(x=SampleID, y=Measurement, fill=
 
 ```
 
-
-## Plot phenotypic analysis of coded phenotypes
-### Descriptors
-```{r phenotype1, echo=FALSE, warning=FALSE, cache=TRUE}
-
-# convert numberical values to phenotypic descriptors MORPHOLOGY
-MOdata$PhenotypeMorphology <- gsub(MOdata$PhenotypeMorphology, pattern = "1", replacement = "Wild-type") 
-MOdata$PhenotypeMorphology <- gsub(MOdata$PhenotypeMorphology, pattern = "2", replacement = "FinCoverage")
-MOdata$PhenotypeMorphology <- gsub(MOdata$PhenotypeMorphology, pattern = "3", replacement = "Other")
-MOdata$PhenotypeMorphology <- gsub(MOdata$PhenotypeMorphology, pattern = "4", replacement = "AxialNub")
-MOdata$PhenotypeMorphology <- gsub(MOdata$PhenotypeMorphology, pattern = "5", replacement = "AxialSpike(SansFin)")
-MOdata$PhenotypeMorphology <- factor(MOdata$PhenotypeMorphology, levels = c("Wild-type", "AxialNub", "FinCoverage", "AxialSpike(SansFin)", "Other"))
-  
-# convert numberical values to phenotypic descriptors NOTOCORD
-MOdata$PhenotypeNotocord <- gsub(MOdata$PhenotypeNotocord, pattern = "1", replacement = "Stacked") 
-MOdata$PhenotypeNotocord <- gsub(MOdata$PhenotypeNotocord, pattern = "2", replacement = "NotStacked")
-MOdata$PhenotypeNotocord <- factor(MOdata$PhenotypeNotocord, levels = c("Stacked", "NotStacked"))
-
-
-# convert numberical values to phenotypic descriptors NEURONS
-MOdata$PhenotypeNeuron <- gsub(MOdata$PhenotypeNeuron, pattern = "1", replacement = "Regen") 
-MOdata$PhenotypeNeuron <- gsub(MOdata$PhenotypeNeuron, pattern = "2", replacement = "NotInRegen")
-MOdata$PhenotypeNeuron <- gsub(MOdata$PhenotypeNeuron, pattern = "0", replacement = "NoStain")
-MOdata$PhenotypeNeuron <- factor(MOdata$PhenotypeNeuron, levels = c("Regen", "NotInRegen", "NoStain"))
-
-```
-
-### Plot Phenotype Morphology: Histogram
-```{r phenotype2, echo=FALSE, warning=FALSE, cache=TRUE}
-
-# Histogram for Morphology
-ggplot(data = filter(MOdata,MeasureType == "Tail"), aes(x=PhenotypeMorphology, fill=PhenotypeMorphology)) +
-  geom_histogram(stat = "count") +
-    scale_fill_manual(values = color) + # changes color of box 
-  theme(legend.position = "none") + # change legend position
-  facet_grid(Sample~Timepoint) + # make facets by measurement type and timepoint
-  theme_bw() +
-  ggtitle("Morphology") +
-  Seurat:::RotatedAxis()
-
-
-# Stacked barplot of phenotypes
-Phenoplot <- filter(MOdata, MeasureType == "Tail" & Timepoint == "72hpa")
-#Phenoplot <- table( Phenoplot$PhenotypeMorphology, Phenoplot$Sample)
-Phenoplot$PhenotypeMorphology <- factor(Phenoplot$PhenotypeMorphology, levels = c("Wild-type", "AxialNub", "FinCoverage", "AxialSpike(SansFin)", "Other"))
-
-```
-
-
-### Plot Phenotype Morphology:Stacked bar
-```{r phenotype3, echo=FALSE, warning=FALSE, cache=TRUE}
-# Waffle charts of phenotypes
-filterdata <- filter(MOdata,MeasureType == "Tail")
-testfreq <- as.data.frame(table(filterdata$Sample, filterdata$Timepoint, filterdata$PhenotypeMorphology))
-testtotal <- as.data.frame(table(filterdata$Sample, filterdata$Timepoint))
-test <- merge.data.frame(testfreq, testtotal, by = c("Var1", "Var2"))
-colnames(test) <- c("sample", "timepoint", "phenotype", "freq", "total")
-test$percent <- (test$freq/test$total)*100
-
-# stacked barplot
-ggplot(test, aes(x=sample, y=percent, fill=phenotype)) +
-  geom_bar(stat = "identity") +
-  scale_fill_manual(values = color[c(1,3,4,5,6)]) +
-  facet_grid(timepoint~.)
-```
-
-### Plot Phenotype Morphology: Waffle chart
-```{r phenotype4, echo=FALSE, warning=FALSE, cache=TRUE}
-source("wafflechart.R")
-
-# waffle chart
-p1 <- waffle_chart(filter(test, timepoint == "24hpa"), 
-             fill = "phenotype", value = "percent",facet = "sample", fill_colors = color[c(1,3,4,5,6)]) 
-p2 <- waffle_chart(filter(test, timepoint == "48hpa"), 
-             fill = "phenotype", value = "percent",facet = "sample", fill_colors = color[c(1,3,4,5,6)]) 
-p3 <- waffle_chart(filter(test, timepoint == "72hpa"), 
-             fill = "phenotype", value = "percent",facet = "sample", fill_colors = color[c(1,3,4,5,6)]) 
-
-
-plot_grid(p1, p2, p3, labels = c("24hpa", "48hpa", "72hpa"),  nrow = 3)
-
-
-
-```
 

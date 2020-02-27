@@ -1,0 +1,123 @@
+---
+title: "PH3 Cells in Regen"
+author: "Anneke Kakebeen"
+date: "8/14/2019 (Revised 09/27/19)"
+always_allow_html: yes
+output:
+  github_document:
+    toc: true
+    toc_depth: 3
+---
+
+## Set up 
+```{r set up, echo=FALSE, warning=FALSE, message=FALSE}
+
+# load packages 
+library(ggplot2)
+library(tidyr)
+library(DT)
+library(LaCroixColoR)
+library(dplyr)
+library(ggpubr)
+library(cowplot)
+library(Seurat)
+library(patchwork)
+
+# colors 
+meisColor <- "#FBB58F"
+pbxColor <- "#B574A7"
+color <- lacroix_palette("CranRaspberry")
+
+# source functions
+source("~/Desktop/R_working/common_source_functions.R")
+
+
+# set wd
+setwd("~/Desktop/pax6 paper/Final Markdowns/RegenPH3/")
+
+```
+
+## Load in data
+```{r load data, echo=FALSE, warning=FALSE, cache=TRUE}
+
+# read in data
+ph3 <- read.csv("regen_ph3.csv")
+
+```
+
+## Plot 24hpa and 72hpa
+### per one clutch
+```{r 2472, echo=FALSE, warning=FALSE, cache=TRUE}
+
+ph3_2472 <- filter(ph3, Clutch == "20720")
+ 
+# plot ph3/area of spinal cord FOR FIGURES
+ggplot(ph3_2472, aes(x=Timepoint, y=CPMm)) +
+  geom_boxplot(fill="green4") +
+  ylab(expression("Cells per"~mm^2~" of the Spinal Cord")) +
+  theme_bw() +
+  theme(text = element_text(colour = "black", size = 18), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
+  stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test") 
+ 
+
+# plot ph3/area of spinal cord FOR TALKS
+# ggplot(ph3, aes(x=Timepoint, y=CPMm)) +
+#   geom_boxplot(fill="green4", color="white") +
+#   DarkTheme() +
+#   ylab(expression("Cells per"~mm^2~" of the Spinal Cord")) +
+#   theme(text = element_text(colour = "white")) +
+#   stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test", label = "p.signif", color = "white") 
+
+```
+
+### per both clutches
+```{r 2472_2, echo=FALSE, warning=FALSE, cache=TRUE}
+#filter for morphant data
+ph3_2472_1 <- filter(ph3, Condition == "uninjured")
+
+# plot morphant data
+ggplot(ph3_2472_1, aes(x=Timepoint, y=CPMm)) +
+  geom_boxplot(fill="green4") +
+  ylab(expression("Cells per"~mm^2~" of the Spinal Cord")) +
+  theme_bw() +
+  theme(text = element_text(colour = "black", size = 18), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
+  stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test") +
+  facet_wrap(Condition~.) +
+  Seurat:::RotatedAxis()
+
+
+```
+
+
+## Plot morphants
+```{r morphants, echo=FALSE, warning=FALSE, cache=TRUE}
+#filter for morphant data
+ph3_morphant <- filter(ph3, Clutch == "22120")
+ph3_morphant$Condition <- factor(ph3_morphant$Condition, levels = c("uninjured", "tracer", "pbx3_VMO", "meis1_VMO"))
+
+# set stats covmparison
+comparison <- list(c("uninjured", "tracer"), c("uninjured", "pbx3_VMO"), c("uninjured", "meis1_VMO"), c("tracer", "pbx3_VMO"), c("tracer", "meis1_VMO"))
+
+# plot morphant data per each timepoint comparing between conditions
+ggplot(ph3_morphant, aes(x=Condition, y=ph3_morphant$CPMm)) +
+  geom_boxplot(fill="green4") +
+  ylab(expression("PH3+ Cells per"~mm^2~" of the Spinal Cord")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 20), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
+  stat_compare_means(comparisons = comparison, method = "t.test") +
+  facet_grid(Timepoint~.) +
+  Seurat:::RotatedAxis()
+
+# plot morphant data per each condition comparing timepoints
+ggplot(ph3_morphant, aes(x=Timepoint, y=ph3_morphant$CPMm)) +
+  geom_boxplot(fill="green4") +
+  ylab(expression("PH3+ Cells per"~mm^2~" of the Spinal Cord")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 18), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
+  stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test") +
+  facet_wrap(Condition~.) +
+  Seurat:::RotatedAxis()
+
+
+
+```

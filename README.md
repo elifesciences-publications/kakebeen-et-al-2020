@@ -9,6 +9,8 @@ Anneke Kakebeen
 -   [SingleCell](#singlecell)
 -   [GRN](#grn)
 -   [Tail Measurement](#tail-measurement)
+-   [FACS](#facs)
+-   [Regen PH3](#regen-ph3)
 
 Repository for analysis of data from Kakebeen et al 2019
 --------------------------------------------------------
@@ -38,4 +40,14 @@ This folder contains the code used to integrated the ATAC-Seq, scRNA-Seq, and Ch
 Tail Measurement
 ----------------
 
-This folder contains the tail measurement data and graphical representations of this data.
+This folder contains the tail measurement data and graphical representations of this data for vivo-morphants and embryonic morphants.
+
+FACS
+----
+
+This folder contains the data representing cells collected by FACS. The code for the figure quantifying the number of sorted cells per tail lives here.
+
+Regen PH3
+---------
+
+This folder contains data and visuali representations of the number of PH3 + cells per reenerated area of the spinal cord in normal regeneration as well as morphant regeneration.
