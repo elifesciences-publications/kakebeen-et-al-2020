@@ -69,9 +69,8 @@ These plots take into account each biological replicate sorted for atac-seq libr
 
 # subset data for dates of interest
 flow_pax_1 <- subset(flow_pax, flow_pax$date %in% c("2/6/19", "9/5/17", "9/6/17", "9/8/19"))  # subset data from pax table
-flow_pax_1$tail <- (flow_pax_1$tail)
 flow_pax_1$cpt <- ((flow_pax_1$Count_GFPPos)/(flow_pax_1$tail)) # add column for cells/tail input
-#table(flow_pax_1$TimePoint)  # show number of each timepoint present in data for information
+table(flow_pax_1$TimePoint)  # show number of each timepoint present in data for information
 # datatable(flow_pax_1) # inspect data
 
 ```

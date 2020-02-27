@@ -17,6 +17,42 @@ In response, I elected to analyze and plot existing data from the ATAC-Seq colle
 Set up
 ======
 
+    ## Loading required package: magrittr
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+    ## ── Attaching packages ─────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+
+    ## ✓ tibble  2.1.3     ✓ purrr   0.3.3
+    ## ✓ tidyr   1.0.0     ✓ stringr 1.4.0
+    ## ✓ readr   1.3.1     ✓ forcats 0.4.0
+
+    ## ── Conflicts ────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## x tidyr::extract()   masks magrittr::extract()
+    ## x dplyr::filter()    masks stats::filter()
+    ## x dplyr::lag()       masks stats::lag()
+    ## x purrr::set_names() masks magrittr::set_names()
+
+    ## 
+    ## Attaching package: 'scales'
+
+    ## The following object is masked from 'package:purrr':
+    ## 
+    ##     discard
+
+    ## The following object is masked from 'package:readr':
+    ## 
+    ##     col_factor
+
 Flowjo Analysis
 ===============
 
@@ -31,6 +67,10 @@ ATAC-Seq samples and Most recent FACS analysis for higher N
 These plots take into account each biological replicate sorted for atac-seq libraries as well as biological replicates measured in a different experiment performed summer of 2019.
 
 ### Subset table
+
+    ## 
+    ## uninj  0hpa  6hpa 24hpa 72hpa 
+    ##     3     3     3     6     6
 
 Based on our ATAC-Seq analysis and scRNA-Seq analysis, we hypothesized that the 72hpa timepoint has more proliferative neural progenitor cells than at 6hpa or 24hpa. To quantify the number of cells per regenerating tail, we identified the GFP+ cells in each flow cytometry analysis and divided this number by the number of input tails.
 

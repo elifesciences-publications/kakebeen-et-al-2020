@@ -45,7 +45,7 @@ my.color <-(lacroix_palette("Lemon"))
 All pax regeneration samples that were run on FACS have been re-analyzed on flowjo to idenitfy more accurate numbers sorted (does not relate to number of cells  collected).
 
 ## Read in all FACS data
-```{r flowjo output 1, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+```{r flowjo output 1, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 
 # read in table of values
 flow <- read.csv("pax6paper_analysis.csv") # read in data
@@ -55,7 +55,7 @@ flow <- flow[-c((grep(flow$Genotype, pattern = "gating")), 60),] # remove gating
 flow_pax <- subset(flow, Genotype == "pax") # subset
 flow_pax$TimePoint <- factor(flow_pax$TimePoint, levels = c("uninj", "0hpa", "6hpa", "24hpa", "72hpa"))
 
-datatable(flow)
+datatable(flow_pax)
 ```
 
 
@@ -64,7 +64,7 @@ datatable(flow)
 These plots take into account each biological replicate sorted for atac-seq libraries as well as biological replicates measured in a different experiment performed summer of 2019. 
 
 ### Subset table
-```{r flowjo output subset, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+```{r flowjo output subset, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 
 # subset data for dates of interest
 flow_pax_1 <- subset(flow_pax, flow_pax$date %in% c("2/6/19", "9/5/17", "9/6/17", "9/8/19"))  # subset data from pax table
@@ -77,7 +77,7 @@ datatable(flow_pax_1) # inspect data
 Based on our ATAC-Seq analysis and scRNA-Seq analysis, we hypothesized that the 72hpa timepoint has more proliferative neural progenitor cells than at 6hpa or 24hpa. To quantify the number of cells per regenerating tail, we identified the GFP+ cells in each flow cytometry analysis and divided this number by the number of input tails.
 
 ### Plot table
-```{r flowjo output  plot, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+```{r flowjo output  plot, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 
 # Define pairwise comparisons for statistical testing with ggpubr on the ggplot
 comparisons <- list(c("uninj", "0hpa"),c("0hpa", "6hpa"), c("0hpa", "72hpa"), c("6hpa", "24hpa"), c("6hpa", "72hpa"), c("24hpa", "72hpa")) # list comparison for stats
