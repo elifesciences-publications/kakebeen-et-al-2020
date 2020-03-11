@@ -1,0 +1,593 @@
+---
+title: "SCRNA-Seq Seurat Dimensional Reduction"
+author: "Anneke Kakebeen"
+date: "4/9/2019 (Revised 12 Aug 2019)"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Set Up
+```{r setup, include=FALSE}
+
+# Load Packages
+library(Seurat)
+library(ggplot2)
+library(LaCroixColoR)
+library(RColorBrewer)
+library(cowplot)
+library(DT)
+library(dplyr)
+library(gridExtra)
+
+# Set Color Palette
+my.color <- c(lacroix_palette("PeachPear", type = "discrete"), lacroix_palette("Lime", type = "discrete"),  lacroix_palette("MurePepino", type = "discrete"), lacroix_palette("PassionFruit", type = "discrete"), lacroix_palette("Lemon", type = "discrete"))
+my.color.neural <- c("#2CB11B", "#F73BEE", "#E9E4A6", "#DFCEE0" , "#E9A17C", "#1BB6AF" , "#172869" , "#FF3200")
+my.color1 <- lacroix_palette(type = "paired")
+standard.color <- c("grey89", "green4")
+condition.color <- c( "#6F0909", "#C0C0C0")
+cc_colors <- c((lacroix_palette("Lime"))[c(1,3)], "black")
+
+
+# Laod functions
+source("~/Desktop/pax6 paper/Final Markdowns/common_source_functions.R")
+
+## This is where files will save ##
+setwd("~/Desktop/pax6 paper/Final Markdowns/SingleCell_1/UMAP/")
+```
+
+## Set up objects
+```{r setup objects}
+
+# Load in uninj
+pax6.data <- Read10X(data.dir ="/Volumes/WillsLab_Kakebeen/scRNA-seq_Raw/feb2018_pax6_expt/frog_1_SI-GA-B5/outs/filtered_gene_bc_matrices/xt9-transgenes/")
+uninj_object <- CreateSeuratObject(counts = pax6.data, min.cells = 5, project = "10X_pax6") # create Seaurat Object 
+uninj_object$condition <- "uninj" # make identity condition and assign cells "uninjured" identity
+uninj_object <- subset(x = uninj_object, subset = nFeature_RNA > 500) # subset all cells for cells with greater than 500 RNA features
+uninj_object <- NormalizeData(object = uninj_object, verbose = FALSE) # normalize uninjured cells 
+uninj <- FindVariableFeatures(object = uninj_object, selection.method = "vst") # Find variable features
+
+pax6.data <- Read10X(data.dir ="/Volumes/WillsLab_Kakebeen/scRNA-seq_Raw/full_wnt_regen/dmso_SI-GA-E9/outs/filtered_gene_bc_matrices/xt9-transgenes/")
+regenerate_object <- CreateSeuratObject(counts = pax6.data, min.cells = 5, project = "10X_pax6")
+regenerate_object$condition <- "regenerate"  # assign cells to "regenerate" in the condition identity
+regenerate_object <- subset(x = regenerate_object, subset = nFeature_RNA > 500) # previous analysis run with ">500"
+regenerate_object <- NormalizeData(object = regenerate_object, verbose = FALSE)
+regenerate <- FindVariableFeatures(object = regenerate_object, selection.method = "vst")
+
+```
+
+
+'We then identify anchors using the FindIntegrationAnchors function, which takes a list of Seurat objects as input, and use these anchors to integrate the two datasets together with IntegrateData. ' 
+
+## Integration
+```{r integration}
+
+pax.anchors <- FindIntegrationAnchors(object.list = list(uninj, regenerate), dims = 1:20) # set integration anchors
+pax.combined <- IntegrateData(anchorset = pax.anchors, dims = 1:20) # integrate data
+
+```
+
+Now we can run a single integrated analysis on all cells!
+
+## Integrated Analysis and UMAP
+```{r analysis}
+
+DefaultAssay(object = pax.combined) <- "integrated" # assay identity as integrated
+
+# Run the standard workflow for visualization and clustering
+pax.combined <- ScaleData(object = pax.combined, verbose = FALSE, features = rownames(pax.combined))
+pax.combined <- RunPCA(object = pax.combined, npcs = 60, verbose = FALSE)
+ElbowPlot(pax.combined, ndims = 60) # visualize PCs to pick how many
+# umap and Clustering
+pax.combined <- RunUMAP(object = pax.combined, reduction = "pca", dims = 1:40) # reduce by pca to a umap reduction
+pax.combined <- FindNeighbors(object = pax.combined, reduction = "pca", dims = 1:40) # find nearesst neighbors
+pax.combined <- FindClusters(pax.combined, resolution = 0.7) # get clusters
+
+# Visualization
+DimPlot(object = pax.combined, reduction = "umap", split.by  = "condition") # split umap plot by conditions
+DimPlot(object = pax.combined, reduction = "umap", label = TRUE) # show umap aligned
+#plot_grid(p1, p2, ncol = 1) # plot side by side
+
+DimPlot(pax.combined, reduction = "umap", group.by =  "condition", label = TRUE) # color cells by condition in one aligned plot
+ 
+```
+
+
+
+## Neural subset
+### Identify clusters
+```{r neural subset 1}
+
+# Identify Neural Clusters
+# sox2 = canonical neural stem cell marker
+# neurog2 = pro-neural gene
+# elavl4 = differentiated neuron
+p1 <- FeaturePlot(pax.combined, 
+            features = c("sox2", "neurog1", "elavl4", "prdm14"), 
+            cols = standard.color,
+            reduction = "umap") + NoLegend()
+p2 <- DimPlot(pax.combined, label = TRUE)
+p3 <- DotPlot(pax.combined, 
+             features = c("sox2", "neurog1", "elavl4", "prdm14")) + coord_flip() + RotatedAxis()
+plot <- plot_grid(p1, p2)
+plot_grid(plot, p3, nrow = 2) # feature plot, dotplot, and umap to identify neural clusters for subset analysis
+```
+
+### Subset clusters
+```{r neural subset 2}
+# subset nerual clusters
+pax.neural <- SubsetData(pax.combined, ident.use = c(1,5,4,13,15))
+
+# Run the standard workflow for visualization and clustering
+pax.neural <- ScaleData(object = pax.neural, verbose = TRUE, features = rownames(pax.neural))
+pax.neural <- RunPCA(object = pax.neural, npcs = 30, verbose = TRUE) # verbose shows us how long its running
+ElbowPlot(pax.neural, ndims = 30)
+# umap and Clustering
+pax.neural <- RunUMAP(object = pax.neural, reduction = "pca", dims = 1:20) # reduce by pca to a umap reduction
+pax.neural <- FindNeighbors(object = pax.neural, reduction = "pca", dims = 1:20) # find nearesst neighbors
+pax.neural <- FindClusters(pax.neural, resolution = 0.4) # get clusters ## resolution at 0.3 for 050719
+
+# Run dim plot and save out
+DimPlot(pax.neural, reduction = "umap", label = TRUE) # plot umap of neural clusters
+DimPlot(pax.neural, reduction = "umap", group.by = "condition", cols = condition.color) # plot umap and color cells by condition
+DimPlot(pax.neural, reduction = "umap", split.by = "condition")  # plot umap and split to individual plots by condition
+ FeaturePlot(pax.neural, features = c("sox2", "neurog1", "elavl4", "prdm14")) # plot neural markers
+ 
+
+## scaledata for "RNA"
+DefaultAssay(pax.neural) <- "RNA"
+pax.neural <- ScaleData(object = pax.neural, verbose = TRUE, features = rownames(pax.neural))
+pax.neural@assays$RNA@scale.data
+FeaturePlot(pax.neural, features = c("sox2", "neurog1", "elavl4", "prdm14")) # plot neural markers under RNA assay
+
+
+# Check subset
+DimPlot(pax.neural) # plot UMAP
+
+```
+
+To identify canonical cell type marker genes that are conserved across conditions, we provide the FindConservedMarkers function. This function performs differential gene expression testing for each dataset/group and combines the p-values using meta-analysis methods from the MetaDE R package. For example, we can calculat ed the genes that are conserved markers irrespective of iwrulation condition in cluster 6 (NK cells).
+
+
+
+## Identify cluster cell identity
+### Conserved functions
+```{r DE functions}
+# Define DE marker function
+
+cluster_markers <- functio(object, cluster1){
+  FindMarkers(object = object, ident.1=cluster1, verbose = TRUE, only.pos = TRUE)
+}
+
+# Define function for loop for marker function
+# clusters = list of clusters by number, outfiles= names out objects to be made
+conserved.marker.multi.1 <- function(object, clusters1, outfiles){ 
+  for(i in 1:length(clusters1)){
+      # Perform Findmarkers function from Seurat
+      temp.markers <- cluster_markers(object, clusters1[i])
+      # Get number of rows in tempprary table
+      n <- nrow(temp.markers)
+      # Add column with identifier
+      temp.markers$cluster <- rep(outfiles[i], n)
+      # make index of rows with LOC
+      remove <- grep(pattern = "LOC.*", x = rownames(temp.markers))
+      # remove rows with LOC
+      temp.table <- temp.markers[-remove,]
+      # make index to remove rows wtih Xetrov
+      remove <- grep(pattern = "Xetrov.*", x = rownames(temp.table))
+      # remove rows with Xetrov
+      temp.table <- temp.table[-remove,]
+      # make column for genes
+      temp.table$gene <- rownames(temp.table)
+      # Assign to outfile name in the enviornment
+    assign(outfiles[i], temp.table, envir = .GlobalEnv)
+    }
+}
+```
+
+### Cell markers for superset
+```{r markers superset}
+
+DefaultAssay(object = pax.combined) <- "RNA" # change assay from integrated to RNA
+DimPlot(pax.combined, label = TRUE, cols = my.color) # plot umap
+
+# Define ins to function
+Idents(pax.combined) <- "seurat_clusters" # set identity of cells by cluster
+clusters<- levels(pax.combined@active.ident) # make object of cluster names
+
+# Outfile names
+outfiles <- paste("conserved", unique(gsub(clusters, pattern = "_.*", replacement = "")), sep = ".") 
+outfiles <- paste("all.", outfiles, sep = "")
+
+# Run function to find conserved markers
+conserved.marker.multi.1(pax.combined, clusters, outfiles) 
+
+# Create one big table
+objects <- ls(pattern="all.conserved.") # make object of names of all conserved marker objects just made
+objects.list <- lapply(objects, get) # get objects
+time.conserved.all <- do.call(bind_rows, objects.list) # rowbind objects to make one big table
+
+# view conserved markers
+datatable(time.conserved.all)
+
+# Write out table
+write.table(time.conserved.all, "~/Desktop/pax6 paper/Final Markdowns/SingleCell_1/UMAP/all.markers_030520.txt", sep = "\t", col.names = NA)
+
+
+```
+
+### Get conserved markers for neural subset
+```{r neural subset markers}
+DefaultAssay(object = pax.neural) <- "RNA"
+
+# Define ins
+clusters<- levels(pax.neural@meta.data$seurat_clusters)
+
+# Outfile names
+outfiles <- paste("conserved", unique(gsub(clusters, pattern = "_.*", replacement = "")), sep = ".")
+outfiles <- paste("pax.", outfiles, sep = "")
+
+# Run function to find conserved markers
+conserved.marker.multi.1(pax.neural, clusters, outfiles)
+
+## Create one big table
+objects <- ls(pattern="pax.conserved.")
+objects.list <- lapply(objects, get)
+time.conserved.all <- do.call(bind_rows, objects.list)
+
+# View neural subset conserved
+datatable(time.conserved.all)
+
+write.table(time.conserved.all, "~/Desktop/pax6 paper/Final Markdowns/SingleCell_1/UMAP/pax.markers_030520.txt", sep = "\t", col.names = NA)
+```
+
+## Name cell clusters
+### Name cell clusters for entire set
+```{r name cells}
+Idents(pax.combined) <- pax.combined$seurat_clusters # set identites of pax as seurat clusters
+
+# Make new identity names
+pax.combined <- RenameIdents(pax.combined, 
+                           `0` = "Small Secretory Cell 1", # "Non-neural ectoderm"
+                           `1` = "Spinal Cord Progenitor", # "Mesoderm"
+                             `2` = "Notochord", #"Neural"
+                             `3` = "Skeletal Muscle", #"Mesoderm"
+                             `4` = "Vulnerable Motor Neuron/leptin Motor Neuron", #"Mesoderm"
+                             `5` = "Differentiating Neuron/Interneuron", #"Mesoderm"
+                             `6` = "Myotome", #"Neural"
+                           `7`= "Satellite Cells/Differentiating Myotome", #"Non-neural ectoderm"
+                           `8`= "Goblet Cells", #"Mesoderm"
+                           `9`= "Dermomyotome/Skeletal Muscle", #"Neural"
+                           `10`= "ROC", #"Neural"
+                           `11`= "Dermomyotome", #"Non-neural ectoderm"
+                           `12`= "Bipotent Progenitor", #"Mesoderm"
+                           `13`= "Motor Neuron", #"Neural"
+                           `14`= "Mesenchyme", #"Mesoderm"
+                           `15`= "Dopaminergic Neuron", #"Mesoderm"
+                           `16`= "Small Secretory Cell 2", #"Neural"
+                           `17`= "Other 1", #"Non-neural ectoderm"
+                           `18`= "Other 2") #"Other"
+
+pax.combined$AK_Names <- Idents(pax.combined)
+# order clusters
+pax.combined$AK_Names <- factor(pax.combined$AK_Names, levels = c("Spinal Cord Progenitor", "Differentiating Neuron/Interneuron", "Dopaminergic Neuron", "Vulnerable Motor Neuron/leptin Motor Neuron", "Motor Neuron", "Notochord", "Mesenchyme", "Myotome", "Scleretome", "Satellite Cells/Differentiating Myotome", "Dermomyotome","Dermomyotome/Skeletal Muscle", "Skeletal Muscle", "Bipotent Progenitor", "Small Secretory Cell 1", "Small Secretory Cell 2", "ROC", "Goblet Cells", "Other 1", "Other 2"))
+
+
+Idents(pax.combined) <- pax.combined$AK_Names
+DimPlot(pax.combined, reduction = "umap", label = TRUE) +NoAxes() 
+
+```
+
+### Neural cell type analysis based on Laevis singel cell
+```{r renames laevis}
+
+Idents(pax.neural) <- pax.neural$seurat_clusters
+pax.neural <- RenameIdents(pax.neural, 
+                           `0` = "Spinal Cord Progenitor",
+                           `1` = "Vulnerable Motor Neuron",
+                             `2` = "Differentiating Neuron",
+                             `5` = "Interneurons",
+                             `3` = "Motor Neuron (leptin+)",
+                             `4` = "Motor Neuron",
+                             `6` = "Dopaminergic Neurons",
+                           '7'="Floor Plate")
+
+pax.neural$Laevis <- pax.neural@active.ident
+pax.neural$Laevis <- factor(pax.neural$Laevis, levels = c("Spinal Cord Progenitor","Floor Plate", "Differentiating Neuron", "Interneurons", "Vulnerable Motor Neuron", "Motor Neuron", "Motor Neuron (leptin+)", "Dopaminergic Neurons"))
+Idents(pax.neural) <- pax.neural$Laevis
+DimPlot(pax.neural, cols = my.color.neural, label = TRUE)
+
+```
+
+
+
+## Cell cycle analysis
+### Cell cycle All
+```{r cell cycle all}
+
+# define cell cycle genes (Seurat)
+s.genes <- cc.genes$s.genes # get cell cycle genes
+g2m.genes <- cc.genes$g2m.genes
+s.genes.grep <- concat.grep(s.genes) # put object with gene names into greppable form
+g2m.genes.grep <- concat.grep(g2m.genes)
+
+# grep for genes in Seurat Object
+s.genes <- FindGene(pax.combined, s.genes.grep) # grep for genes
+s.genes <- intersect(s.genes, tolower(cc.genes$s.genes)) # intersect with original gene list to eliminate any genes that come up with same beginning pattern and different end
+g2m.genes <- FindGene(pax.combined, g2m.genes.grep)
+g2m.genes <- intersect(g2m.genes, tolower(cc.genes$g2m.genes))
+
+# Use Seurat cell cycle scoring to predict phase identity
+pax.combined <- CellCycleScoring(pax.combined, s.features = s.genes, g2m.features = g2m.genes, set.ident = TRUE)
+pax.combined$Phase <- factor(pax.combined$Phase, levels = c("S", "G2M", "G1"))
+
+# plot UMAP and color cells by cell cycle
+DimPlot(pax.combined, group.by ="Phase", cols = cc_colors)
+
+```
+
+### Cell cycle neural
+```{r cell cycle neural}
+
+# grep for genes in Seurat Object
+s.genes <- FindGene(pax.neural, s.genes.grep) # grep for genes
+s.genes <- intersect(s.genes, tolower(cc.genes$s.genes)) # intersect with original gene list to eliminate any genes that come up with same beginning pattern and different end
+g2m.genes <- FindGene(pax.neural, g2m.genes.grep)
+g2m.genes <- intersect(g2m.genes, tolower(cc.genes$g2m.genes))
+
+# Use Seurat cell cycle scoring to predict phase identity
+pax.neural <- CellCycleScoring(pax.neural, s.features = s.genes, g2m.features = g2m.genes, set.ident = TRUE)
+pax.neural$Phase <- factor(pax.neural$Phase, levels = c("S", "G2M", "G1"))
+
+# plot UMAP and color cells by cell cycle
+DimPlot(pax.neural, cols = cc_colors, group.by = "Phase")
+
+```
+
+## Assigning alternate identities to all cells
+### Assigning by cell class
+```{r all cell names}
+
+Idents(pax.combined) <- pax.combined$seurat_clusters # set identites of pax as seurat clusters
+
+# Make new identity names
+pax.combined <- RenameIdents(pax.combined, 
+                           `0` = "Non-neural Ectoderm",
+                           `1` =  "Neural",
+                             `2` = "Mesoderm",
+                             `3` = "Mesoderm",
+                             `4` = "Neural",
+                             `5` = "Neural",
+                             `6` = "Mesoderm",
+                           `7`= "Mesoderm",
+                           `8`= "Non-neural Ectoderm",
+                           `9`= "Mesoderm",
+                           `10`= "Non-neural Ectoderm",
+                           `11`= "Mesoderm",
+                           `12`= "Mesoderm",
+                           `13`= "Neural",
+                           `14`= "Mesoderm",
+                           `15`= "Neural",
+                           `16`= "Non-neural Ectoderm",
+                           `17`= "Mesoderm",
+                           `18`= "Other",
+                           `19`= "Other")
+
+# Assign new identities to pax.all
+pax.combined$CellClass <-  Idents(pax.combined) 
+pax.combined$CellClass <- factor(pax.combined$CellClass, levels = c("Neural", "Non-neural Ectoderm", "Mesoderm", "Other"))
+
+Idents(pax.combined) <- pax.combined$CellClass
+DimPlot(pax.combined, label = TRUE)
+
+```
+
+
+
+## Assigning alternate identities to Neural Cells
+
+### Abbreviated names neural 
+```{r renames abbrev}
+
+Idents(pax.neural) <- pax.neural$Laevis
+pax.neural<- RenameIdents(pax.neural, 
+                           "Spinal Cord Progenitor"="NPC",
+                           "Vulnerable Motor Neuron"="VMN",
+                             "Differentiating Neuron"="DiffN",
+                           "Interneurons"="IN",
+                            "Motor Neuron (leptin+)"="MNL",
+                             "Motor Neuron"="MN",
+                             "Dopaminergic Neurons"="DN",
+                          "Floor Plate" = "FP")
+
+pax.neural$Abbrv <- pax.neural@active.ident
+pax.neural$Abbrv <- factor(pax.neural$Abbrv, levels = c("NPC", "FP", "DiffN", "IN", "VMN", "MN", "MNL", "DN"))
+Idents(pax.neural) <- pax.neural$Abbrv
+DimPlot(pax.neural, cols = my.color.neural, label = TRUE)
+
+
+
+```
+
+### assigning three state identites
+```{r, three state}
+Idents(pax.neural) <- "Abbrv"
+pax.neural <- RenameIdents(pax.neural, 
+                           `NPC` = "NSC",
+                           `FP` = "NSC",
+                           `MN` = "Neuron",
+                             `DiffN` = "Differentiating",
+                             `VMN` = "Neuron",
+                             `MNL` = "Neuron",
+                             `DN` = "Neuron",
+                             `IN` = "Neuron")
+pax.neural$three_state <- Idents(pax.neural)
+pax.neural$three_state <- factor(pax.neural$three_state, levels = c("NSC", "Differentiating", "Neuron"))
+Idents(pax.neural) <- "three_state"
+DimPlot(pax.neural, cols = my.color)
+
+```
+
+### assign abbrv condition cell
+```{r phase condition cell}
+
+pax.neural$Abbrv_condition <- paste(pax.neural$Abbrv, pax.neural$condition, sep = "_")
+
+
+```
+
+
+### assign three state condition 
+```{r three state neural}
+# three state and condition
+Idents(pax.neural) <- "three_state"
+pax.neural$threestate_condition <- paste(pax.neural$condition, Idents(pax.neural), sep = "_")
+Idents(pax.neural) <- "threestate_condition"
+pax.neural$threestate_condition <- factor(pax.neural$threestate_condition, levels = c("uninj_NSC", "regenerate_NSC", "uninj_Differentiating", "regenerate_Differentiating", "uninj_Neuron", "regenerate_Neuron"))
+
+# three state and condition and cell
+pax.neural$threestate_condition_cell <- paste(pax.neural$threestate_condition, pax.neural$Laevis, sep = "__")
+Idents(pax.neural) <- pax.neural$threestate_condition_cell
+
+DimPlot(pax.neural, label = TRUE)
+
+```
+
+### assign phase condition cell
+```{r phase condition cell}
+
+pax.neural$phase_condition_cell <- paste(pax.neural$condition, pax.neural$Phase, sep = "_")
+pax.neural$phase_condition_cell <- paste(pax.neural$phase_condition_cell, pax.neural$Laevis, sep = "__")
+Idents(pax.neural) <- pax.neural$phase_condition_cell
+
+
+```
+
+
+### assigning cell type and condition identity
+```{r laevis condition}
+Idents(pax.neural) <- pax.neural$Laevis
+pax.neural$laevis_condition <- paste(pax.neural$condition, Idents(pax.neural), sep = "_")
+Idents(pax.neural) <- "laevis_condition"
+
+DimPlot(pax.neural, label = TRUE)
+
+```
+
+
+
+## Save out RDS for combined and neural
+```{r save out RDS}
+
+# # Save out all cells
+# saveRDS(pax.combined, "pax.combined_FINAL_1.RDS") # 5March2020
+# saveRDS(pax.neural, "pax.neural_FINAL_1.RDS") # 5March2020
+
+```
+
+## Pull data for plotting with ggplot All
+```{r pull data all}
+## Metadata and umap coordiinates
+umapdata <- as.data.frame(Embeddings(object = pax.combined[["umap"]])) #get umap coordinates
+colnames(umapdata)
+meta <- pax.combined[[]] # get metadata
+pax.all.plotting <- cbind(umapdata, meta) #make table
+
+# View extracted data table
+datatable(pax.all.plotting)
+colnames(pax.all.plotting)
+
+# Plot with ggplot from extracted data
+ggplot(pax.all.plotting, aes(x=UMAP_1, y=UMAP_2, color=AK_Names))+
+  geom_point(stat="identity") + scale_color_manual(values = my.color) + Seurat:::NoAxes() + blank_theme
+
+# write out table
+write.table(pax.all.plotting, "pax.combined_metadata.txt", sep = "\t",row.names = TRUE, col.names = TRUE)
+
+
+```
+
+### Pull data for plotting with ggplot Neural
+```{r pull data neural}
+## Metadata and umap coordiinates
+umapdata <- as.data.frame(Embeddings(object = pax.neural[["umap"]])) #get umap coordinates
+colnames(umapdata)
+meta <- pax.neural[[]] # get metadata
+pax.neural.plotting <- cbind(umapdata, meta) #make table
+datatable(pax.neural.plotting)
+colnames(pax.neural.plotting)
+
+# remove outlier cells
+select.cells <- c("CGATGTAAGAGATGAG_1", "CTGGTCTAGCGTTGCC_2", "AGGGAGTCATCACGAT_3", "CATGGCGCACTGTCGG_3", "CCCAATCGTGGTTTCA_3", "GGCTGGTAGTGTGAAT_3",
+"TAAACCGCAGTTCATG_3", "TTCTACACAGGGATTG_3", "ACATACGGTTCATGGT_3")
+remove <- select.cells
+remove <- concat.grep(remove)
+pax.neural.plotting <- pax.neural.plotting[-1*(grep(rownames(pax.neural.plotting), pattern = remove, ignore.case = TRUE)),]
+
+# test plotting with umap plot
+ggplot(pax.neural.plotting, aes(x=UMAP_1, y=UMAP_2, color=AK_Names))+
+  geom_point(stat="identity") + scale_color_manual(values = my.color.neural) + Seurat:::NoAxes() +blank_theme
+
+# write out table
+write.table(pax.neural.plotting, "pax.neural_metadata.txt", sep = "\t",row.names = TRUE, col.names = TRUE)
+
+```
+
+
+## NSC subset
+### Subset all cells to just NSC
+```{r subset nsc}
+
+# # subset nerual clusters
+# Idents(pax.combined) <- pax.combined$AK_Names
+# pax.neural <- SubsetData(pax.combined, ident.use = c("NSC"))
+# 
+# # Run the standard workflow for visualization and clustering
+# pax.neural <- ScaleData(object = pax.neural, verbose = TRUE, features = rownames(pax.neural))
+# pax.neural <- RunPCA(object = pax.neural, npcs = 30, verbose = TRUE) # verbose shows us how long its running
+# ElbowPlot(pax.neural, ndims = 30)
+# # umap and Clustering
+# pax.neural <- RunUMAP(object = pax.neural, reduction = "pca", dims = 1:25) # reduce by pca to a umap reduction
+# pax.neural <- FindNeighbors(object = pax.neural, reduction = "pca", dims = 1:25) # find nearesst neighbors
+# pax.neural <- FindClusters(pax.neural, resolution = 0.5) # get clusters ## resolution at 0.3 for 050719
+# 
+# # Run dim plot and save out
+# DimPlot(pax.neural, reduction = "umap", label = TRUE, cols = my.color.neural) # plot umap of neural clusters
+# DimPlot(pax.neural, reduction = "umap", group.by = "condition", cols = condition.color) # plot umap and color cells by condition
+# DimPlot(pax.neural, reduction = "umap", split.by = "condition", cols = my.color.neural)  # plot umap and split to individual plots by condition
+#  FeaturePlot(pax.neural, features = c("sox2", "fabp7", "nes", "")) # plot neural markers
+#  
+# 
+# ## scaledata for "RNA"
+# DefaultAssay(pax.neural) <- "RNA"
+# pax.neural <- ScaleData(object = pax.neural, verbose = TRUE, features = rownames(pax.neural))
+# pax.neural@assays$RNA@scale.data
+# FeaturePlot(pax.neural, features = c("vim", "nes", "hes1", "slc1a3", "fabp7")) # plot neural markers under RNA assay
+# FeaturePlot(pax.neural, features = c("foxa2", "shh", "ferd3l", "arx"))
+# test <- FindGene(pax.neural, "bmp|shh|gli|ptch")
+# FeaturePlot(pax.neural, features = test)
+# 
+# DotPlot(pax.neural, features=test, cols=c("blue", "gold")) + coord_flip() + RotatedAxis()
+# 
+# 
+# saveRDS(pax.neural, "pax.nsc_FINAL.RDS")
+# 
+# # featuremarkers
+# 
+# nsc0 <- FindMarkers(pax.neural, ident.1 = "0", only.pos = TRUE, verbose = TRUE)
+# nsc0$gene <- rownames(nsc0)
+# nsc1 <- FindMarkers(pax.neural, ident.1 = "1", only.pos = TRUE, verbose = TRUE)
+# nsc1$gene <- rownames(nsc1)
+# nsc2 <- FindMarkers(pax.neural, ident.1 = "2", only.pos = TRUE, verbose = TRUE)
+# nsc2$gene <- rownames(nsc2)
+# 
+# datatable(filter(nsc0, pct.1-pct.2>0.2))
+# FeaturePlot(pax.neural, features = filter(nsc0, pct.1-pct.2>0.2)[21:25,6])
+# 
+# datatable(filter(nsc1, pct.1-pct.2>0.2))
+# FeaturePlot(pax.neural, features = filter(nsc1, pct.1-pct.2>0.2)[5:8,6])
+# 
+# datatable(filter(nsc2, pct.1-pct.2>0.6))
+# FeaturePlot(pax.neural, features = filter(nsc2, pct.1-pct.2>0.6)[,6])
+# ```
+

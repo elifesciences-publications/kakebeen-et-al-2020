@@ -64,24 +64,24 @@ datatable(MOdata)
 ```{r plot 1,  echo=FALSE, warning=FALSE, cache=TRUE}
 
 # filter data for last clutch with correct doses
-vmo_022120 <- filter(MOdata, Clutch == "22120")
+vmo_022120 <- filter(MOdata, Clutch == "22120" )
+vmo_022120 <- filter(vmo_022120, SampleID %in% c("tracer", "pbx3_VMO", "meis1_VMO"))
 #factor data to order sample variables correctly
-vmo_022120$SampleID <- factor(vmo_022120$SampleID, levels = c("uninjected", "tracer", "meis1_VMO", "pbx3_VMO"))
+vmo_022120$SampleID <- factor(vmo_022120$SampleID, levels = c("tracer", "meis1_VMO", "pbx3_VMO"))
 # define comparisons for statistics
-comparisons <- list(c("uninjected", "tracer"),c("uninjected", "meis1_VMO"),c("uninjected", "pbx3_VMO"),c("tracer", "meis1_VMO"), c("tracer", "pbx3_VMO")) # define comparisons for statistics
+comparisons <- list(c("tracer", "meis1_VMO"), c("tracer", "pbx3_VMO")) # define comparisons for statistics
 
 # for publication
 ggplot(vmo_022120, aes(x=SampleID, y=Measurement, fill=SampleID)) +
   geom_boxplot() +
-  geom_jitter() +
-  theme_bw(base_size = 20) +
-  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(colour = "black"), axis.text.y = element_text(colour = "black")) +
+  theme_bw(base_size = 29) +
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(colour = "black"), axis.text.y = element_text(colour = "black"), strip.background =element_rect(fill="white")) +
   facet_grid(Timepoint~MeasureType) +
   ylab(expression(paste("Length ", mu, "m"))) +
   xlab("") +
    stat_compare_means(comparisons = comparisons, method = "t.test", label = "p.signif") +
     Seurat:::RotatedAxis() +
-  scale_fill_manual(values = c(uninjColor,tracerColor, pbxColor, meisColor))
+  scale_fill_manual(values = c(tracerColor, meisColor, pbxColor))
 
 # for talk figure
 # ggplot(vmo_022120, aes(x=SampleID, y=Measurement, fill=SampleID)) +
@@ -96,6 +96,7 @@ ggplot(vmo_022120, aes(x=SampleID, y=Measurement, fill=SampleID)) +
 #     Seurat:::RotatedAxis() +
 #   scale_fill_manual(values = c("white",meisColor, meisColor, pbxColor, pbxColor))
 
+table(vmo_022120$SampleID, vmo_022120$MeasureType)
 
 ```
 

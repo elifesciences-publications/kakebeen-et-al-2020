@@ -1,0 +1,494 @@
+---
+title: "Single Cell Figures"
+author: "Anneke Kakebeen"
+date: "13 Aug 2019"
+always_allow_html: yes
+output:
+  github_document:
+    toc: true
+    toc_depth: 3
+---
+
+## Set up for scRNA-Seq Figures
+```{r scrnaseq figure set up, cache=FALSE, message=FALSE, warning=FALSE}
+# load packages
+library(Seurat)
+library(LaCroixColoR)
+library(ggplot2)
+library(cowplot)
+library(tidyr)
+library(DT)
+library(dplyr)
+library(ggpubr)
+library(rmarkdown)
+library(knitr)
+library(patchwork)
+
+# load functions
+source("~/Desktop/pax6 paper/Final Markdowns/common_source_functions.R")
+
+# Set colors
+my.color.neural <- c("#2CB11B", # NPC
+                     "#F73BEE", # Floor plate
+                     "#E9E4A6", # DiffN
+                     "#DFCEE0" , # IN
+                     "#E9A17C", # VMN
+                     "#FF3200", # MN
+                     "#172869" , # MNL
+                     "#1BB6AF" ) # DN
+
+condition.color <- c( "#6F0909", # 24hpa
+                      "#C0C0C0") # uninj
+cc_colors <- c((lacroix_palette("Lime"))[c(1,3)], "black")
+
+# Set working directory
+setwd("~/Desktop/pax6 paper/Final Markdowns/SingleCell_1/analysis/")
+
+```
+
+
+
+## Read in scRNASeq Objects
+```{r load objects, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Read in pax.neural seurat object
+pax.neural <- readRDS("~/Desktop/pax6 paper/Final Markdowns/SingleCell_1/UMAP/pax.neural_FINAL_1.RDS")
+
+# read in all single cell
+pax.all <- readRDS("~/Desktop/pax6 paper/Final Markdowns/SingleCell_1/UMAP/pax.combined_FINAL_1.RDS")
+DefaultAssay(pax.all) <- "RNA"
+
+# read in plotting data
+pax.neural.plotting<- read.table("~/Desktop/pax6 paper/Final Markdowns/SingleCell_1/UMAP/pax.neural_metadata.txt", sep = "\t")
+
+# factor plotting table for plotting
+pax.neural.plotting$condition <- factor(pax.neural.plotting$condition, levels = c("uninj", "regenerate"))
+pax.neural.plotting$three_state <- factor(pax.neural.plotting$three_state, levels = c("NSC", "Differentiating", "Neuron"))
+pax.neural.plotting$Laevis <- factor(pax.neural.plotting$Laevis, levels = c("Spinal Cord Progenitor", "Floor Plate", "Differentiating Neuron" , "Interneurons",  "Motor Neuron" , "Vulnerable Motor Neuron", "Motor Neuron (leptin+)" , "Dopaminergic Neurons" ))
+pax.neural.plotting$Phase <- factor(pax.neural.plotting$Phase, levels = c("S", "G2M", "G1"))
+
+pax.neural$condition <- factor(pax.neural$condition, levels = c("uninj", "regenerate"))
+
+
+```
+
+
+## Figure 4a: UMAP of all neural cells
+```{r 4a, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# change idents of suerat object
+Idents(pax.neural) <- pax.neural$Laevis
+# plot wit hseurat umap
+DimPlot(pax.neural, cols = my.color.neural) + NoAxes() + NoLegend()
+
+
+```
+
+
+
+## Figure 4b: UMAP of all neural cells colored for condition (uninjured or 24hpa)
+```{r 4b, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# change idents of suerat object
+Idents(pax.neural) <- pax.neural$condition
+DimPlot(pax.neural, cols = rev(condition.color)) + NoAxes() 
+
+# ggplot(pax.neural.plotting, aes(x=UMAP_1, y=UMAP_2, color=pax.neural.plotting$mock_24))+
+#   geom_point(stat="identity", aes(alpha = 0.6)) + 
+#   scale_color_manual(values = condition.color) + 
+#   Seurat:::NoAxes() + 
+#   blank_theme +
+#   theme(legend.position = "none")
+
+```
+
+
+## Figure 4C: Marker dotplot for neural cell clusters
+```{r 4C, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.height= 6, fig.width=10}
+
+# set ident
+Idents(pax.neural) <- "Laevis"
+
+# get markers
+# read in marker table
+DEClusters.neural <- read.table("~/Desktop/pax6 paper/Final Markdowns/SingleCell_1/analysis/outs/DEClusters.neural.txt", sep = "\t", header =TRUE, row.names = 1)
+# reassign class of genes to factors
+DEClusters.neural$gene <- as.character(DEClusters.neural$gene)
+DEClusters.neural$deltapct <- DEClusters.neural$pct.1- DEClusters.neural$pct.2
+DEClusters.neural <- filter(DEClusters.neural, deltapct >0.5)
+# inspect table
+# datatable(DEClusters.neural)
+
+markers_top <- as.data.frame(DEClusters.neural %>%
+  group_by(cluster) %>%
+  top_n(n = 3, wt=p_val_adj))
+markers <- markers_top$gene
+
+# plot dotplot
+
+dot <- (DotPlot(pax.neural, features=unique(c( markers, "lepr")), cols = c("green", "purple")))$data
+ggplot(dot, aes(x=id, y=features.plot)) +
+  geom_point(aes(size=pct.exp, color=avg.exp.scaled)) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 20), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black"))+
+  scale_color_gradient2(low = "yellow", mid = "green", high = "purple", limits=c(-2.5,2.5))+
+  xlab("") +
+  ylab("") +
+  Seurat:::RotatedAxis() 
+
+
+```
+
+
+## Figure 4D-G: cell cluster proportions 
+### Set up data table
+```{r figure 4 cell prop, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+Idents(object = pax.neural) <- "threestate_condition_cell"
+
+# Get number of cells in each cluster for each condition into data frame
+nCells.neural <- as.data.frame(table(pax.neural@active.ident))
+# Make condition and cluster columns
+nCells.neural$cluster <- gsub(nCells.neural$Var1, pattern = ".*__", replacement = "")
+nCells.neural$condition <- gsub(nCells.neural$Var1, pattern = "__.*", replacement = "")
+nCells.neural$condition <- gsub(nCells.neural$condition, pattern = "_.*", replacement = "")
+nCells.neural$class <- gsub(nCells.neural$Var1, pattern = "__.*", replacement = "")
+nCells.neural$class <- gsub(nCells.neural$class, pattern = ".*_", replacement = "")
+nCells.neural <- nCells.neural[order(nCells.neural$condition),]
+
+# get total numner of cells for each condition
+totals <-as.data.frame(nCells.neural %>%
+    group_by(condition) %>% 
+  summarise(totals = sum(Freq)))
+totals$totals <- as.numeric(totals$totals)
+
+# Make ratio columns in new table expressing percent cluster of all neural cells
+nCells.neural <- merge.data.frame(nCells.neural, totals, by = "condition")
+nCells.neural$percent <- nCells.neural$Freq/nCells.neural$totals*100
+
+# mutate for sunburst
+nCells.neural <- nCells.neural %>% mutate(id = seq(class))
+
+# factor table
+nCells.neural$condition <- factor(nCells.neural$condition, levels = c("uninj", "regenerate"))
+nCells.neural$cluster <- factor(nCells.neural$cluster, levels = c("Spinal Cord Progenitor","Floor Plate", "Differentiating Neuron", "Interneurons", "Vulnerable Motor Neuron", "Dopaminergic Neurons", "Motor Neuron (leptin+)", "Motor Neuron"))
+nCells.neural$class <- factor(nCells.neural$class, levels = c("NSC", "Differentiating", "Neuron"))
+
+```
+
+### Pie Charts
+```{r 4f/g uninjured cell proportions, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+# color for sunburst
+my.color.neural.sun <- c("grey", "#E9E4A6", "#1BB6AF", "#F73BEE", "#DFCEE0" , "#FF3200", "#172869" , "black", "white","#2CB11B", "#E9A17C")
+
+# Filter table for unjured
+
+
+plot.table.1 <- filter(nCells.neural, condition == "uninj")
+p1 <- ggplot(plot.table.1, aes(y = percent, group=class)) +
+  geom_col(aes(fill = class, x = 0), width = .4, color="black") +
+  geom_col(aes(fill = cluster, x = .25), width = .1, color="black") +
+  coord_polar(theta = 'y') +
+  blank_theme +
+  scale_fill_manual(values = my.color.neural.sun) +
+  theme(legend.position = "none", axis.text = element_text(colour = "white"))
+
+plot.table.2 <- filter(nCells.neural, condition == "regenerate")
+p2 <- ggplot(plot.table.2, aes(y = percent, group = class)) +
+  geom_col(aes(fill = class, x = 0), width = .4, color="black") +
+  geom_col(aes(fill = cluster, x = .25), width = .1, color="black") +
+  coord_polar(theta = 'y') +
+  blank_theme +
+  scale_fill_manual(values = my.color.neural.sun) +
+  theme(legend.position = "none", axis.text = element_text(colour = "white"))
+
+plot_grid(p1, p2, ncol = 2, labels = c("uninjured", "24hpa"))
+
+nCells.neural %>% group_by(condition, nCells.neural$class) %>% summarise(sum = sum(percent))
+
+# sunburst code
+# (https://stackoverflow.com/questions/55263155/follow-up-of-how-to-make-a-sunburst-plot-in-r)
+  
+
+```
+
+### UMAPS
+```{r 4d/e uninjured cell proportions 2, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+Idents(pax.neural) <- 'Laevis'
+DimPlot(pax.neural, cols = my.color.neural, split.by = "condition") + NoAxes()
+
+
+
+```
+
+## Figure 4E: Cell cycle phase prediction
+### Table set up
+```{r fig4cell cycle, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+Idents(pax.neural) <- "phase_condition_cell"
+
+# Get number of cells in each cluster for each condition into data frame
+nCells.neural <- as.data.frame(table(pax.neural@active.ident))
+# Make condition and cluster columns
+nCells.neural$cluster <- gsub(nCells.neural$Var1, pattern = ".*__", replacement = "")
+nCells.neural$condition <- gsub(nCells.neural$Var1, pattern = "__.*", replacement = "")
+nCells.neural$condition <- gsub(nCells.neural$condition, pattern = "_.*", replacement = "")
+nCells.neural$phase <- gsub(nCells.neural$Var1, pattern = "__.*", replacement = "")
+nCells.neural$phase <- gsub(nCells.neural$phase, pattern = ".*_", replacement = "")
+nCells.neural <- nCells.neural[order(nCells.neural$condition),]
+
+# get total numner of cells for each condition
+totals <-as.data.frame(nCells.neural %>%
+                         group_by(condition) %>% 
+                         summarise(totals = sum(Freq)))
+totals$totals <- as.numeric(totals$totals)
+
+nCells.neural <- merge.data.frame(nCells.neural, totals, by = "condition")
+nCells.neural$percent <- nCells.neural$Freq/nCells.neural$totals*100
+
+# mutate for sunburts
+nCells.neural <- nCells.neural %>% mutate(id = seq(phase))
+
+# factor table
+nCells.neural$condition <- factor(nCells.neural$condition, levels = c("uninj", "regenerate"))
+nCells.neural$cluster <- factor(nCells.neural$cluster, levels = c("Spinal Cord Progenitor", "Floor Plate", "Differentiating Neuron", "Interneurons", "Vulnerable Motor Neuron", "Dopaminergic Neurons", "Motor Neuron (leptin+)", "Motor Neuron"))
+nCells.neural$phase <- factor(nCells.neural$phase, levels = c("S", "G2M", "G1"))
+
+
+```
+
+### Pie Charts
+```{r 4j/k, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# color for sunburst
+my.color.neural.sun <- c("#E9E4A6", "#1BB6AF",  "#F73BEE","black" , "#BDDE9B","#DFCEE0", "#FF3200", "#172869","#2CB11B" , "#2CB11B", "#E9A17C" )
+
+# plot table
+plot.table.1 <- filter(nCells.neural, condition == "uninj")
+p1 <- ggplot(plot.table.1,
+       aes(y = percent, group = phase)) +
+  geom_col(aes(fill = phase, x = 0), width = .4) +
+  geom_col(aes(fill = cluster, x = .25), width = .1, color="black") +
+  coord_polar(theta = 'y') +
+  blank_theme +
+  scale_fill_manual(values = my.color.neural.sun) +
+  theme(legend.position = "none", axis.text = element_text(colour = "white"))
+
+plot.table.2 <- filter(nCells.neural, condition == "regenerate")
+p2 <- ggplot(plot.table.2,
+       aes(y = percent, group = phase)) +
+  geom_col(aes(fill = phase, x = 0), width = .4) +
+  geom_col(aes(fill = cluster, x = .25), width = .1, color="black") +
+  coord_polar(theta = 'y') +
+  blank_theme +
+  scale_fill_manual(values = my.color.neural.sun) +
+  theme(legend.position = "none", axis.text = element_text(colour = "white"))
+
+plot_grid(p1, p2, ncol = 2, labels = c("uninjured", "24hpa"))
+
+nCells.neural %>% group_by(condition, phase) %>% summarise(sum = sum(percent))
+
+```
+
+### UMAP
+```{r 4h/i charts, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+Idents(pax.neural) <- "Phase"
+DimPlot(pax.neural, split.by = "condition", cols = cc_colors) + NoAxes()
+
+# umap plot of cell types faceted by condition
+# ggplot(filter(pax.neural.plotting, condition %in% c("uninj", "regenerate")), aes(x=UMAP_1, y=UMAP_2, color=Phase))+
+#   geom_point(stat="identity") +
+#   scale_color_manual(values = cc_colors) +
+#   facet_grid(.~condition) +
+#   blank_theme +
+#   theme(legend.position = "right", axis.text = element_text(colour = "white"))
+
+
+
+```
+
+
+## Figure 5E: average expression of meis1 and pbx3 over sc clusters
+```{r grn,cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# Predicted GRN
+" 6hpa_Gene:meis1 -> 24hpa_TF:meis1 -> 72hpa_TF:runx|etv1|klf9"
+" 6hpa_Gene:etv1 -> 24hpa_TF:etv1 -> 72hpa_TF:pbx3"
+
+
+# set identity to abbreviated names and condition
+Idents(pax.neural) <- pax.neural$Abbrv_condition
+# get expr data into one data frame for both meis1 and pbx3 using Seurat's dotplot function
+data <- rbind((DotPlot(pax.neural, features = "meis1"))$data, (DotPlot(pax.neural, features = "pbx3"))$data)
+# split column to make two metadata columns for plotting
+data <- data %>%
+  separate(id, into = c("cluster", "condition"), sep = "_")
+# change regenerate to 24hpa
+data$condition <- gsub(data$condition, pattern = "regenerate", replacement = "24hpa")
+# order cluster and condition levels for plotting
+data$cluster <- factor(data$cluster, levels = c("NPC", "FP", "DiffN", "IN", "VMN", "DN", "MNL", "MN"))
+data$condition <- factor(data$condition, levels = c("uninj", "24hpa"))
+
+# plot average expression 
+ggplot(data, aes(x=condition, y=avg.exp, fill=cluster))+
+  geom_bar(stat = "identity", position = "dodge2") +
+  scale_fill_manual(values = my.color.neural) +
+  theme_bw() +
+  facet_grid(features.plot~cluster) +
+  theme(legend.position = "none", 
+        text = element_text(size=20), 
+        axis.text.x = element_text(size = 30), 
+        axis.title.y = element_text(size = 25), 
+        axis.text = element_text(colour = "black", size = 30), 
+        strip.background = element_blank()) +
+  ylab("Avg. Expression Across Cluster")+
+  xlab("Timepoint") +
+  Seurat:::RotatedAxis()
+
+
+```
+
+
+## Figure 5F: sunburst of number of cells that express pbx3 and meis 1
+```{r 5f, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
+
+# get pax meta data
+pax.meta <- pax.neural[[]] # get datat
+pax.meta$cell <- rownames(pax.meta) # add colnames of cell id
+
+# get TRUE/FALSE if cell is expressing genes of interets
+# pbx3
+pbx3.neural <- as.data.frame(GetAssayData(object = pax.neural)["pbx3",] >0)
+colnames(pbx3.neural) <- "pbx3"
+pbx3.neural$cell <- rownames(pbx3.neural)
+#meis1
+meis1.neural <- as.data.frame(GetAssayData(object = pax.neural)["meis1",] >0)
+colnames(meis1.neural) <- "meis1"
+meis1.neural$cell <- rownames(meis1.neural)
+
+# merge meta and gene data frames
+pbx3.neural <- merge.data.frame(pax.meta, pbx3.neural, by = "cell") #pbx3
+meis1.neural <- merge.data.frame(pax.meta, meis1.neural, by = "cell") #meis1
+
+# get frequency of cells expressing or not expressing gene
+#pbx3
+pbx3.neural.plot <- as.data.frame(table(pbx3.neural$Laevis, pbx3.neural$pbx3, pbx3.neural$condition))
+colnames(pbx3.neural.plot) <- c("cluster", "expression", "condition", "frequency")
+#meis1
+meis1.neural.plot <- as.data.frame(table(meis1.neural$Laevis, meis1.neural$meis1, meis1.neural$condition))
+colnames(meis1.neural.plot) <- c("cluster", "expression", "condition", "frequency")
+
+# get total number of cells per condition
+total.pbx <- as.data.frame(table(pbx3.neural$condition)) #pbx3
+total.meis <- as.data.frame(table(meis1.neural$condition))#meis1
+
+# merge total and gene data frames and make percentage column
+# pbx
+pbx3.neural.plot <- merge.data.frame(pbx3.neural.plot, total.pbx, by.x = "condition", by.y = "Var1")
+pbx3.neural.plot$percent <- pbx3.neural.plot$frequency/pbx3.neural.plot$Freq*100
+pbx3.neural.plot <- pbx3.neural.plot %>% mutate(id = seq(expression))
+#meis
+meis1.neural.plot <- merge.data.frame(meis1.neural.plot, total.pbx, by.x = "condition", by.y = "Var1")
+meis1.neural.plot$percent <- meis1.neural.plot$frequency/meis1.neural.plot$Freq*100
+meis1.neural.plot <- meis1.neural.plot %>% mutate(id = seq(expression))
+
+ 
+plotcolors <- c("#E9E4A6", "#1BB6AF", "black","#F73BEE", "#DFCEE0","#FF3200",  "#172869" ,"#2CB11B", "white",  "#E9A17C" )
+
+# plot pbx3
+ggplot(pbx3.neural.plot, 
+       aes(y = percent, group = expression)) +
+  geom_col(aes(fill = expression, x = 0), width = .4) + 
+  geom_col(aes(fill = cluster, x = .25), width = .1, color="black") +
+  coord_polar(theta = 'y') + 
+  blank_theme +
+  facet_grid(.~condition)+
+  scale_fill_manual(values = plotcolors) +
+  theme(legend.position = "none", axis.text = element_text(colour = "white")) +
+  ggtitle("pbx3")
+
+# plot meis1
+ggplot(meis1.neural.plot, 
+       aes(y = percent, group = expression)) +
+  geom_col(aes(fill = expression, x = 0), width = .4) + 
+  geom_col(aes(fill = cluster, x = .25), width = .1, color="black") +
+  coord_polar(theta = 'y') + 
+  blank_theme +
+  facet_grid(.~condition)+
+    scale_fill_manual(values = plotcolors) +
+  theme(legend.position = "none", axis.text = element_text(colour = "white")) +
+  ggtitle("meis1")
+
+meis1.neural.plot %>% group_by(condition, expression) %>% summarise(sum = sum(percent))
+pbx3.neural.plot %>% group_by(condition, expression) %>% summarise(sum = sum(percent))
+
+
+```
+
+
+## Figure 6: Feature  plots  and dotplots of each differentiation marker
+```{r 6, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.height=3, fig.width=6}
+
+#Define function for featureplot (neural), featureplot(all), and dotplot
+fig6.1 <- function(gene){
+  FeaturePlot(pax.neural, repel = TRUE, features = gene, order = TRUE, cols = c("gold", "green", "purple"))+ NoAxes() + NoLegend()
+}
+
+fig6.2 <- function(gene){
+  FeaturePlot(pax.all, features = gene, order = TRUE, cols = c("gold", "green", "purple"))+ NoAxes() + NoLegend()
+}
+
+dotToplot <- function(gene){
+  dot <- DotPlot(pax.neural, features = gene) 
+  data <- dot$data
+  data <- data %>%
+  separate(id, c("cluster", "condition"), "_")
+  data$condition <- gsub(data$condition, pattern="regenerate", replacement="24hpa")
+  data$gene_condition <- paste(data$features.plot, data$condition)
+  data$condition <- factor(data$condition, levels = c("uninj", "24hpa"))
+ggplot(data, aes(x=condition, y=cluster)) +
+  geom_point(aes(size=pct.exp, color=avg.exp.scaled)) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 40), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black"))+
+  scale_color_gradient2(low = "gold", mid = "green", high = "purple") +
+  xlab("") +
+  Seurat:::RotatedAxis() +
+  Seurat:::NoLegend() +
+  ggtitle(gene)
+}
+
+# Make figure plots
+
+#l1cam
+Idents(pax.neural) <- pax.neural$Abbrv
+fig6.1("l1cam")
+fig6.2("l1cam")
+Idents(pax.neural) <- pax.neural$Abbrv_condition
+dotToplot("l1cam")
+
+
+#uchl1
+Idents(pax.neural) <- pax.neural$Abbrv
+fig6.1("uchl1")
+fig6.2("uchl1")
+Idents(pax.neural) <- pax.neural$Abbrv_condition
+dotToplot("uchl1")
+
+#nsg1
+Idents(pax.neural) <- pax.neural$Abbrv
+fig6.1("nsg1")
+fig6.2("nsg1")
+Idents(pax.neural) <- pax.neural$Abbrv_condition
+dotToplot("nsg1")
+
+#ass1
+Idents(pax.neural) <- pax.neural$Abbrv
+fig6.1("ass1")
+fig6.2("ass1")
+Idents(pax.neural) <- pax.neural$Abbrv_condition
+dotToplot("ass1")
+
+
+```

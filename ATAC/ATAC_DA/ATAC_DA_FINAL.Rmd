@@ -25,6 +25,7 @@ library(biomaRt)
 library(DT)
 
 
+
 # Set WD
 setwd("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/")
 ```
@@ -45,6 +46,7 @@ colnames(counts) <- gsub("...BAM.", "", colnames(counts))
 colnames(counts) <- gsub(".bam", "", colnames(counts))
 
 ```
+
 ### Summary table
 ```{r make summary table}
 # FullFileNames
@@ -1005,5 +1007,35 @@ write.table(final.table.paxVall_All,
 
 # view table
 datatable(final.table.paxVall_All)
+
+```
+
+### Fix counts table naming problem for GEO
+```{r read counts}
+# # P8f == W03
+# # remove W03, rename P8f
+# 
+# # Read in counts table
+# counts <- read.table("peaks_counts.txt", header=T, sep="\t") #store file as counts=
+# counts <- counts[,-26] # remove real P85
+# colnames(counts) <- gsub(colnames(counts), pattern = "P8F", replacement = "W03")
+# colnames(counts)[1] <- "Peak" # rename first column peaks
+# counts$Peak <- gsub(counts$Peak, pattern = "ALL", replacement = "All")
+# # gsub("identify what want to change", "change to", colnames(variable))
+# colnames(counts) <- gsub("...BAM..*05_", "", colnames(counts))
+# #colnames(counts) <- gsub(".*05_", "", colnames(counts))
+# colnames(counts) <- gsub("_Run.*.bam", "", colnames(counts))
+# colnames(counts)[15] <- "W03_WT_0hpa"
+# 
+# # read in summits
+# summits <- (read.table("ALL_merged_summits.bed"))[1:4]
+# colnames(summits)[1:4] <- c("Chromosome", "Start", "End", "Peak")
+# 
+# # add positional info to peaks
+# peaks_counts<- merge.data.frame(counts, summits, by = "Peak")
+# 
+# # write out table for GEO
+# write.table(peaks_counts, "/Users/annekekakebeen/Desktop/pax6 paper/Final Markdowns/ATAC/geo/peaks_counts.txt", sep = "\t")
+
 
 ```

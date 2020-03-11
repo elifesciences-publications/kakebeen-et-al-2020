@@ -49,9 +49,9 @@ ph3_2472 <- filter(ph3, Clutch == "20720")
 # plot ph3/area of spinal cord FOR FIGURES
 ggplot(ph3_2472, aes(x=Timepoint, y=CPMm)) +
   geom_boxplot(fill="green4") +
-  ylab(expression("Cells per"~mm^2~" of the Spinal Cord")) +
+  ylab(expression("pH3 Cells per"~mm^2~" of the Spinal Cord")) +
   theme_bw() +
-  theme(text = element_text(colour = "black", size = 18), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
+  theme(text = element_text(colour = "black", size = 29), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
   stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test") 
  
 
@@ -63,6 +63,8 @@ ggplot(ph3_2472, aes(x=Timepoint, y=CPMm)) +
 #   theme(text = element_text(colour = "white")) +
 #   stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test", label = "p.signif", color = "white") 
 
+table(ph3_2472$Timepoint)
+
 ```
 
 ### per both clutches
@@ -71,15 +73,16 @@ ggplot(ph3_2472, aes(x=Timepoint, y=CPMm)) +
 ph3_2472_1 <- filter(ph3, Condition == "uninjured")
 
 # plot morphant data
-ggplot(ph3_2472_1, aes(x=Timepoint, y=ph3_morphant$CPMm)) +
+ggplot(ph3_2472_1, aes(x=Timepoint, y=CPMm)) +
   geom_boxplot(fill="green4") +
-  ylab(expression("Cells per"~mm^2~" of the Spinal Cord")) +
+  ylab(expression("pH3 Cells per"~mm^2~" of the Spinal Cord")) +
   theme_bw() +
   theme(text = element_text(colour = "black", size = 18), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
   stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test") +
   facet_wrap(Condition~.) +
   Seurat:::RotatedAxis()
 
+table(ph3_2472_1$Timepoint)
 
 ```
 
@@ -99,7 +102,7 @@ ggplot(ph3_morphant, aes(x=Condition, y=ph3_morphant$CPMm)) +
   ylab(expression("PH3+ Cells per"~mm^2~" of the Spinal Cord")) +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 20), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
-  stat_compare_means(comparisons = comparison, method = "t.test") +
+  stat_compare_means(comparisons = comparison, method = "t.test", label = "p.signif") +
   facet_grid(Timepoint~.) +
   Seurat:::RotatedAxis()
 
@@ -109,9 +112,60 @@ ggplot(ph3_morphant, aes(x=Timepoint, y=ph3_morphant$CPMm)) +
   ylab(expression("PH3+ Cells per"~mm^2~" of the Spinal Cord")) +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 18), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
-  stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test") +
+  stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test", label = "p.signif") +
   facet_wrap(Condition~.) +
   Seurat:::RotatedAxis()
+
+
+
+```
+
+```{r}
+comparison <- list(c("tracer", "pbx3_VMO"), c("tracer", "meis1_VMO"))
+ph3_morphant$Condition <- factor(ph3_morphant$Condition, levels = c("tracer", "meis1_VMO", "pbx3_VMO"))
+
+# plot morphant data per each timepoint comparing between conditions
+ggplot(subset(ph3_morphant, Timepoint == "72hpa" & Condition %in% c("tracer", "meis1_VMO", "pbx3_VMO")), aes(x=Condition, y=(Area_micron/1000))) +
+  geom_boxplot(fill="green4") +
+  ylab(expression("Area of Spinal Cord"~paste(mm^2))) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 29), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
+  stat_compare_means(comparisons = comparison, method = "t.test", label = "p.signif") +
+  xlab("") +
+  Seurat:::RotatedAxis()
+
+
+ggplot(subset(ph3_morphant, Timepoint == "72hpa"& Condition %in% c("tracer", "meis1_VMO", "pbx3_VMO")), aes(x=Condition, y=CPMm)) +
+  geom_boxplot(fill="green4") +
+  ylab(expression("PH3 Cells/"~mm^2~"Spinal Cord")) +
+  theme_bw() +
+  xlab("") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 29), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
+  stat_compare_means(comparisons = comparison, method = "t.test", label = "p.signif") +
+  Seurat:::RotatedAxis()
+
+
+table(ph3_morphant$Condition, ph3_morphant$Timepoint)
+
+
+
+```
+
+
+```{r}
+
+test <- read.csv("axon_intensity.csv")
+test$condition <- factor(test$condition, levels=c("mr", "pbx3", 'meis1'))
+
+test %>%
+  group_by(condition) %>%
+  summarise(mean_int = mean(intden), mean_raw = mean(rawintden), mean_area = mean(area))
+
+ggplot(test, aes(x=condition, y=intden)) +
+  geom_boxplot() +
+  geom_jitter() +
+stat_compare_means(comparisons = list(c("mr", "pbx3"), c("mr", "meis1")))
+
 
 
 
