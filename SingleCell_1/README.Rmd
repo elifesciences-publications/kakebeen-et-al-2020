@@ -79,7 +79,7 @@ pax.neural$condition <- factor(pax.neural$condition, levels = c("uninj", "regene
 # change idents of suerat object
 Idents(pax.neural) <- pax.neural$Laevis
 # plot wit hseurat umap
-DimPlot(pax.neural, cols = my.color.neural) + NoAxes() + NoLegend()
+DimPlot(pax.neural, cols = my.color.neural, label = TRUE) + NoAxes() + NoLegend()
 
 
 ```
@@ -121,7 +121,7 @@ DEClusters.neural <- filter(DEClusters.neural, deltapct >0.5)
 
 markers_top <- as.data.frame(DEClusters.neural %>%
   group_by(cluster) %>%
-  top_n(n = 3, wt=p_val_adj))
+  top_n(n = 3, wt=deltapct))
 markers <- markers_top$gene
 
 # plot dotplot
@@ -429,7 +429,7 @@ pbx3.neural.plot %>% group_by(condition, expression) %>% summarise(sum = sum(per
 
 
 ## Figure 6: Feature  plots  and dotplots of each differentiation marker
-```{r 6, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.height=3, fig.width=6}
+```{r 6, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.height=6, fig.width=6}
 
 #Define function for featureplot (neural), featureplot(all), and dotplot
 fig6.1 <- function(gene){
