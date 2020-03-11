@@ -155,11 +155,10 @@ ggplot(dot, aes(x=features.plot, y=id)) +
   geom_point(aes(size=pct.exp, color=avg.exp.scaled)) +
   theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 30), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black"))+
-  scale_color_gradient2(low = "gold", mid = "green", high = "purple", limits = c(0, 2.5)) +
+  scale_color_gradient2(low = "gold", mid = "green", high = "purple", limits = c(-1.5, 2.5)) +
   xlab("") +
   ylab("") +
-  Seurat:::RotatedAxis() +
-  Seurat:::NoLegend()
+  Seurat:::RotatedAxis()
 
 ```
 
