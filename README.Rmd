@@ -11,17 +11,16 @@ output:
 
 ## Repository for analysis of data from Kakebeen et al 2019
 
-This GitLab project holds code for sequencing data preparation, analysis, and figure making for the publication titled Chromatin Accessiblity Dynamics and Sincle Cell Transcriptomics Identify Novel Regulators of Regeneration in Vertebrate Neural Progenitors. This paper can be found with the PMID..... or at this location.
+This GitLab project holds code for sequencing data preparation, analysis, and figure making for the publication titled Chromatin accessibility dynamics and single cell transcriptomics reveal new regulators of regeneration in neural progenitors. This paper can be found with the PMID..... or at this location.
 
 
 ## Abstract
-
-Vertebrate appendage regeneration requires precisely coordinated remodeling of the transcriptional landscape to enable the growth and differentiation of new tissue, a process executed over multiple days and across dozens of cell types. This means that heterogeneous and even conflicting gene regulatory decisions must be coordinated in time and space. Given this complexity, it has been difficult to articulate the specific gene regulatory programs enabling regeneration of individual cell types. To better understand how a regenerative program is fulfilled by neural progenitor cells (NPCs) of the injured spinal cord, we analyzed regenerating NPCs isolated from Xenopus tropicalis tails. By intersecting chromatin accessibility data with single-cell transcriptomics, we find that NPCs place an early priority on neuronal differentiation, with an increase in neurons and decrease in the progenitor pool. Late in regeneration, the priority returns to proliferation. Our analyses identify the homeodomain transcription factors Pbx3 and Meis1 as critical regulators of tail regeneration and axon organization. Overall, we articulate transcriptional regulatory dynamics for regenerating NPCs, define discrete windows for NPC cell fate decisions and identify new regulators critical for these decisions.
+Vertebrate appendage regeneration requires precisely coordinated remodeling of the transcriptional landscape to enable the growth and differentiation of new tissue, a process executed over multiple days and across dozens of cell types. The heterogeneity of tissues and temporally-sensitive fate decisions involved has made it difficult to articulate the gene regulatory programs enabling regeneration of individual cell types. To better understand how a regenerative program is fulfilled by neural progenitor cells (NPCs) of the spinal cord, we analyzed pax6-expressing NPCs isolated from regenerating Xenopus tropicalis tails. By intersecting chromatin accessibility data with single-cell transcriptomics, we find that NPCs place an early priority on neuronal differentiation. Late in regeneration, the priority returns to proliferation. Our analyses identify Pbx3 and Meis1 as critical regulators of tail regeneration and axon organization. Overall, we use transcriptional regulatory dynamics to present a new model for cell fate decisions and their regulators in NPCs during regeneration.
 
 ## ATAC
 This folder contains the commands used to take raw reads to a counts table, quality control analysis, differential accessiblity analysis, and the figures made from this data.
 
-## SingleCell
+## SingleCell_1
 This folder contains the Seurat integrative clustering analysis used to cluster the data, differential expression analysis, and code for figures made from this data. 
 
 ## GRN
