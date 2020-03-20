@@ -1,892 +1,892 @@
-﻿SampleID,Sample,Replicate,Clutch,Timepoint,Measurement,MeasureType,PhenotypeSum,PhenotypeNotocord,PhenotypeNeuron,PhenotypeMorphology,Stain
-cntrl,cntrl,1,2,24hpa,197.17,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,2,2,24hpa,180.22,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,3,2,24hpa,209.28,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,4,2,24hpa,163.71,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,1,2,48hpa,535.24,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,2,48hpa,481.23,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,2,48hpa,485.23,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,2,48hpa,464.61,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,2,48hpa,211.07,Tail,113,1,1,3,NF_DAPI
-cntrl,cntrl,1,2,72hpa,506.46,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,2,72hpa,646.28,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,2,72hpa,624.85,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,2,72hpa,666.2,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,2,72hpa,627.9,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,2,72hpa,541.79,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,2,24hpa,36.68,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,2,2,24hpa,46.56,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,3,2,24hpa,37.64,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,4,2,24hpa,32.04,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,1,2,48hpa,15.84,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,2,48hpa,16.03,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,2,48hpa,18.62,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,2,48hpa,25.88,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,2,48hpa,49.08,sc_width,113,1,1,3,NF_DAPI
-cntrl,cntrl,1,2,72hpa,21.5,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,2,72hpa,30.36,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,2,72hpa,20.2,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,2,72hpa,21.94,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,2,72hpa,19.17,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,2,72hpa,17.96,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,2,24hpa,74.79,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,2,2,24hpa,70.78,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,3,2,24hpa,76.26,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,4,2,24hpa,57.34,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,1,2,48hpa,303.18,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,2,48hpa,310.65,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,2,48hpa,306.65,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,2,48hpa,194.55,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,2,48hpa,112.8,sc,113,1,1,3,NF_DAPI
-cntrl,cntrl,1,2,72hpa,452.46,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,2,72hpa,550.87,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,2,72hpa,480.44,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,2,72hpa,448.07,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,2,72hpa,490.31,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,2,72hpa,459.13,sc,111,1,1,1,NF_DAPI
-pbx3MO1,pbx3MO,1,2,24hpa,188.09,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,2,24hpa,207.03,Tail,211,2,1,1,NF_DAPI
-pbx3MO1,pbx3MO,3,2,24hpa,127.14,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,4,2,24hpa,159.09,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,5,2,24hpa,158.64,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,6,2,24hpa,120.8,Tail,213,2,1,3,NF_DAPI
-pbx3MO1,pbx3MO,7,2,24hpa,232,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,8,2,24hpa,136.42,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,9,2,24hpa,184.84,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,1,2,48hpa,323.06,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,2,48hpa,444.42,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,3,2,48hpa,503.71,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,4,2,48hpa,314.72,Tail,211,2,1,1,NF_DAPI
-pbx3MO1,pbx3MO,5,2,48hpa,203.44,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,6,2,48hpa,358.15,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,7,2,48hpa,267.05,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,1,2,72hpa,157.23,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,2,2,72hpa,159.48,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,3,2,72hpa,198.24,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,4,2,72hpa,196.64,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,5,2,72hpa,235.42,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,6,2,72hpa,109.99,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,7,2,72hpa,306.92,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,8,2,72hpa,383.15,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,9,2,72hpa,443.57,Tail,211,2,1,1,NF_DAPI
-pbx3MO1,pbx3MO,10,2,72hpa,246.06,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,1,2,24hpa,74.79,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,2,24hpa,68.59,sc,211,2,1,1,NF_DAPI
-pbx3MO1,pbx3MO,3,2,24hpa,72.02,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,4,2,24hpa,70.26,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,5,2,24hpa,70.77,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,6,2,24hpa,65.28,sc,213,2,1,3,NF_DAPI
-pbx3MO1,pbx3MO,7,2,24hpa,80.63,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,8,2,24hpa,71.34,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,9,2,24hpa,99.31,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,1,2,48hpa,144.7,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,2,48hpa,120.75,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,3,2,48hpa,227.19,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,4,2,48hpa,124.77,sc,211,2,1,1,NF_DAPI
-pbx3MO1,pbx3MO,5,2,48hpa,74.86,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,6,2,48hpa,115.4,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,7,2,48hpa,145.05,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,1,2,72hpa,86.79,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,2,2,72hpa,91.4,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,3,2,72hpa,132.55,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,4,2,72hpa,97.4,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,5,2,72hpa,125.43,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,6,2,72hpa,60.56,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,7,2,72hpa,131.12,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,8,2,72hpa,219.59,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,9,2,72hpa,128.73,sc,211,2,1,1,NF_DAPI
-pbx3MO1,pbx3MO,10,2,72hpa,155.74,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,1,2,24hpa,34.08,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,2,24hpa,51,sc_width,211,2,1,1,NF_DAPI
-pbx3MO1,pbx3MO,3,2,24hpa,52.48,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,4,2,24hpa,43.09,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,5,2,24hpa,47.18,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,6,2,24hpa,43.01,sc_width,213,2,1,3,NF_DAPI
-pbx3MO1,pbx3MO,7,2,24hpa,46.01,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,8,2,24hpa,48.52,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,9,2,24hpa,34.53,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,1,2,48hpa,14.89,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,2,48hpa,29.25,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,3,2,48hpa,38.86,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,4,2,48hpa,37.55,sc_width,211,2,1,1,NF_DAPI
-pbx3MO1,pbx3MO,5,2,48hpa,42.24,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,6,2,48hpa,27.31,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,7,2,48hpa,34.94,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,1,2,72hpa,37.61,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,2,2,72hpa,40.74,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,3,2,72hpa,49.3,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,4,2,72hpa,48.3,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,5,2,72hpa,46.7,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,6,2,72hpa,36.14,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,7,2,72hpa,39.72,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,8,2,72hpa,38.21,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,9,2,72hpa,57.76,sc_width,211,2,1,1,NF_DAPI
-pbx3MO1,pbx3MO,10,2,72hpa,41.44,sc_width,212,2,1,2,NF_DAPI
-cntrl,cntrl,1,1,48hpa,506.02,Tail,101,1,0,1,DAPI
-cntrl,cntrl,2,1,48hpa,527.69,Tail,101,1,0,1,DAPI
-cntrl,cntrl,3,1,48hpa,446.95,Tail,101,1,0,1,DAPI
-cntrl,cntrl,4,1,48hpa,555.29,Tail,101,1,0,1,DAPI
-cntrl,cntrl,5,1,48hpa,475.91,Tail,101,1,0,1,DAPI
-cntrl,cntrl,6,1,48hpa,406.48,Tail,101,1,0,1,DAPI
-cntrl,cntrl,7,1,48hpa,385,Tail,101,1,0,1,DAPI
-cntrl,cntrl,8,1,48hpa,527.81,Tail,101,1,0,1,DAPI
-cntrl,cntrl,9,1,48hpa,544.87,Tail,101,1,0,1,DAPI
-cntrl,cntrl,10,1,48hpa,415.75,Tail,101,1,0,1,DAPI
-pbx3MO1,pbx3MO,1,1,48hpa,356.05,Tail,204,2,0,4,DAPI
-pbx3MO1,pbx3MO,2,1,48hpa,391.25,Tail,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,3,1,48hpa,221.52,Tail,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,4,1,48hpa,305.36,Tail,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,5,1,48hpa,288.55,Tail,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,6,1,48hpa,325.02,Tail,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,7,1,48hpa,398.17,Tail,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,8,1,48hpa,247.54,Tail,202,2,0,2,DAPI
-meis1MO1,meis1MO,1,1,48hpa,244.85,Tail,202,2,0,2,DAPI
-meis1MO1,meis1MO,2,1,48hpa,328.43,Tail,201,2,0,1,DAPI
-meis1MO1,meis1MO,3,1,48hpa,192.25,Tail,202,2,0,2,DAPI
-meis1MO1,meis1MO,4,1,48hpa,403.29,Tail,201,2,0,1,DAPI
-meis1MO1,meis1MO,5,1,48hpa,285.63,Tail,202,2,0,2,DAPI
-cntrl,cntrl,1,1,48hpa,313.94,sc,101,1,0,1,DAPI
-cntrl,cntrl,2,1,48hpa,271.39,sc,101,1,0,1,DAPI
-cntrl,cntrl,3,1,48hpa,300.06,sc,101,1,0,1,DAPI
-cntrl,cntrl,4,1,48hpa,370.85,sc,101,1,0,1,DAPI
-cntrl,cntrl,5,1,48hpa,228,sc,101,1,0,1,DAPI
-cntrl,cntrl,6,1,48hpa,220.28,sc,101,1,0,1,DAPI
-cntrl,cntrl,7,1,48hpa,290.06,sc,101,1,0,1,DAPI
-cntrl,cntrl,8,1,48hpa,329.43,sc,101,1,0,1,DAPI
-cntrl,cntrl,9,1,48hpa,302.25,sc,101,1,0,1,DAPI
-cntrl,cntrl,10,1,48hpa,220.05,sc,101,1,0,1,DAPI
-pbx3MO1,pbx3MO,1,1,48hpa,169.5,sc,204,2,0,4,DAPI
-pbx3MO1,pbx3MO,2,1,48hpa,209.16,sc,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,3,1,48hpa,80.38,sc,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,4,1,48hpa,245.45,sc,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,5,1,48hpa,175.55,sc,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,6,1,48hpa,261.06,sc,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,7,1,48hpa,171.9,sc,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,8,1,48hpa,177.46,sc,202,2,0,2,DAPI
-meis1MO1,meis1MO,1,1,48hpa,71.88,sc,202,2,0,2,DAPI
-meis1MO1,meis1MO,2,1,48hpa,168.11,sc,201,2,0,1,DAPI
-meis1MO1,meis1MO,3,1,48hpa,75.6,sc,202,2,0,2,DAPI
-meis1MO1,meis1MO,4,1,48hpa,152.35,sc,201,2,0,1,DAPI
-meis1MO1,meis1MO,5,1,48hpa,131.88,sc,202,2,0,2,DAPI
-cntrl,cntrl,1,1,48hpa,25.66,sc_width,101,1,0,1,DAPI
-cntrl,cntrl,2,1,48hpa,35.77,sc_width,101,1,0,1,DAPI
-cntrl,cntrl,3,1,48hpa,37.61,sc_width,101,1,0,1,DAPI
-cntrl,cntrl,4,1,48hpa,26.69,sc_width,101,1,0,1,DAPI
-cntrl,cntrl,5,1,48hpa,25.32,sc_width,101,1,0,1,DAPI
-cntrl,cntrl,6,1,48hpa,20.54,sc_width,101,1,0,1,DAPI
-cntrl,cntrl,7,1,48hpa,18.31,sc_width,101,1,0,1,DAPI
-cntrl,cntrl,8,1,48hpa,22.09,sc_width,101,1,0,1,DAPI
-cntrl,cntrl,9,1,48hpa,23.13,sc_width,101,1,0,1,DAPI
-cntrl,cntrl,10,1,48hpa,36.72,sc_width,101,1,0,1,DAPI
-pbx3MO1,pbx3MO,1,1,48hpa,70.88,sc_width,204,2,0,4,DAPI
-pbx3MO1,pbx3MO,2,1,48hpa,47.74,sc_width,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,3,1,48hpa,46.24,sc_width,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,4,1,48hpa,31.6,sc_width,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,5,1,48hpa,41.91,sc_width,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,6,1,48hpa,70.02,sc_width,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,7,1,48hpa,68.13,sc_width,202,2,0,2,DAPI
-pbx3MO1,pbx3MO,8,1,48hpa,80.15,sc_width,202,2,0,2,DAPI
-meis1MO1,meis1MO,1,1,48hpa,75.83,sc_width,202,2,0,2,DAPI
-meis1MO1,meis1MO,2,1,48hpa,62.76,sc_width,201,2,0,1,DAPI
-meis1MO1,meis1MO,3,1,48hpa,52.42,sc_width,202,2,0,2,DAPI
-meis1MO1,meis1MO,4,1,48hpa,71.91,sc_width,201,2,0,1,DAPI
-meis1MO1,meis1MO,5,1,48hpa,63.91,sc_width,202,2,0,2,DAPI
-meis1MO1,meis1MO,1,3,24hpa,50.98,Tail,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,2,3,24hpa,62.4,Tail,214,2,1,4,NF_DAPI
-meis1MO1,meis1MO,3,3,24hpa,57.21,Tail,214,2,1,4,NF_DAPI
-meis1MO1,meis1MO,1,3,48hpa,58.29,Tail,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,2,3,48hpa,54.98,Tail,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,3,3,48hpa,90.3,Tail,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,1,3,72hpa,94.46,Tail,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,2,3,72hpa,141.28,Tail,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,3,3,72hpa,102.58,Tail,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,4,3,72hpa,116.59,Tail,212,2,1,2,NF_DAPI
-cntrl,cntrl,1,3,24hpa,115.01,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,3,24hpa,112.3,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,3,24hpa,144.05,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,3,24hpa,145.65,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,3,24hpa,145.9,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,3,24hpa,156.79,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,3,48hpa,120.24,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,3,48hpa,269.45,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,3,48hpa,250.75,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,3,48hpa,292.52,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,3,48hpa,205.13,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,3,48hpa,290.32,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,7,3,48hpa,299.85,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,3,72hpa,464.23,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,3,72hpa,408.68,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,3,72hpa,462.07,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,3,72hpa,593.91,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,3,72hpa,538.47,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,3,72hpa,562.45,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,7,3,72hpa,410.66,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,8,3,72hpa,549.3,Tail,111,1,1,1,NF_DAPI
-meis1MO1,meis1MO,1,3,24hpa,78.31,sc,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,2,3,24hpa,143.16,sc,214,2,1,4,NF_DAPI
-meis1MO1,meis1MO,3,3,24hpa,143.83,sc,214,2,1,4,NF_DAPI
-meis1MO1,meis1MO,1,3,48hpa,153.45,sc,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,2,3,48hpa,216,sc,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,3,3,48hpa,133.79,sc,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,1,3,72hpa,188.8,sc,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,2,3,72hpa,461.39,sc,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,3,3,72hpa,172.86,sc,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,4,3,72hpa,194.37,sc,212,2,1,2,NF_DAPI
-cntrl,cntrl,1,3,24hpa,299.86,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,3,24hpa,281.65,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,3,24hpa,330.75,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,3,24hpa,345.16,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,3,24hpa,368.56,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,3,24hpa,330.95,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,3,48hpa,307.42,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,3,48hpa,413.53,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,3,48hpa,448.6,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,3,48hpa,486.76,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,3,48hpa,475.42,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,3,48hpa,393.71,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,7,3,48hpa,474.67,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,3,72hpa,563.26,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,3,72hpa,524.05,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,3,72hpa,586.44,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,3,72hpa,707.48,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,3,72hpa,666.18,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,3,72hpa,669.85,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,7,3,72hpa,548.82,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,8,3,72hpa,680.27,sc,111,1,1,1,NF_DAPI
-meis1MO1,meis1MO,1,3,24hpa,29.13,sc_width,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,2,3,24hpa,49.05,sc_width,214,2,1,4,NF_DAPI
-meis1MO1,meis1MO,3,3,24hpa,51.56,sc_width,214,2,1,4,NF_DAPI
-meis1MO1,meis1MO,1,3,48hpa,64.33,sc_width,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,2,3,48hpa,55.31,sc_width,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,3,3,48hpa,27.9,sc_width,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,1,3,72hpa,70.12,sc_width,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,2,3,72hpa,46.17,sc_width,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,3,3,72hpa,42.74,sc_width,212,2,1,2,NF_DAPI
-meis1MO1,meis1MO,4,3,72hpa,49.47,sc_width,212,2,1,2,NF_DAPI
-cntrl,cntrl,1,3,24hpa,64.53,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,3,24hpa,56.76,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,3,24hpa,41.15,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,3,24hpa,30.92,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,3,24hpa,46.86,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,3,24hpa,46.88,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,3,48hpa,28.07,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,3,48hpa,27.25,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,3,48hpa,25.56,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,3,48hpa,21.86,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,3,48hpa,21.15,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,3,48hpa,20.59,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,7,3,48hpa,25.29,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,3,72hpa,17.33,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,3,72hpa,20.52,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,3,72hpa,17.95,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,3,72hpa,22.56,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,3,72hpa,19.31,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,3,72hpa,17.4,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,7,3,72hpa,21.92,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,8,3,72hpa,27.61,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,4,24hpa,216.37,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,2,4,24hpa,241.25,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,3,4,24hpa,212.22,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,4,4,24hpa,228.11,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,5,4,24hpa,227.09,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,6,4,24hpa,210.24,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,7,4,24hpa,199.33,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,8,4,24hpa,222.67,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,9,4,24hpa,239.68,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,10,4,24hpa,262.19,Tail,211,2,1,1,NF_DAPI
-cntrl,cntrl,1,4,24hpa,80.61,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,2,4,24hpa,94.59,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,3,4,24hpa,91.89,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,4,4,24hpa,92.37,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,5,4,24hpa,78.73,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,6,4,24hpa,104.9,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,7,4,24hpa,79.88,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,8,4,24hpa,104.08,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,9,4,24hpa,99.56,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,10,4,24hpa,105.85,sc,211,2,1,1,NF_DAPI
-cntrl,cntrl,1,4,24hpa,37.62,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,2,4,24hpa,51.16,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,3,4,24hpa,48.4,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,4,4,24hpa,61.53,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,5,4,24hpa,45.67,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,6,4,24hpa,66.24,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,7,4,24hpa,45.83,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,8,4,24hpa,59.25,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,9,4,24hpa,61.71,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,10,4,24hpa,57.3,sc_width,211,2,1,1,NF_DAPI
-cntrl,cntrl,1,4,48hpa,321.25,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,4,48hpa,346.24,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,4,48hpa,416.2,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,4,48hpa,512.41,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,4,72hpa,609.39,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,4,72hpa,637.5,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,4,72hpa,590.46,Tail,131,1,3,1,NF_DAPI
-cntrl,cntrl,4,4,72hpa,545.68,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,4,72hpa,496.02,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,4,72hpa,660.61,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,7,4,72hpa,628.53,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,8,4,72hpa,621.3,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,9,4,72hpa,506.76,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,10,4,72hpa,548.39,Tail,111,1,1,1,NF_DAPI
-cntrl,cntrl,11,4,72hpa,648.37,Tail,111,1,1,1,NF_DAPI
-pbx3MO1,pbx3MO,1,4,24hpa,337.3,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,2,4,24hpa,200.04,Tail,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,3,4,24hpa,263.88,Tail,213,2,1,3,NF_DAPI
-pbx3MO1,pbx3MO,1,4,48hpa,278.89,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,4,48hpa,583.58,Tail,113,1,1,3,NF_DAPI
-pbx3MO1,pbx3MO,3,4,48hpa,398.38,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,1,4,72hpa,676.5,Tail,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,4,72hpa,342.04,Tail,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,1,4,24hpa,259.8,Tail,211,2,1,1,NF_DAPI
-pbx3MO2,pbx3MO,2,4,24hpa,148.61,Tail,213,2,1,3,NF_DAPI
-pbx3MO2,pbx3MO,3,4,24hpa,271.73,Tail,211,2,1,1,NF_DAPI
-pbx3MO2,pbx3MO,4,4,24hpa,100.97,Tail,214,2,1,4,NF_DAPI
-pbx3MO2,pbx3MO,1,4,48hpa,373.11,Tail,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,2,4,48hpa,362.86,Tail,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,3,4,48hpa,367.26,Tail,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,4,4,48hpa,365.03,Tail,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,5,4,48hpa,343.45,Tail,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,6,4,48hpa,118.09,Tail,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,7,4,48hpa,145.24,Tail,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,8,4,48hpa,215.51,Tail,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,9,4,48hpa,300.11,Tail,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,1,4,72hpa,353.26,Tail,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,2,4,72hpa,177.89,Tail,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,3,4,72hpa,283.01,Tail,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,4,4,72hpa,170.1,Tail,213,2,1,3,NF_DAPI
-pbx3MO2,pbx3MO,5,4,72hpa,153.44,Tail,213,2,1,3,NF_DAPI
-pbx3MO2,pbx3MO,6,4,72hpa,190.03,Tail,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,1,4,24hpa,251.14,Tail,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,2,4,24hpa,183.29,Tail,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,3,4,24hpa,185.71,Tail,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,1,4,48hpa,263.15,Tail,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,2,4,48hpa,354.02,Tail,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,3,4,48hpa,271.11,Tail,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,1,4,72hpa,183.81,Tail,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,2,4,72hpa,235.16,Tail,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,3,4,72hpa,292.36,Tail,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,4,4,72hpa,350.53,Tail,212,2,1,2,NF_DAPI
-cntrl,cntrl,1,4,48hpa,214.98,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,4,48hpa,156.82,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,4,48hpa,175.44,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,4,48hpa,301.15,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,4,72hpa,502.01,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,4,72hpa,468.23,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,4,72hpa,483.12,sc,131,1,3,1,NF_DAPI
-cntrl,cntrl,4,4,72hpa,432.93,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,4,72hpa,423.34,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,4,72hpa,405.78,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,7,4,72hpa,450.25,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,8,4,72hpa,432.14,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,9,4,72hpa,405.25,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,10,4,72hpa,389.19,sc,111,1,1,1,NF_DAPI
-cntrl,cntrl,11,4,72hpa,577.13,sc,111,1,1,1,NF_DAPI
-pbx3MO1,pbx3MO,1,4,24hpa,77.82,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,2,4,24hpa,80.01,sc,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,3,4,24hpa,113.29,sc,213,2,1,3,NF_DAPI
-pbx3MO1,pbx3MO,1,4,48hpa,181.19,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,4,48hpa,401.67,sc,113,1,1,3,NF_DAPI
-pbx3MO1,pbx3MO,3,4,48hpa,167.02,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,1,4,72hpa,578.32,sc,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,4,72hpa,130.9,sc,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,1,4,24hpa,85.78,sc,211,2,1,1,NF_DAPI
-pbx3MO2,pbx3MO,2,4,24hpa,93.46,sc,213,2,1,3,NF_DAPI
-pbx3MO2,pbx3MO,3,4,24hpa,132.04,sc,211,2,1,1,NF_DAPI
-pbx3MO2,pbx3MO,4,4,24hpa,90.98,sc,214,2,1,4,NF_DAPI
-pbx3MO2,pbx3MO,1,4,48hpa,89.99,sc,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,2,4,48hpa,112.36,sc,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,3,4,48hpa,96.18,sc,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,4,4,48hpa,123.84,sc,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,5,4,48hpa,168.92,sc,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,6,4,48hpa,103.57,sc,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,7,4,48hpa,138.75,sc,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,8,4,48hpa,107.5,sc,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,9,4,48hpa,122.95,sc,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,1,4,72hpa,91.46,sc,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,2,4,72hpa,161.31,sc,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,3,4,72hpa,178.35,sc,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,4,4,72hpa,129.21,sc,213,2,1,3,NF_DAPI
-pbx3MO2,pbx3MO,5,4,72hpa,114.74,sc,213,2,1,3,NF_DAPI
-pbx3MO2,pbx3MO,6,4,72hpa,89.22,sc,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,1,4,24hpa,121.51,sc,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,2,4,24hpa,117.59,sc,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,3,4,24hpa,137.01,sc,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,1,4,48hpa,66.24,sc,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,2,4,48hpa,143.25,sc,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,3,4,48hpa,101.29,sc,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,1,4,72hpa,157.17,sc,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,2,4,72hpa,111.6,sc,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,3,4,72hpa,102.98,sc,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,4,4,72hpa,154.42,sc,212,2,1,2,NF_DAPI
-cntrl,cntrl,1,4,48hpa,23,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,4,48hpa,28.65,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,4,48hpa,35.92,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,4,4,48hpa,26.15,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,1,4,72hpa,24.99,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,2,4,72hpa,15.23,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,3,4,72hpa,14.54,sc_width,131,1,3,1,NF_DAPI
-cntrl,cntrl,4,4,72hpa,16.38,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,5,4,72hpa,21.48,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,6,4,72hpa,21.24,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,7,4,72hpa,16.89,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,8,4,72hpa,15.67,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,9,4,72hpa,21,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,10,4,72hpa,25.11,sc_width,111,1,1,1,NF_DAPI
-cntrl,cntrl,11,4,72hpa,19.25,sc_width,111,1,1,1,NF_DAPI
-pbx3MO1,pbx3MO,1,4,24hpa,65.21,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,2,4,24hpa,95.09,sc_width,214,2,1,4,NF_DAPI
-pbx3MO1,pbx3MO,3,4,24hpa,74.45,sc_width,213,2,1,3,NF_DAPI
-pbx3MO1,pbx3MO,1,4,48hpa,29.06,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,4,48hpa,18.2,sc_width,113,1,1,3,NF_DAPI
-pbx3MO1,pbx3MO,3,4,48hpa,71.82,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,1,4,72hpa,16.68,sc_width,212,2,1,2,NF_DAPI
-pbx3MO1,pbx3MO,2,4,72hpa,33.55,sc_width,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,1,4,24hpa,82.7,sc_width,211,2,1,1,NF_DAPI
-pbx3MO2,pbx3MO,2,4,24hpa,50.6,sc_width,213,2,1,3,NF_DAPI
-pbx3MO2,pbx3MO,3,4,24hpa,45.53,sc_width,211,2,1,1,NF_DAPI
-pbx3MO2,pbx3MO,4,4,24hpa,45.55,sc_width,214,2,1,4,NF_DAPI
-pbx3MO2,pbx3MO,1,4,48hpa,67.68,sc_width,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,2,4,48hpa,61.96,sc_width,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,3,4,48hpa,28.52,sc_width,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,4,4,48hpa,63.48,sc_width,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,5,4,48hpa,49.61,sc_width,215,2,1,5,NF_DAPI
-pbx3MO2,pbx3MO,6,4,48hpa,65.14,sc_width,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,7,4,48hpa,94.22,sc_width,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,8,4,48hpa,51.69,sc_width,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,9,4,48hpa,22.36,sc_width,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,1,4,72hpa,74.16,sc_width,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,2,4,72hpa,83.79,sc_width,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,3,4,72hpa,58.8,sc_width,212,2,1,2,NF_DAPI
-pbx3MO2,pbx3MO,4,4,72hpa,54.3,sc_width,213,2,1,3,NF_DAPI
-pbx3MO2,pbx3MO,5,4,72hpa,67.49,sc_width,213,2,1,3,NF_DAPI
-pbx3MO2,pbx3MO,6,4,72hpa,64.4,sc_width,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,1,4,24hpa,53.36,sc_width,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,2,4,24hpa,65.47,sc_width,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,3,4,24hpa,58.22,sc_width,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,1,4,48hpa,58.95,sc_width,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,2,4,48hpa,50.6,sc_width,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,3,4,48hpa,58.94,sc_width,214,2,1,4,NF_DAPI
-meis1MO2,meis1MO,1,4,72hpa,49.13,sc_width,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,2,4,72hpa,41.89,sc_width,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,3,4,72hpa,42.28,sc_width,212,2,1,2,NF_DAPI
-meis1MO2,meis1MO,4,4,72hpa,31.93,sc_width,212,2,1,2,NF_DAPI
-cntrl,cntrl,1,5,24hpa,237.47,Tail,,,3,1,DAPI
-cntrl,cntrl,2,5,24hpa,219.34,Tail,,,3,1,DAPI
-cntrl,cntrl,3,5,24hpa,237.86,Tail,,,3,1,DAPI
-cntrl,cntrl,4,5,24hpa,223.28,Tail,,,3,1,DAPI
-cntrl,cntrl,5,5,24hpa,234.17,Tail,,,3,1,DAPI
-cntrl,cntrl,6,5,24hpa,148.66,Tail,,,3,1,DAPI
-cntrl,cntrl,7,5,24hpa,241.06,Tail,,,3,1,DAPI
-cntrl,cntrl,8,5,24hpa,203.68,Tail,,,3,1,DAPI
-cntrl,cntrl,9,5,24hpa,232.08,Tail,,,3,1,DAPI
-cntrl,cntrl,10,5,24hpa,257.41,Tail,,,3,1,DAPI
-cntrl,cntrl,11,5,24hpa,303.24,Tail,,,3,1,DAPI
-cntrl,cntrl,12,5,24hpa,252.16,Tail,,,3,1,DAPI
-cntrl,cntrl,13,5,24hpa,244.69,Tail,,,3,1,DAPI
-cntrl,cntrl,14,5,24hpa,223.66,Tail,,,3,1,DAPI
-cntrl,cntrl,15,5,24hpa,236.56,Tail,,,3,1,DAPI
-cntrl,cntrl,1,5,48hpa,351.26,Tail,,,3,1,DAPI
-cntrl,cntrl,2,5,48hpa,410.85,Tail,,,3,1,DAPI
-cntrl,cntrl,3,5,48hpa,437.66,Tail,,,3,1,DAPI
-cntrl,cntrl,4,5,48hpa,490.41,Tail,,,3,1,DAPI
-cntrl,cntrl,5,5,48hpa,434.59,Tail,,,3,1,DAPI
-cntrl,cntrl,6,5,48hpa,436.15,Tail,,,3,1,DAPI
-cntrl,cntrl,7,5,48hpa,426.93,Tail,,,3,1,DAPI
-cntrl,cntrl,8,5,48hpa,443.77,Tail,,,3,1,DAPI
-cntrl,cntrl,9,5,48hpa,412.39,Tail,,,3,1,DAPI
-cntrl,cntrl,10,5,48hpa,476.35,Tail,,,3,1,DAPI
-cntrl,cntrl,1,5,72hpa,630.38,Tail,,,3,1,DAPI
-cntrl,cntrl,2,5,72hpa,641.86,Tail,,,3,1,DAPI
-cntrl,cntrl,3,5,72hpa,648.99,Tail,,,3,1,DAPI
-cntrl,cntrl,4,5,72hpa,567.98,Tail,,,3,1,DAPI
-cntrl,cntrl,5,5,72hpa,469.77,Tail,,,3,1,DAPI
-cntrl,cntrl,6,5,72hpa,674.03,Tail,,,3,1,DAPI
-cntrl,cntrl,7,5,72hpa,465.02,Tail,,,3,1,DAPI
-cntrl,cntrl,8,5,72hpa,615.76,Tail,,,3,1,DAPI
-cntrl,cntrl,9,5,72hpa,700.74,Tail,,,3,1,DAPI
-cntrl,cntrl,10,5,72hpa,556.19,Tail,,,3,1,DAPI
-cntrl,cntrl,11,5,72hpa,605.45,Tail,,,3,1,DAPI
-cntrl,cntrl,12,5,72hpa,645.04,Tail,,,3,1,DAPI
-cntrl,cntrl,13,5,72hpa,503.99,Tail,,,3,1,DAPI
-cntrl,cntrl,14,5,72hpa,645.35,Tail,,,3,1,DAPI
-cntrl,cntrl,15,5,72hpa,678.85,Tail,,,3,1,DAPI
-cntrl,cntrl,16,5,72hpa,652.21,Tail,,,3,1,DAPI
-cntrl,cntrl,17,5,72hpa,569.42,Tail,,,3,1,DAPI
-cntrl,cntrl,18,5,72hpa,577.23,Tail,,,3,1,DAPI
-meis1MO2,meis1MO,1,5,24hpa,137.17,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,2,5,24hpa,192,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,3,5,24hpa,163.9,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,4,5,24hpa,190.45,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,5,5,24hpa,105.02,Tail,,,3,3,DAPI
-meis1MO2,meis1MO,6,5,24hpa,116.81,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,7,5,24hpa,198.9,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,8,5,24hpa,288.37,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,9,5,24hpa,132.47,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,10,5,24hpa,151.95,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,11,5,24hpa,153.11,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,12,5,24hpa,159.28,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,13,5,24hpa,169.42,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,1,5,48hpa,192.18,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,2,5,48hpa,147.47,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,3,5,48hpa,144.73,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,4,5,48hpa,300.96,Tail,,,3,1,DAPI
-meis1MO2,meis1MO,5,5,48hpa,304.38,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,6,5,48hpa,231.43,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,7,5,48hpa,194.02,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,8,5,48hpa,308.21,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,9,5,48hpa,206.68,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,10,5,48hpa,318.58,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,11,5,48hpa,196.47,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,12,5,48hpa,247.72,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,13,5,48hpa,216.96,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,14,5,48hpa,246.78,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,15,5,48hpa,367.43,Tail,,,3,1,DAPI
-meis1MO2,meis1MO,1,5,72hpa,150.95,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,2,5,72hpa,167.24,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,3,5,72hpa,261.99,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,4,5,72hpa,238.59,Tail,,,3,4,DAPI
-meis1MO2,meis1MO,5,5,72hpa,286.99,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,6,5,72hpa,145.89,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,7,5,72hpa,378.85,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,8,5,72hpa,123.64,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,9,5,72hpa,436.1,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,10,5,72hpa,226.18,Tail,,,3,2,DAPI
-meis1MO2,meis1MO,11,5,72hpa,191.01,Tail,,,3,5,DAPI
-meis1MO2,meis1MO,12,5,72hpa,244.13,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,1,5,24hpa,199.44,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,2,5,24hpa,152.55,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,3,5,24hpa,154.49,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,4,5,24hpa,145.22,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,5,5,24hpa,144.79,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,6,5,24hpa,171.74,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,7,5,24hpa,244.54,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,8,5,24hpa,277.67,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,9,5,24hpa,202.14,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,10,5,24hpa,208.13,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,11,5,24hpa,243.01,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,1,5,48hpa,313.56,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,2,5,48hpa,145.16,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,3,5,48hpa,194.59,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,4,5,48hpa,430.26,Tail,,,3,1,DAPI
-pbx3MO2,pbx3MO,5,5,48hpa,410.14,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,6,5,48hpa,250.22,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,7,5,48hpa,339.32,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,8,5,48hpa,312.46,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,9,5,48hpa,312.13,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,10,5,48hpa,269.22,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,11,5,48hpa,457.87,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,12,5,48hpa,389.44,Tail,,,3,4,DAPI
-pbx3MO2,pbx3MO,13,5,48hpa,239.24,Tail,,,3,3,DAPI
-pbx3MO2,pbx3MO,1,5,72hpa,222.5,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,2,5,72hpa,240.41,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,3,5,72hpa,419.31,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,4,5,72hpa,340.69,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,5,5,72hpa,470.54,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,6,5,72hpa,134.56,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,7,5,72hpa,190.1,Tail,,,3,2,DAPI
-pbx3MO2,pbx3MO,8,5,72hpa,510.8,Tail,,,3,1,DAPI
-pbx3MO2,pbx3MO,9,5,72hpa,414.56,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,10,5,72hpa,694.29,Tail,,,3,5,DAPI
-pbx3MO2,pbx3MO,11,5,72hpa,191.87,Tail,,,3,4,DAPI
-cntrl,cntrl,1,5,24hpa,101.12,sc,,,3,1,DAPI
-cntrl,cntrl,2,5,24hpa,87.16,sc,,,3,1,DAPI
-cntrl,cntrl,3,5,24hpa,112.44,sc,,,3,1,DAPI
-cntrl,cntrl,4,5,24hpa,98.89,sc,,,3,1,DAPI
-cntrl,cntrl,5,5,24hpa,105.68,sc,,,3,1,DAPI
-cntrl,cntrl,6,5,24hpa,93.46,sc,,,3,1,DAPI
-cntrl,cntrl,7,5,24hpa,98.12,sc,,,3,1,DAPI
-cntrl,cntrl,8,5,24hpa,105.87,sc,,,3,1,DAPI
-cntrl,cntrl,9,5,24hpa,104.19,sc,,,3,1,DAPI
-cntrl,cntrl,10,5,24hpa,118.07,sc,,,3,1,DAPI
-cntrl,cntrl,11,5,24hpa,131.24,sc,,,3,1,DAPI
-cntrl,cntrl,12,5,24hpa,108.61,sc,,,3,1,DAPI
-cntrl,cntrl,13,5,24hpa,109.99,sc,,,3,1,DAPI
-cntrl,cntrl,14,5,24hpa,126.96,sc,,,3,1,DAPI
-cntrl,cntrl,15,5,24hpa,108.83,sc,,,3,1,DAPI
-cntrl,cntrl,1,5,48hpa,140.21,sc,,,3,1,DAPI
-cntrl,cntrl,2,5,48hpa,132.37,sc,,,3,1,DAPI
-cntrl,cntrl,3,5,48hpa,163.77,sc,,,3,1,DAPI
-cntrl,cntrl,4,5,48hpa,151.06,sc,,,3,1,DAPI
-cntrl,cntrl,5,5,48hpa,186.89,sc,,,3,1,DAPI
-cntrl,cntrl,6,5,48hpa,196.63,sc,,,3,1,DAPI
-cntrl,cntrl,7,5,48hpa,124.75,sc,,,3,1,DAPI
-cntrl,cntrl,8,5,48hpa,174.36,sc,,,3,1,DAPI
-cntrl,cntrl,9,5,48hpa,127.81,sc,,,3,1,DAPI
-cntrl,cntrl,10,5,48hpa,219.82,sc,,,3,1,DAPI
-cntrl,cntrl,1,5,72hpa,400.8,sc,,,3,1,DAPI
-cntrl,cntrl,2,5,72hpa,389.82,sc,,,3,1,DAPI
-cntrl,cntrl,3,5,72hpa,376.99,sc,,,3,1,DAPI
-cntrl,cntrl,4,5,72hpa,432.39,sc,,,3,1,DAPI
-cntrl,cntrl,5,5,72hpa,336.48,sc,,,3,1,DAPI
-cntrl,cntrl,6,5,72hpa,464.07,sc,,,3,1,DAPI
-cntrl,cntrl,7,5,72hpa,353.91,sc,,,3,1,DAPI
-cntrl,cntrl,8,5,72hpa,465.78,sc,,,3,1,DAPI
-cntrl,cntrl,9,5,72hpa,488.61,sc,,,3,1,DAPI
-cntrl,cntrl,10,5,72hpa,333.07,sc,,,3,1,DAPI
-cntrl,cntrl,11,5,72hpa,455.26,sc,,,3,1,DAPI
-cntrl,cntrl,12,5,72hpa,513.38,sc,,,3,1,DAPI
-cntrl,cntrl,13,5,72hpa,344.34,sc,,,3,1,DAPI
-cntrl,cntrl,14,5,72hpa,494.32,sc,,,3,1,DAPI
-cntrl,cntrl,15,5,72hpa,458.23,sc,,,3,1,DAPI
-cntrl,cntrl,16,5,72hpa,374.42,sc,,,3,1,DAPI
-cntrl,cntrl,17,5,72hpa,440.07,sc,,,3,1,DAPI
-cntrl,cntrl,18,5,72hpa,385.55,sc,,,3,1,DAPI
-meis1MO2,meis1MO,1,5,24hpa,58.16,sc,,,3,4,DAPI
-meis1MO2,meis1MO,2,5,24hpa,69,sc,,,3,4,DAPI
-meis1MO2,meis1MO,3,5,24hpa,48.04,sc,,,3,4,DAPI
-meis1MO2,meis1MO,4,5,24hpa,104.36,sc,,,3,4,DAPI
-meis1MO2,meis1MO,5,5,24hpa,71.92,sc,,,3,3,DAPI
-meis1MO2,meis1MO,6,5,24hpa,75.03,sc,,,3,4,DAPI
-meis1MO2,meis1MO,7,5,24hpa,96.92,sc,,,3,4,DAPI
-meis1MO2,meis1MO,8,5,24hpa,98.13,sc,,,3,4,DAPI
-meis1MO2,meis1MO,9,5,24hpa,80.6,sc,,,3,4,DAPI
-meis1MO2,meis1MO,10,5,24hpa,88.08,sc,,,3,4,DAPI
-meis1MO2,meis1MO,11,5,24hpa,100.86,sc,,,3,4,DAPI
-meis1MO2,meis1MO,12,5,24hpa,89.77,sc,,,3,2,DAPI
-meis1MO2,meis1MO,13,5,24hpa,65.13,sc,,,3,4,DAPI
-meis1MO2,meis1MO,1,5,48hpa,97.4,sc,,,3,4,DAPI
-meis1MO2,meis1MO,2,5,48hpa,124.12,sc,,,3,2,DAPI
-meis1MO2,meis1MO,3,5,48hpa,83.31,sc,,,3,2,DAPI
-meis1MO2,meis1MO,4,5,48hpa,91.52,sc,,,3,1,DAPI
-meis1MO2,meis1MO,5,5,48hpa,86.43,sc,,,3,2,DAPI
-meis1MO2,meis1MO,6,5,48hpa,106.85,sc,,,3,2,DAPI
-meis1MO2,meis1MO,7,5,48hpa,129.82,sc,,,3,2,DAPI
-meis1MO2,meis1MO,8,5,48hpa,90.41,sc,,,3,2,DAPI
-meis1MO2,meis1MO,9,5,48hpa,83.82,sc,,,3,4,DAPI
-meis1MO2,meis1MO,10,5,48hpa,139.29,sc,,,3,2,DAPI
-meis1MO2,meis1MO,11,5,48hpa,92.03,sc,,,3,2,DAPI
-meis1MO2,meis1MO,12,5,48hpa,117.82,sc,,,3,2,DAPI
-meis1MO2,meis1MO,13,5,48hpa,79.82,sc,,,3,2,DAPI
-meis1MO2,meis1MO,14,5,48hpa,82.18,sc,,,3,4,DAPI
-meis1MO2,meis1MO,15,5,48hpa,108.88,sc,,,3,1,DAPI
-meis1MO2,meis1MO,1,5,72hpa,83.55,sc,,,3,4,DAPI
-meis1MO2,meis1MO,2,5,72hpa,85.09,sc,,,3,4,DAPI
-meis1MO2,meis1MO,3,5,72hpa,83.94,sc,,,3,4,DAPI
-meis1MO2,meis1MO,4,5,72hpa,101.28,sc,,,3,4,DAPI
-meis1MO2,meis1MO,5,5,72hpa,93.77,sc,,,3,2,DAPI
-meis1MO2,meis1MO,6,5,72hpa,100.73,sc,,,3,2,DAPI
-meis1MO2,meis1MO,7,5,72hpa,129,sc,,,3,2,DAPI
-meis1MO2,meis1MO,8,5,72hpa,92.69,sc,,,3,2,DAPI
-meis1MO2,meis1MO,9,5,72hpa,215.76,sc,,,3,2,DAPI
-meis1MO2,meis1MO,10,5,72hpa,129.03,sc,,,3,2,DAPI
-meis1MO2,meis1MO,11,5,72hpa,83.14,sc,,,3,5,DAPI
-meis1MO2,meis1MO,12,5,72hpa,147.82,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,1,5,24hpa,104.43,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,2,5,24hpa,84.83,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,3,5,24hpa,65.91,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,4,5,24hpa,69.74,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,5,5,24hpa,79.05,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,6,5,24hpa,82.58,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,7,5,24hpa,84.17,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,8,5,24hpa,170.92,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,9,5,24hpa,81.92,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,10,5,24hpa,71.08,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,11,5,24hpa,160.9,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,1,5,48hpa,103.59,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,2,5,48hpa,119.45,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,3,5,48hpa,101.31,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,4,5,48hpa,142.47,sc,,,3,1,DAPI
-pbx3MO2,pbx3MO,5,5,48hpa,91.84,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,6,5,48hpa,109.92,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,7,5,48hpa,143.72,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,8,5,48hpa,121.83,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,9,5,48hpa,100.52,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,10,5,48hpa,129.76,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,11,5,48hpa,169.92,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,12,5,48hpa,127.2,sc,,,3,4,DAPI
-pbx3MO2,pbx3MO,13,5,48hpa,113.45,sc,,,3,3,DAPI
-pbx3MO2,pbx3MO,1,5,72hpa,134.87,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,2,5,72hpa,118.25,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,3,5,72hpa,108.51,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,4,5,72hpa,227.28,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,5,5,72hpa,82.37,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,6,5,72hpa,70.39,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,7,5,72hpa,160.66,sc,,,3,2,DAPI
-pbx3MO2,pbx3MO,8,5,72hpa,138.73,sc,,,3,1,DAPI
-pbx3MO2,pbx3MO,9,5,72hpa,142.88,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,10,5,72hpa,256.34,sc,,,3,5,DAPI
-pbx3MO2,pbx3MO,11,5,72hpa,76.45,sc,,,3,4,DAPI
-pbx3_VMO,pbx3MO,1,6,72hpa,723,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,2,6,72hpa,692.89,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,3,6,72hpa,563.59,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,4,6,72hpa,677.69,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,5,6,72hpa,505.59,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,6,6,72hpa,621.09,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,7,6,72hpa,556.55,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,8,6,72hpa,855.02,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,9,6,72hpa,747.21,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,1,6,72hpa,372.73,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,2,6,72hpa,463.64,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,3,6,72hpa,355.13,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,4,6,72hpa,438.46,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,5,6,72hpa,286.43,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,6,6,72hpa,422.07,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,7,6,72hpa,351.1,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,8,6,72hpa,392.54,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,9,6,72hpa,365.99,sc,0,0,0,0,0
-mr,control,1,6,72hpa,651.32,Tail,0,0,0,0,0
-mr,control,2,6,72hpa,542.98,Tail,0,0,0,0,0
-mr,control,3,6,72hpa,612.31,Tail,0,0,0,0,0
-uninjected,control,1,6,72hpa,557.84,Tail,0,0,0,0,0
-uninjected,control,2,6,72hpa,653.15,Tail,0,0,0,0,0
-uninjected,control,3,6,72hpa,505.61,Tail,0,0,0,0,0
-mr,control,1,6,72hpa,434,sc,0,0,0,0,0
-mr,control,2,6,72hpa,464.54,sc,0,0,0,0,0
-mr,control,3,6,72hpa,425.78,sc,0,0,0,0,0
-uninjected,control,1,6,72hpa,441.97,sc,0,0,0,0,0
-uninjected,control,2,6,72hpa,453.24,sc,0,0,0,0,0
-uninjected,control,3,6,72hpa,348.6,sc,0,0,0,0,0
-uninjected,control,1,20720,72hpa,526.982,sc,0,0,0,0,0
-uninjected,control,1,20720,72hpa,680.634,Tail,0,0,0,0,0
-uninjected,control,2,20720,72hpa,391.474,sc,0,0,0,0,0
-uninjected,control,2,20720,72hpa,669.176,Tail,0,0,0,0,0
-uninjected,control,3,20720,72hpa,427.74,sc,0,0,0,0,0
-uninjected,control,3,20720,72hpa,673.016,Tail,0,0,0,0,0
-uninjected,control,4,20720,72hpa,414.078,sc,0,0,0,0,0
-uninjected,control,4,20720,72hpa,631.654,Tail,0,0,0,0,0
-uninjected,control,5,20720,72hpa,410.908,sc,0,0,0,0,0
-uninjected,control,5,20720,72hpa,585.785,Tail,0,0,0,0,0
-uninjected,control,6,20720,72hpa,344.02,sc,0,0,0,0,0
-uninjected,control,6,20720,72hpa,565.912,Tail,0,0,0,0,0
-uninjected,control,7,20720,72hpa,373.95,sc,0,0,0,0,0
-uninjected,control,7,20720,72hpa,597.132,Tail,0,0,0,0,0
-uninjected,control,8,20720,72hpa,319.187,sc,0,0,0,0,0
-uninjected,control,8,20720,72hpa,531.206,Tail,0,0,0,0,0
-tracer,control,1,20720,72hpa,401.691,sc,0,0,0,0,0
-tracer,control,1,20720,72hpa,513.091,Tail,0,0,0,0,0
-tracer,control,2,20720,72hpa,511.815,sc,0,0,0,0,0
-tracer,control,2,20720,72hpa,598.92,Tail,0,0,0,0,0
-tracer,control,3,20720,72hpa,363.445,sc,0,0,0,0,0
-tracer,control,3,20720,72hpa,526.002,Tail,0,0,0,0,0
-tracer,control,4,20720,72hpa,294.776,sc,0,0,0,0,0
-tracer,control,4,20720,72hpa,419.067,Tail,0,0,0,0,0
-tracer,control,5,20720,72hpa,299.742,sc,0,0,0,0,0
-tracer,control,5,20720,72hpa,437.407,Tail,0,0,0,0,0
-tracer,control,6,20720,72hpa,390.747,sc,0,0,0,0,0
-tracer,control,6,20720,72hpa,518.583,Tail,0,0,0,0,0
-tracer,control,7,20720,72hpa,320.502,sc,0,0,0,0,0
-tracer,control,7,20720,72hpa,419.179,Tail,0,0,0,0,0
-tracer,control,8,20720,72hpa,363.546,sc,0,0,0,0,0
-tracer,control,8,20720,72hpa,573.38,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,1,20720,72hpa,352.438,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,1,20720,72hpa,459.14,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,2,20720,72hpa,274.722,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,2,20720,72hpa,369.575,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,3,20720,72hpa,286.911,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,3,20720,72hpa,409.449,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,4,20720,72hpa,266.823,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,4,20720,72hpa,376.533,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,5,20720,72hpa,322.404,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,5,20720,72hpa,499.124,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,6,20720,72hpa,311.865,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,6,20720,72hpa,366.013,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,7,20720,72hpa,223.193,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,7,20720,72hpa,359.564,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,8,20720,72hpa,184.819,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,8,20720,72hpa,249.599,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,1,20720,72hpa,517.234,sc,0,0,0,0,0
-meis1_VMO,meis1MO,1,20720,72hpa,899.524,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,2,20720,72hpa,477.48,sc,0,0,0,0,0
-meis1_VMO,meis1MO,2,20720,72hpa,632.74,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,3,20720,72hpa,412.401,sc,0,0,0,0,0
-meis1_VMO,meis1MO,3,20720,72hpa,565.031,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,4,20720,72hpa,446.14,sc,0,0,0,0,0
-meis1_VMO,meis1MO,4,20720,72hpa,631.302,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,5,20720,72hpa,458.44,sc,0,0,0,0,0
-meis1_VMO,meis1MO,5,20720,72hpa,614.213,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,6,20720,72hpa,343.98,sc,0,0,0,0,0
-meis1_VMO,meis1MO,6,20720,72hpa,455.051,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,7,20720,72hpa,370.655,sc,0,0,0,0,0
-meis1_VMO,meis1MO,7,20720,72hpa,610.719,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,8,20720,72hpa,337.411,sc,0,0,0,0,0
-meis1_VMO,meis1MO,8,20720,72hpa,586.717,Tail,0,0,0,0,0
-uninjected,control,1,22120,72hpa,522.621,sc,0,0,0,0,0
-uninjected,control,1,22120,72hpa,812.511,Tail,0,0,0,0,0
-uninjected,control,2,22120,72hpa,483.402,sc,0,0,0,0,0
-uninjected,control,2,22120,72hpa,804.959,Tail,0,0,0,0,0
-uninjected,control,3,22120,72hpa,534.507,sc,0,0,0,0,0
-uninjected,control,3,22120,72hpa,690.856,Tail,0,0,0,0,0
-uninjected,control,4,22120,72hpa,493.891,sc,0,0,0,0,0
-uninjected,control,4,22120,72hpa,639.648,Tail,0,0,0,0,0
-uninjected,control,5,22120,72hpa,618.893,sc,0,0,0,0,0
-uninjected,control,5,22120,72hpa,773.136,Tail,0,0,0,0,0
-uninjected,control,6,22120,72hpa,588.259,sc,0,0,0,0,0
-uninjected,control,6,22120,72hpa,817.417,Tail,0,0,0,0,0
-uninjected,control,7,22120,72hpa,575.306,sc,0,0,0,0,0
-uninjected,control,7,22120,72hpa,711.556,Tail,0,0,0,0,0
-uninjected,control,8,22120,72hpa,519.759,sc,0,0,0,0,0
-uninjected,control,8,22120,72hpa,693.234,Tail,0,0,0,0,0
-uninjected,control,9,22120,72hpa,463.062,sc,0,0,0,0,0
-uninjected,control,9,22120,72hpa,650.423,Tail,0,0,0,0,0
-uninjected,control,10,22120,72hpa,591.578,sc,0,0,0,0,0
-uninjected,control,10,22120,72hpa,1001.409,Tail,0,0,0,0,0
-uninjected,control,11,22120,72hpa,539.786,sc,0,0,0,0,0
-uninjected,control,11,22120,72hpa,695.854,Tail,0,0,0,0,0
-uninjected,control,12,22120,72hpa,563.926,sc,0,0,0,0,0
-uninjected,control,12,22120,72hpa,678.86,Tail,0,0,0,0,0
-uninjected,control,13,22120,72hpa,478.734,sc,0,0,0,0,0
-uninjected,control,13,22120,72hpa,628.251,Tail,0,0,0,0,0
-tracer,control,1,22120,72hpa,430.035,sc,0,0,0,0,0
-tracer,control,1,22120,72hpa,661.819,Tail,0,0,0,0,0
-tracer,control,2,22120,72hpa,568.472,sc,0,0,0,0,0
-tracer,control,2,22120,72hpa,721.326,Tail,0,0,0,0,0
-tracer,control,3,22120,72hpa,544.828,sc,0,0,0,0,0
-tracer,control,3,22120,72hpa,653.744,Tail,0,0,0,0,0
-tracer,control,4,22120,72hpa,545.637,sc,0,0,0,0,0
-tracer,control,4,22120,72hpa,674.612,Tail,0,0,0,0,0
-tracer,control,5,22120,72hpa,557.224,sc,0,0,0,0,0
-tracer,control,5,22120,72hpa,697.773,Tail,0,0,0,0,0
-tracer,control,6,22120,72hpa,548.49,sc,0,0,0,0,0
-tracer,control,6,22120,72hpa,682.173,Tail,0,0,0,0,0
-tracer,control,7,22120,72hpa,466.27,sc,0,0,0,0,0
-tracer,control,7,22120,72hpa,681.355,Tail,0,0,0,0,0
-tracer,control,8,22120,72hpa,655.79,sc,0,0,0,0,0
-tracer,control,8,22120,72hpa,783.063,Tail,0,0,0,0,0
-tracer,control,9,22120,72hpa,553.292,sc,0,0,0,0,0
-tracer,control,9,22120,72hpa,655.166,Tail,0,0,0,0,0
-tracer,control,10,22120,72hpa,539.89,sc,0,0,0,0,0
-tracer,control,10,22120,72hpa,757.245,Tail,0,0,0,0,0
-tracer,control,11,22120,72hpa,458.853,sc,0,0,0,0,0
-tracer,control,11,22120,72hpa,746.264,Tail,0,0,0,0,0
-tracer,control,12,22120,72hpa,489.704,sc,0,0,0,0,0
-tracer,control,12,22120,72hpa,647.343,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,1,22120,72hpa,399.918,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,1,22120,72hpa,481.521,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,2,22120,72hpa,429.561,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,2,22120,72hpa,534.855,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,3,22120,72hpa,420.539,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,3,22120,72hpa,523.167,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,4,22120,72hpa,453.116,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,4,22120,72hpa,528.037,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,5,22120,72hpa,250.459,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,5,22120,72hpa,396.394,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,6,22120,72hpa,406.414,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,6,22120,72hpa,502.837,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,7,22120,72hpa,211.773,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,7,22120,72hpa,348.006,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,8,22120,72hpa,403.704,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,8,22120,72hpa,501.286,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,9,22120,72hpa,409.272,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,9,22120,72hpa,484.114,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,10,22120,72hpa,404.556,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,10,22120,72hpa,528.275,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,11,22120,72hpa,401.86,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,11,22120,72hpa,579.1,Tail,0,0,0,0,0
-pbx3_VMO,pbx3MO,12,22120,72hpa,327.569,sc,0,0,0,0,0
-pbx3_VMO,pbx3MO,12,22120,72hpa,548.51,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,1,22120,72hpa,303.827,sc,0,0,0,0,0
-meis1_VMO,meis1MO,1,22120,72hpa,416.751,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,2,22120,72hpa,433.969,sc,0,0,0,0,0
-meis1_VMO,meis1MO,2,22120,72hpa,517.446,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,3,22120,72hpa,489.537,sc,0,0,0,0,0
-meis1_VMO,meis1MO,3,22120,72hpa,655.452,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,4,22120,72hpa,243.394,sc,0,0,0,0,0
-meis1_VMO,meis1MO,4,22120,72hpa,351.939,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,5,22120,72hpa,282.475,sc,0,0,0,0,0
-meis1_VMO,meis1MO,5,22120,72hpa,394.083,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,6,22120,72hpa,353.702,sc,0,0,0,0,0
-meis1_VMO,meis1MO,6,22120,72hpa,442.733,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,7,22120,72hpa,357.025,sc,0,0,0,0,0
-meis1_VMO,meis1MO,7,22120,72hpa,456.636,Tail,0,0,0,0,0
-meis1_VMO,meis1MO,8,22120,72hpa,332.795,sc,0,0,0,0,0
-meis1_VMO,meis1MO,8,22120,72hpa,477.351,Tail,0,0,0,0,0
+﻿SampleID,Sample,Replicate,Clutch,Timepoint,Measurement,MeasureType,PhenotypeSum,PhenotypeNotocord,PhenotypeNeuron,PhenotypeMorphology,Stain,Other Notes
+cntrl,cntrl,1,2,24hpa,197.17,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,2,24hpa,180.22,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,2,24hpa,209.28,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,2,24hpa,163.71,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,2,48hpa,535.24,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,2,48hpa,481.23,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,2,48hpa,485.23,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,2,48hpa,464.61,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,2,48hpa,211.07,Tail,113,1,1,3,NF_DAPI,embryonic study
+cntrl,cntrl,1,2,72hpa,506.46,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,2,72hpa,646.28,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,2,72hpa,624.85,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,2,72hpa,666.2,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,2,72hpa,627.9,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,2,72hpa,541.79,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,2,24hpa,36.68,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,2,24hpa,46.56,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,2,24hpa,37.64,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,2,24hpa,32.04,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,2,48hpa,15.84,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,2,48hpa,16.03,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,2,48hpa,18.62,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,2,48hpa,25.88,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,2,48hpa,49.08,sc_width,113,1,1,3,NF_DAPI,embryonic study
+cntrl,cntrl,1,2,72hpa,21.5,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,2,72hpa,30.36,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,2,72hpa,20.2,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,2,72hpa,21.94,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,2,72hpa,19.17,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,2,72hpa,17.96,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,2,24hpa,74.79,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,2,24hpa,70.78,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,2,24hpa,76.26,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,2,24hpa,57.34,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,2,48hpa,303.18,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,2,48hpa,310.65,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,2,48hpa,306.65,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,2,48hpa,194.55,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,2,48hpa,112.8,sc,113,1,1,3,NF_DAPI,embryonic study
+cntrl,cntrl,1,2,72hpa,452.46,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,2,72hpa,550.87,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,2,72hpa,480.44,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,2,72hpa,448.07,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,2,72hpa,490.31,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,2,72hpa,459.13,sc,111,1,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,2,24hpa,188.09,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,2,24hpa,207.03,Tail,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,2,24hpa,127.14,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,4,2,24hpa,159.09,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,5,2,24hpa,158.64,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,6,2,24hpa,120.8,Tail,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,7,2,24hpa,232,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,8,2,24hpa,136.42,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,9,2,24hpa,184.84,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,2,48hpa,323.06,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,2,48hpa,444.42,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,2,48hpa,503.71,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,4,2,48hpa,314.72,Tail,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,5,2,48hpa,203.44,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,6,2,48hpa,358.15,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,7,2,48hpa,267.05,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,2,72hpa,157.23,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,2,72hpa,159.48,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,2,72hpa,198.24,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,4,2,72hpa,196.64,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,5,2,72hpa,235.42,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,6,2,72hpa,109.99,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,7,2,72hpa,306.92,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,8,2,72hpa,383.15,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,9,2,72hpa,443.57,Tail,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,10,2,72hpa,246.06,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,2,24hpa,74.79,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,2,24hpa,68.59,sc,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,2,24hpa,72.02,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,4,2,24hpa,70.26,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,5,2,24hpa,70.77,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,6,2,24hpa,65.28,sc,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,7,2,24hpa,80.63,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,8,2,24hpa,71.34,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,9,2,24hpa,99.31,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,2,48hpa,144.7,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,2,48hpa,120.75,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,2,48hpa,227.19,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,4,2,48hpa,124.77,sc,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,5,2,48hpa,74.86,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,6,2,48hpa,115.4,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,7,2,48hpa,145.05,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,2,72hpa,86.79,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,2,72hpa,91.4,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,2,72hpa,132.55,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,4,2,72hpa,97.4,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,5,2,72hpa,125.43,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,6,2,72hpa,60.56,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,7,2,72hpa,131.12,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,8,2,72hpa,219.59,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,9,2,72hpa,128.73,sc,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,10,2,72hpa,155.74,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,2,24hpa,34.08,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,2,24hpa,51,sc_width,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,2,24hpa,52.48,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,4,2,24hpa,43.09,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,5,2,24hpa,47.18,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,6,2,24hpa,43.01,sc_width,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,7,2,24hpa,46.01,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,8,2,24hpa,48.52,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,9,2,24hpa,34.53,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,2,48hpa,14.89,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,2,48hpa,29.25,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,2,48hpa,38.86,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,4,2,48hpa,37.55,sc_width,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,5,2,48hpa,42.24,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,6,2,48hpa,27.31,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,7,2,48hpa,34.94,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,2,72hpa,37.61,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,2,72hpa,40.74,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,2,72hpa,49.3,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,4,2,72hpa,48.3,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,5,2,72hpa,46.7,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,6,2,72hpa,36.14,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,7,2,72hpa,39.72,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,8,2,72hpa,38.21,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,9,2,72hpa,57.76,sc_width,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,10,2,72hpa,41.44,sc_width,212,2,1,2,NF_DAPI,embryonic study
+cntrl,cntrl,1,1,48hpa,506.02,Tail,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,2,1,48hpa,527.69,Tail,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,3,1,48hpa,446.95,Tail,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,4,1,48hpa,555.29,Tail,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,5,1,48hpa,475.91,Tail,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,6,1,48hpa,406.48,Tail,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,7,1,48hpa,385,Tail,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,8,1,48hpa,527.81,Tail,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,9,1,48hpa,544.87,Tail,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,10,1,48hpa,415.75,Tail,101,1,0,1,DAPI,embryonic study
+pbx3MO1,pbx3MO,1,1,48hpa,356.05,Tail,204,2,0,4,DAPI,embryonic study
+pbx3MO1,pbx3MO,2,1,48hpa,391.25,Tail,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,3,1,48hpa,221.52,Tail,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,4,1,48hpa,305.36,Tail,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,5,1,48hpa,288.55,Tail,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,6,1,48hpa,325.02,Tail,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,7,1,48hpa,398.17,Tail,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,8,1,48hpa,247.54,Tail,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,1,1,48hpa,244.85,Tail,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,2,1,48hpa,328.43,Tail,201,2,0,1,DAPI,embryonic study
+meis1MO1,meis1MO,3,1,48hpa,192.25,Tail,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,4,1,48hpa,403.29,Tail,201,2,0,1,DAPI,embryonic study
+meis1MO1,meis1MO,5,1,48hpa,285.63,Tail,202,2,0,2,DAPI,embryonic study
+cntrl,cntrl,1,1,48hpa,313.94,sc,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,2,1,48hpa,271.39,sc,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,3,1,48hpa,300.06,sc,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,4,1,48hpa,370.85,sc,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,5,1,48hpa,228,sc,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,6,1,48hpa,220.28,sc,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,7,1,48hpa,290.06,sc,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,8,1,48hpa,329.43,sc,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,9,1,48hpa,302.25,sc,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,10,1,48hpa,220.05,sc,101,1,0,1,DAPI,embryonic study
+pbx3MO1,pbx3MO,1,1,48hpa,169.5,sc,204,2,0,4,DAPI,embryonic study
+pbx3MO1,pbx3MO,2,1,48hpa,209.16,sc,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,3,1,48hpa,80.38,sc,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,4,1,48hpa,245.45,sc,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,5,1,48hpa,175.55,sc,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,6,1,48hpa,261.06,sc,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,7,1,48hpa,171.9,sc,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,8,1,48hpa,177.46,sc,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,1,1,48hpa,71.88,sc,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,2,1,48hpa,168.11,sc,201,2,0,1,DAPI,embryonic study
+meis1MO1,meis1MO,3,1,48hpa,75.6,sc,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,4,1,48hpa,152.35,sc,201,2,0,1,DAPI,embryonic study
+meis1MO1,meis1MO,5,1,48hpa,131.88,sc,202,2,0,2,DAPI,embryonic study
+cntrl,cntrl,1,1,48hpa,25.66,sc_width,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,2,1,48hpa,35.77,sc_width,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,3,1,48hpa,37.61,sc_width,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,4,1,48hpa,26.69,sc_width,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,5,1,48hpa,25.32,sc_width,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,6,1,48hpa,20.54,sc_width,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,7,1,48hpa,18.31,sc_width,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,8,1,48hpa,22.09,sc_width,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,9,1,48hpa,23.13,sc_width,101,1,0,1,DAPI,embryonic study
+cntrl,cntrl,10,1,48hpa,36.72,sc_width,101,1,0,1,DAPI,embryonic study
+pbx3MO1,pbx3MO,1,1,48hpa,70.88,sc_width,204,2,0,4,DAPI,embryonic study
+pbx3MO1,pbx3MO,2,1,48hpa,47.74,sc_width,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,3,1,48hpa,46.24,sc_width,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,4,1,48hpa,31.6,sc_width,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,5,1,48hpa,41.91,sc_width,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,6,1,48hpa,70.02,sc_width,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,7,1,48hpa,68.13,sc_width,202,2,0,2,DAPI,embryonic study
+pbx3MO1,pbx3MO,8,1,48hpa,80.15,sc_width,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,1,1,48hpa,75.83,sc_width,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,2,1,48hpa,62.76,sc_width,201,2,0,1,DAPI,embryonic study
+meis1MO1,meis1MO,3,1,48hpa,52.42,sc_width,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,4,1,48hpa,71.91,sc_width,201,2,0,1,DAPI,embryonic study
+meis1MO1,meis1MO,5,1,48hpa,63.91,sc_width,202,2,0,2,DAPI,embryonic study
+meis1MO1,meis1MO,1,3,24hpa,50.98,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,2,3,24hpa,62.4,Tail,214,2,1,4,NF_DAPI,embryonic study
+meis1MO1,meis1MO,3,3,24hpa,57.21,Tail,214,2,1,4,NF_DAPI,embryonic study
+meis1MO1,meis1MO,1,3,48hpa,58.29,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,2,3,48hpa,54.98,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,3,3,48hpa,90.3,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,1,3,72hpa,94.46,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,2,3,72hpa,141.28,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,3,3,72hpa,102.58,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,4,3,72hpa,116.59,Tail,212,2,1,2,NF_DAPI,embryonic study
+cntrl,cntrl,1,3,24hpa,115.01,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,3,24hpa,112.3,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,3,24hpa,144.05,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,3,24hpa,145.65,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,3,24hpa,145.9,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,3,24hpa,156.79,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,3,48hpa,120.24,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,3,48hpa,269.45,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,3,48hpa,250.75,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,3,48hpa,292.52,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,3,48hpa,205.13,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,3,48hpa,290.32,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,3,48hpa,299.85,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,3,72hpa,464.23,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,3,72hpa,408.68,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,3,72hpa,462.07,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,3,72hpa,593.91,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,3,72hpa,538.47,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,3,72hpa,562.45,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,3,72hpa,410.66,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,8,3,72hpa,549.3,Tail,111,1,1,1,NF_DAPI,embryonic study
+meis1MO1,meis1MO,1,3,24hpa,78.31,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,2,3,24hpa,143.16,sc,214,2,1,4,NF_DAPI,embryonic study
+meis1MO1,meis1MO,3,3,24hpa,143.83,sc,214,2,1,4,NF_DAPI,embryonic study
+meis1MO1,meis1MO,1,3,48hpa,153.45,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,2,3,48hpa,216,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,3,3,48hpa,133.79,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,1,3,72hpa,188.8,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,2,3,72hpa,461.39,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,3,3,72hpa,172.86,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,4,3,72hpa,194.37,sc,212,2,1,2,NF_DAPI,embryonic study
+cntrl,cntrl,1,3,24hpa,299.86,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,3,24hpa,281.65,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,3,24hpa,330.75,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,3,24hpa,345.16,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,3,24hpa,368.56,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,3,24hpa,330.95,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,3,48hpa,307.42,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,3,48hpa,413.53,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,3,48hpa,448.6,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,3,48hpa,486.76,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,3,48hpa,475.42,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,3,48hpa,393.71,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,3,48hpa,474.67,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,3,72hpa,563.26,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,3,72hpa,524.05,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,3,72hpa,586.44,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,3,72hpa,707.48,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,3,72hpa,666.18,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,3,72hpa,669.85,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,3,72hpa,548.82,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,8,3,72hpa,680.27,sc,111,1,1,1,NF_DAPI,embryonic study
+meis1MO1,meis1MO,1,3,24hpa,29.13,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,2,3,24hpa,49.05,sc_width,214,2,1,4,NF_DAPI,embryonic study
+meis1MO1,meis1MO,3,3,24hpa,51.56,sc_width,214,2,1,4,NF_DAPI,embryonic study
+meis1MO1,meis1MO,1,3,48hpa,64.33,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,2,3,48hpa,55.31,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,3,3,48hpa,27.9,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,1,3,72hpa,70.12,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,2,3,72hpa,46.17,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,3,3,72hpa,42.74,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO1,meis1MO,4,3,72hpa,49.47,sc_width,212,2,1,2,NF_DAPI,embryonic study
+cntrl,cntrl,1,3,24hpa,64.53,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,3,24hpa,56.76,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,3,24hpa,41.15,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,3,24hpa,30.92,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,3,24hpa,46.86,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,3,24hpa,46.88,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,3,48hpa,28.07,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,3,48hpa,27.25,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,3,48hpa,25.56,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,3,48hpa,21.86,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,3,48hpa,21.15,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,3,48hpa,20.59,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,3,48hpa,25.29,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,3,72hpa,17.33,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,3,72hpa,20.52,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,3,72hpa,17.95,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,3,72hpa,22.56,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,3,72hpa,19.31,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,3,72hpa,17.4,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,3,72hpa,21.92,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,8,3,72hpa,27.61,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,4,24hpa,216.37,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,4,24hpa,241.25,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,4,24hpa,212.22,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,4,24hpa,228.11,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,4,24hpa,227.09,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,4,24hpa,210.24,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,4,24hpa,199.33,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,8,4,24hpa,222.67,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,9,4,24hpa,239.68,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,10,4,24hpa,262.19,Tail,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,4,24hpa,80.61,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,4,24hpa,94.59,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,4,24hpa,91.89,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,4,24hpa,92.37,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,4,24hpa,78.73,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,4,24hpa,104.9,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,4,24hpa,79.88,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,8,4,24hpa,104.08,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,9,4,24hpa,99.56,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,10,4,24hpa,105.85,sc,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,4,24hpa,37.62,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,4,24hpa,51.16,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,4,24hpa,48.4,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,4,24hpa,61.53,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,4,24hpa,45.67,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,4,24hpa,66.24,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,4,24hpa,45.83,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,8,4,24hpa,59.25,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,9,4,24hpa,61.71,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,10,4,24hpa,57.3,sc_width,211,2,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,4,48hpa,321.25,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,4,48hpa,346.24,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,4,48hpa,416.2,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,4,48hpa,512.41,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,4,72hpa,609.39,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,4,72hpa,637.5,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,4,72hpa,590.46,Tail,131,1,3,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,4,72hpa,545.68,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,4,72hpa,496.02,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,4,72hpa,660.61,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,4,72hpa,628.53,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,8,4,72hpa,621.3,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,9,4,72hpa,506.76,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,10,4,72hpa,548.39,Tail,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,11,4,72hpa,648.37,Tail,111,1,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,4,24hpa,337.3,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,4,24hpa,200.04,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,4,24hpa,263.88,Tail,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,4,48hpa,278.89,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,4,48hpa,583.58,Tail,113,1,1,3,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,4,48hpa,398.38,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,4,72hpa,676.5,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,4,72hpa,342.04,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,1,4,24hpa,259.8,Tail,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,2,4,24hpa,148.61,Tail,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,3,4,24hpa,271.73,Tail,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,4,4,24hpa,100.97,Tail,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,1,4,48hpa,373.11,Tail,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,2,4,48hpa,362.86,Tail,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,3,4,48hpa,367.26,Tail,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,4,4,48hpa,365.03,Tail,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,5,4,48hpa,343.45,Tail,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,6,4,48hpa,118.09,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,7,4,48hpa,145.24,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,8,4,48hpa,215.51,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,9,4,48hpa,300.11,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,1,4,72hpa,353.26,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,2,4,72hpa,177.89,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,3,4,72hpa,283.01,Tail,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,4,4,72hpa,170.1,Tail,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,5,4,72hpa,153.44,Tail,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,6,4,72hpa,190.03,Tail,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,1,4,24hpa,251.14,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,2,4,24hpa,183.29,Tail,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,3,4,24hpa,185.71,Tail,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,1,4,48hpa,263.15,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,2,4,48hpa,354.02,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,3,4,48hpa,271.11,Tail,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,1,4,72hpa,183.81,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,2,4,72hpa,235.16,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,3,4,72hpa,292.36,Tail,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,4,4,72hpa,350.53,Tail,212,2,1,2,NF_DAPI,embryonic study
+cntrl,cntrl,1,4,48hpa,214.98,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,4,48hpa,156.82,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,4,48hpa,175.44,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,4,48hpa,301.15,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,4,72hpa,502.01,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,4,72hpa,468.23,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,4,72hpa,483.12,sc,131,1,3,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,4,72hpa,432.93,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,4,72hpa,423.34,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,4,72hpa,405.78,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,4,72hpa,450.25,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,8,4,72hpa,432.14,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,9,4,72hpa,405.25,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,10,4,72hpa,389.19,sc,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,11,4,72hpa,577.13,sc,111,1,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,4,24hpa,77.82,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,4,24hpa,80.01,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,4,24hpa,113.29,sc,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,4,48hpa,181.19,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,4,48hpa,401.67,sc,113,1,1,3,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,4,48hpa,167.02,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,4,72hpa,578.32,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,4,72hpa,130.9,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,1,4,24hpa,85.78,sc,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,2,4,24hpa,93.46,sc,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,3,4,24hpa,132.04,sc,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,4,4,24hpa,90.98,sc,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,1,4,48hpa,89.99,sc,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,2,4,48hpa,112.36,sc,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,3,4,48hpa,96.18,sc,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,4,4,48hpa,123.84,sc,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,5,4,48hpa,168.92,sc,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,6,4,48hpa,103.57,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,7,4,48hpa,138.75,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,8,4,48hpa,107.5,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,9,4,48hpa,122.95,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,1,4,72hpa,91.46,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,2,4,72hpa,161.31,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,3,4,72hpa,178.35,sc,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,4,4,72hpa,129.21,sc,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,5,4,72hpa,114.74,sc,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,6,4,72hpa,89.22,sc,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,1,4,24hpa,121.51,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,2,4,24hpa,117.59,sc,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,3,4,24hpa,137.01,sc,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,1,4,48hpa,66.24,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,2,4,48hpa,143.25,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,3,4,48hpa,101.29,sc,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,1,4,72hpa,157.17,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,2,4,72hpa,111.6,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,3,4,72hpa,102.98,sc,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,4,4,72hpa,154.42,sc,212,2,1,2,NF_DAPI,embryonic study
+cntrl,cntrl,1,4,48hpa,23,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,4,48hpa,28.65,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,4,48hpa,35.92,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,4,48hpa,26.15,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,1,4,72hpa,24.99,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,2,4,72hpa,15.23,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,3,4,72hpa,14.54,sc_width,131,1,3,1,NF_DAPI,embryonic study
+cntrl,cntrl,4,4,72hpa,16.38,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,5,4,72hpa,21.48,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,6,4,72hpa,21.24,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,7,4,72hpa,16.89,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,8,4,72hpa,15.67,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,9,4,72hpa,21,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,10,4,72hpa,25.11,sc_width,111,1,1,1,NF_DAPI,embryonic study
+cntrl,cntrl,11,4,72hpa,19.25,sc_width,111,1,1,1,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,4,24hpa,65.21,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,4,24hpa,95.09,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,4,24hpa,74.45,sc_width,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,4,48hpa,29.06,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,4,48hpa,18.2,sc_width,113,1,1,3,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,3,4,48hpa,71.82,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,1,4,72hpa,16.68,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO1,pbx3MO,2,4,72hpa,33.55,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,1,4,24hpa,82.7,sc_width,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,2,4,24hpa,50.6,sc_width,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,3,4,24hpa,45.53,sc_width,211,2,1,1,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,4,4,24hpa,45.55,sc_width,214,2,1,4,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,1,4,48hpa,67.68,sc_width,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,2,4,48hpa,61.96,sc_width,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,3,4,48hpa,28.52,sc_width,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,4,4,48hpa,63.48,sc_width,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,5,4,48hpa,49.61,sc_width,215,2,1,5,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,6,4,48hpa,65.14,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,7,4,48hpa,94.22,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,8,4,48hpa,51.69,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,9,4,48hpa,22.36,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,1,4,72hpa,74.16,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,2,4,72hpa,83.79,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,3,4,72hpa,58.8,sc_width,212,2,1,2,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,4,4,72hpa,54.3,sc_width,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,5,4,72hpa,67.49,sc_width,213,2,1,3,NF_DAPI,embryonic study
+pbx3MO2,pbx3MO,6,4,72hpa,64.4,sc_width,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,1,4,24hpa,53.36,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,2,4,24hpa,65.47,sc_width,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,3,4,24hpa,58.22,sc_width,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,1,4,48hpa,58.95,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,2,4,48hpa,50.6,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,3,4,48hpa,58.94,sc_width,214,2,1,4,NF_DAPI,embryonic study
+meis1MO2,meis1MO,1,4,72hpa,49.13,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,2,4,72hpa,41.89,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,3,4,72hpa,42.28,sc_width,212,2,1,2,NF_DAPI,embryonic study
+meis1MO2,meis1MO,4,4,72hpa,31.93,sc_width,212,2,1,2,NF_DAPI,embryonic study
+cntrl,cntrl,1,5,24hpa,237.47,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,2,5,24hpa,219.34,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,3,5,24hpa,237.86,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,4,5,24hpa,223.28,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,5,5,24hpa,234.17,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,6,5,24hpa,148.66,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,7,5,24hpa,241.06,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,8,5,24hpa,203.68,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,9,5,24hpa,232.08,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,10,5,24hpa,257.41,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,11,5,24hpa,303.24,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,12,5,24hpa,252.16,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,13,5,24hpa,244.69,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,14,5,24hpa,223.66,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,15,5,24hpa,236.56,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,1,5,48hpa,351.26,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,2,5,48hpa,410.85,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,3,5,48hpa,437.66,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,4,5,48hpa,490.41,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,5,5,48hpa,434.59,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,6,5,48hpa,436.15,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,7,5,48hpa,426.93,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,8,5,48hpa,443.77,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,9,5,48hpa,412.39,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,10,5,48hpa,476.35,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,1,5,72hpa,630.38,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,2,5,72hpa,641.86,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,3,5,72hpa,648.99,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,4,5,72hpa,567.98,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,5,5,72hpa,469.77,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,6,5,72hpa,674.03,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,7,5,72hpa,465.02,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,8,5,72hpa,615.76,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,9,5,72hpa,700.74,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,10,5,72hpa,556.19,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,11,5,72hpa,605.45,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,12,5,72hpa,645.04,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,13,5,72hpa,503.99,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,14,5,72hpa,645.35,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,15,5,72hpa,678.85,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,16,5,72hpa,652.21,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,17,5,72hpa,569.42,Tail,,,3,1,DAPI,embryonic study
+cntrl,cntrl,18,5,72hpa,577.23,Tail,,,3,1,DAPI,embryonic study
+meis1MO2,meis1MO,1,5,24hpa,137.17,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,2,5,24hpa,192,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,3,5,24hpa,163.9,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,4,5,24hpa,190.45,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,5,5,24hpa,105.02,Tail,,,3,3,DAPI,embryonic study
+meis1MO2,meis1MO,6,5,24hpa,116.81,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,7,5,24hpa,198.9,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,8,5,24hpa,288.37,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,9,5,24hpa,132.47,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,10,5,24hpa,151.95,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,11,5,24hpa,153.11,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,12,5,24hpa,159.28,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,13,5,24hpa,169.42,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,1,5,48hpa,192.18,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,2,5,48hpa,147.47,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,3,5,48hpa,144.73,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,4,5,48hpa,300.96,Tail,,,3,1,DAPI,embryonic study
+meis1MO2,meis1MO,5,5,48hpa,304.38,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,6,5,48hpa,231.43,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,7,5,48hpa,194.02,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,8,5,48hpa,308.21,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,9,5,48hpa,206.68,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,10,5,48hpa,318.58,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,11,5,48hpa,196.47,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,12,5,48hpa,247.72,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,13,5,48hpa,216.96,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,14,5,48hpa,246.78,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,15,5,48hpa,367.43,Tail,,,3,1,DAPI,embryonic study
+meis1MO2,meis1MO,1,5,72hpa,150.95,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,2,5,72hpa,167.24,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,3,5,72hpa,261.99,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,4,5,72hpa,238.59,Tail,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,5,5,72hpa,286.99,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,6,5,72hpa,145.89,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,7,5,72hpa,378.85,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,8,5,72hpa,123.64,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,9,5,72hpa,436.1,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,10,5,72hpa,226.18,Tail,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,11,5,72hpa,191.01,Tail,,,3,5,DAPI,embryonic study
+meis1MO2,meis1MO,12,5,72hpa,244.13,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,1,5,24hpa,199.44,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,2,5,24hpa,152.55,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,3,5,24hpa,154.49,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,4,5,24hpa,145.22,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,5,5,24hpa,144.79,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,6,5,24hpa,171.74,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,7,5,24hpa,244.54,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,8,5,24hpa,277.67,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,9,5,24hpa,202.14,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,10,5,24hpa,208.13,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,11,5,24hpa,243.01,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,1,5,48hpa,313.56,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,2,5,48hpa,145.16,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,3,5,48hpa,194.59,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,4,5,48hpa,430.26,Tail,,,3,1,DAPI,embryonic study
+pbx3MO2,pbx3MO,5,5,48hpa,410.14,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,6,5,48hpa,250.22,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,7,5,48hpa,339.32,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,8,5,48hpa,312.46,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,9,5,48hpa,312.13,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,10,5,48hpa,269.22,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,11,5,48hpa,457.87,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,12,5,48hpa,389.44,Tail,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,13,5,48hpa,239.24,Tail,,,3,3,DAPI,embryonic study
+pbx3MO2,pbx3MO,1,5,72hpa,222.5,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,2,5,72hpa,240.41,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,3,5,72hpa,419.31,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,4,5,72hpa,340.69,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,5,5,72hpa,470.54,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,6,5,72hpa,134.56,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,7,5,72hpa,190.1,Tail,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,8,5,72hpa,510.8,Tail,,,3,1,DAPI,embryonic study
+pbx3MO2,pbx3MO,9,5,72hpa,414.56,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,10,5,72hpa,694.29,Tail,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,11,5,72hpa,191.87,Tail,,,3,4,DAPI,embryonic study
+cntrl,cntrl,1,5,24hpa,101.12,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,2,5,24hpa,87.16,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,3,5,24hpa,112.44,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,4,5,24hpa,98.89,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,5,5,24hpa,105.68,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,6,5,24hpa,93.46,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,7,5,24hpa,98.12,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,8,5,24hpa,105.87,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,9,5,24hpa,104.19,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,10,5,24hpa,118.07,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,11,5,24hpa,131.24,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,12,5,24hpa,108.61,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,13,5,24hpa,109.99,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,14,5,24hpa,126.96,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,15,5,24hpa,108.83,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,1,5,48hpa,140.21,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,2,5,48hpa,132.37,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,3,5,48hpa,163.77,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,4,5,48hpa,151.06,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,5,5,48hpa,186.89,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,6,5,48hpa,196.63,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,7,5,48hpa,124.75,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,8,5,48hpa,174.36,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,9,5,48hpa,127.81,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,10,5,48hpa,219.82,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,1,5,72hpa,400.8,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,2,5,72hpa,389.82,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,3,5,72hpa,376.99,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,4,5,72hpa,432.39,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,5,5,72hpa,336.48,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,6,5,72hpa,464.07,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,7,5,72hpa,353.91,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,8,5,72hpa,465.78,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,9,5,72hpa,488.61,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,10,5,72hpa,333.07,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,11,5,72hpa,455.26,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,12,5,72hpa,513.38,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,13,5,72hpa,344.34,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,14,5,72hpa,494.32,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,15,5,72hpa,458.23,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,16,5,72hpa,374.42,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,17,5,72hpa,440.07,sc,,,3,1,DAPI,embryonic study
+cntrl,cntrl,18,5,72hpa,385.55,sc,,,3,1,DAPI,embryonic study
+meis1MO2,meis1MO,1,5,24hpa,58.16,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,2,5,24hpa,69,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,3,5,24hpa,48.04,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,4,5,24hpa,104.36,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,5,5,24hpa,71.92,sc,,,3,3,DAPI,embryonic study
+meis1MO2,meis1MO,6,5,24hpa,75.03,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,7,5,24hpa,96.92,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,8,5,24hpa,98.13,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,9,5,24hpa,80.6,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,10,5,24hpa,88.08,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,11,5,24hpa,100.86,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,12,5,24hpa,89.77,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,13,5,24hpa,65.13,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,1,5,48hpa,97.4,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,2,5,48hpa,124.12,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,3,5,48hpa,83.31,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,4,5,48hpa,91.52,sc,,,3,1,DAPI,embryonic study
+meis1MO2,meis1MO,5,5,48hpa,86.43,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,6,5,48hpa,106.85,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,7,5,48hpa,129.82,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,8,5,48hpa,90.41,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,9,5,48hpa,83.82,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,10,5,48hpa,139.29,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,11,5,48hpa,92.03,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,12,5,48hpa,117.82,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,13,5,48hpa,79.82,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,14,5,48hpa,82.18,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,15,5,48hpa,108.88,sc,,,3,1,DAPI,embryonic study
+meis1MO2,meis1MO,1,5,72hpa,83.55,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,2,5,72hpa,85.09,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,3,5,72hpa,83.94,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,4,5,72hpa,101.28,sc,,,3,4,DAPI,embryonic study
+meis1MO2,meis1MO,5,5,72hpa,93.77,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,6,5,72hpa,100.73,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,7,5,72hpa,129,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,8,5,72hpa,92.69,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,9,5,72hpa,215.76,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,10,5,72hpa,129.03,sc,,,3,2,DAPI,embryonic study
+meis1MO2,meis1MO,11,5,72hpa,83.14,sc,,,3,5,DAPI,embryonic study
+meis1MO2,meis1MO,12,5,72hpa,147.82,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,1,5,24hpa,104.43,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,2,5,24hpa,84.83,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,3,5,24hpa,65.91,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,4,5,24hpa,69.74,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,5,5,24hpa,79.05,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,6,5,24hpa,82.58,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,7,5,24hpa,84.17,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,8,5,24hpa,170.92,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,9,5,24hpa,81.92,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,10,5,24hpa,71.08,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,11,5,24hpa,160.9,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,1,5,48hpa,103.59,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,2,5,48hpa,119.45,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,3,5,48hpa,101.31,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,4,5,48hpa,142.47,sc,,,3,1,DAPI,embryonic study
+pbx3MO2,pbx3MO,5,5,48hpa,91.84,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,6,5,48hpa,109.92,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,7,5,48hpa,143.72,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,8,5,48hpa,121.83,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,9,5,48hpa,100.52,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,10,5,48hpa,129.76,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,11,5,48hpa,169.92,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,12,5,48hpa,127.2,sc,,,3,4,DAPI,embryonic study
+pbx3MO2,pbx3MO,13,5,48hpa,113.45,sc,,,3,3,DAPI,embryonic study
+pbx3MO2,pbx3MO,1,5,72hpa,134.87,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,2,5,72hpa,118.25,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,3,5,72hpa,108.51,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,4,5,72hpa,227.28,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,5,5,72hpa,82.37,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,6,5,72hpa,70.39,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,7,5,72hpa,160.66,sc,,,3,2,DAPI,embryonic study
+pbx3MO2,pbx3MO,8,5,72hpa,138.73,sc,,,3,1,DAPI,embryonic study
+pbx3MO2,pbx3MO,9,5,72hpa,142.88,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,10,5,72hpa,256.34,sc,,,3,5,DAPI,embryonic study
+pbx3MO2,pbx3MO,11,5,72hpa,76.45,sc,,,3,4,DAPI,embryonic study
+pbx3_VMO,pbx3MO,1,6,72hpa,723,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,2,6,72hpa,692.89,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,3,6,72hpa,563.59,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,4,6,72hpa,677.69,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,5,6,72hpa,505.59,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,6,6,72hpa,621.09,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,7,6,72hpa,556.55,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,8,6,72hpa,855.02,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,9,6,72hpa,747.21,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,1,6,72hpa,372.73,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,2,6,72hpa,463.64,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,3,6,72hpa,355.13,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,4,6,72hpa,438.46,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,5,6,72hpa,286.43,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,6,6,72hpa,422.07,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,7,6,72hpa,351.1,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,8,6,72hpa,392.54,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,9,6,72hpa,365.99,sc,0,0,0,0,0,vivo study_low dose
+mr,control,1,6,72hpa,651.32,Tail,0,0,0,0,0,vivo study_low dose
+mr,control,2,6,72hpa,542.98,Tail,0,0,0,0,0,vivo study_low dose
+mr,control,3,6,72hpa,612.31,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,1,6,72hpa,557.84,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,2,6,72hpa,653.15,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,3,6,72hpa,505.61,Tail,0,0,0,0,0,vivo study_low dose
+mr,control,1,6,72hpa,434,sc,0,0,0,0,0,vivo study_low dose
+mr,control,2,6,72hpa,464.54,sc,0,0,0,0,0,vivo study_low dose
+mr,control,3,6,72hpa,425.78,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,1,6,72hpa,441.97,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,2,6,72hpa,453.24,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,3,6,72hpa,348.6,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,1,20720,72hpa,526.982,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,1,20720,72hpa,680.634,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,2,20720,72hpa,391.474,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,2,20720,72hpa,669.176,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,3,20720,72hpa,427.74,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,3,20720,72hpa,673.016,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,4,20720,72hpa,414.078,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,4,20720,72hpa,631.654,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,5,20720,72hpa,410.908,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,5,20720,72hpa,585.785,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,6,20720,72hpa,344.02,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,6,20720,72hpa,565.912,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,7,20720,72hpa,373.95,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,7,20720,72hpa,597.132,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,8,20720,72hpa,319.187,sc,0,0,0,0,0,vivo study_low dose
+uninjected,control,8,20720,72hpa,531.206,Tail,0,0,0,0,0,vivo study_low dose
+tracer,control,1,20720,72hpa,401.691,sc,0,0,0,0,0,vivo study_low dose
+tracer,control,1,20720,72hpa,513.091,Tail,0,0,0,0,0,vivo study_low dose
+tracer,control,2,20720,72hpa,511.815,sc,0,0,0,0,0,vivo study_low dose
+tracer,control,2,20720,72hpa,598.92,Tail,0,0,0,0,0,vivo study_low dose
+tracer,control,3,20720,72hpa,363.445,sc,0,0,0,0,0,vivo study_low dose
+tracer,control,3,20720,72hpa,526.002,Tail,0,0,0,0,0,vivo study_low dose
+tracer,control,4,20720,72hpa,294.776,sc,0,0,0,0,0,vivo study_low dose
+tracer,control,4,20720,72hpa,419.067,Tail,0,0,0,0,0,vivo study_low dose
+tracer,control,5,20720,72hpa,299.742,sc,0,0,0,0,0,vivo study_low dose
+tracer,control,5,20720,72hpa,437.407,Tail,0,0,0,0,0,vivo study_low dose
+tracer,control,6,20720,72hpa,390.747,sc,0,0,0,0,0,vivo study_low dose
+tracer,control,6,20720,72hpa,518.583,Tail,0,0,0,0,0,vivo study_low dose
+tracer,control,7,20720,72hpa,320.502,sc,0,0,0,0,0,vivo study_low dose
+tracer,control,7,20720,72hpa,419.179,Tail,0,0,0,0,0,vivo study_low dose
+tracer,control,8,20720,72hpa,363.546,sc,0,0,0,0,0,vivo study_low dose
+tracer,control,8,20720,72hpa,573.38,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,1,20720,72hpa,352.438,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,1,20720,72hpa,459.14,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,2,20720,72hpa,274.722,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,2,20720,72hpa,369.575,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,3,20720,72hpa,286.911,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,3,20720,72hpa,409.449,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,4,20720,72hpa,266.823,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,4,20720,72hpa,376.533,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,5,20720,72hpa,322.404,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,5,20720,72hpa,499.124,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,6,20720,72hpa,311.865,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,6,20720,72hpa,366.013,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,7,20720,72hpa,223.193,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,7,20720,72hpa,359.564,Tail,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,8,20720,72hpa,184.819,sc,0,0,0,0,0,vivo study_low dose
+pbx3_VMO,pbx3MO,8,20720,72hpa,249.599,Tail,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,1,20720,72hpa,517.234,sc,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,1,20720,72hpa,899.524,Tail,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,2,20720,72hpa,477.48,sc,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,2,20720,72hpa,632.74,Tail,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,3,20720,72hpa,412.401,sc,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,3,20720,72hpa,565.031,Tail,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,4,20720,72hpa,446.14,sc,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,4,20720,72hpa,631.302,Tail,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,5,20720,72hpa,458.44,sc,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,5,20720,72hpa,614.213,Tail,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,6,20720,72hpa,343.98,sc,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,6,20720,72hpa,455.051,Tail,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,7,20720,72hpa,370.655,sc,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,7,20720,72hpa,610.719,Tail,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,8,20720,72hpa,337.411,sc,0,0,0,0,0,vivo study_low dose
+meis1_VMO,meis1MO,8,20720,72hpa,586.717,Tail,0,0,0,0,0,vivo study_low dose
+uninjected,control,1,22120,72hpa,522.621,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,1,22120,72hpa,812.511,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,2,22120,72hpa,483.402,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,2,22120,72hpa,804.959,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,3,22120,72hpa,534.507,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,3,22120,72hpa,690.856,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,4,22120,72hpa,493.891,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,4,22120,72hpa,639.648,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,5,22120,72hpa,618.893,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,5,22120,72hpa,773.136,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,6,22120,72hpa,588.259,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,6,22120,72hpa,817.417,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,7,22120,72hpa,575.306,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,7,22120,72hpa,711.556,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,8,22120,72hpa,519.759,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,8,22120,72hpa,693.234,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,9,22120,72hpa,463.062,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,9,22120,72hpa,650.423,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,10,22120,72hpa,591.578,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,10,22120,72hpa,1001.409,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,11,22120,72hpa,539.786,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,11,22120,72hpa,695.854,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,12,22120,72hpa,563.926,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,12,22120,72hpa,678.86,Tail,0,0,0,0,0,vivostudy_final dose
+uninjected,control,13,22120,72hpa,478.734,sc,0,0,0,0,0,vivostudy_final dose
+uninjected,control,13,22120,72hpa,628.251,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,1,22120,72hpa,430.035,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,1,22120,72hpa,661.819,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,2,22120,72hpa,568.472,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,2,22120,72hpa,721.326,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,3,22120,72hpa,544.828,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,3,22120,72hpa,653.744,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,4,22120,72hpa,545.637,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,4,22120,72hpa,674.612,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,5,22120,72hpa,557.224,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,5,22120,72hpa,697.773,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,6,22120,72hpa,548.49,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,6,22120,72hpa,682.173,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,7,22120,72hpa,466.27,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,7,22120,72hpa,681.355,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,8,22120,72hpa,655.79,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,8,22120,72hpa,783.063,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,9,22120,72hpa,553.292,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,9,22120,72hpa,655.166,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,10,22120,72hpa,539.89,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,10,22120,72hpa,757.245,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,11,22120,72hpa,458.853,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,11,22120,72hpa,746.264,Tail,0,0,0,0,0,vivostudy_final dose
+tracer,control,12,22120,72hpa,489.704,sc,0,0,0,0,0,vivostudy_final dose
+tracer,control,12,22120,72hpa,647.343,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,1,22120,72hpa,399.918,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,1,22120,72hpa,481.521,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,2,22120,72hpa,429.561,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,2,22120,72hpa,534.855,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,3,22120,72hpa,420.539,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,3,22120,72hpa,523.167,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,4,22120,72hpa,453.116,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,4,22120,72hpa,528.037,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,5,22120,72hpa,250.459,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,5,22120,72hpa,396.394,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,6,22120,72hpa,406.414,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,6,22120,72hpa,502.837,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,7,22120,72hpa,211.773,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,7,22120,72hpa,348.006,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,8,22120,72hpa,403.704,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,8,22120,72hpa,501.286,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,9,22120,72hpa,409.272,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,9,22120,72hpa,484.114,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,10,22120,72hpa,404.556,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,10,22120,72hpa,528.275,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,11,22120,72hpa,401.86,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,11,22120,72hpa,579.1,Tail,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,12,22120,72hpa,327.569,sc,0,0,0,0,0,vivostudy_final dose
+pbx3_VMO,pbx3MO,12,22120,72hpa,548.51,Tail,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,1,22120,72hpa,303.827,sc,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,1,22120,72hpa,416.751,Tail,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,2,22120,72hpa,433.969,sc,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,2,22120,72hpa,517.446,Tail,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,3,22120,72hpa,489.537,sc,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,3,22120,72hpa,655.452,Tail,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,4,22120,72hpa,243.394,sc,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,4,22120,72hpa,351.939,Tail,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,5,22120,72hpa,282.475,sc,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,5,22120,72hpa,394.083,Tail,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,6,22120,72hpa,353.702,sc,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,6,22120,72hpa,442.733,Tail,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,7,22120,72hpa,357.025,sc,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,7,22120,72hpa,456.636,Tail,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,8,22120,72hpa,332.795,sc,0,0,0,0,0,vivostudy_final dose
+meis1_VMO,meis1MO,8,22120,72hpa,477.351,Tail,0,0,0,0,0,vivostudy_final dose

@@ -155,7 +155,7 @@ To identify canonical cell type marker genes that are conserved across condition
 ```{r DE functions}
 # Define DE marker function
 
-cluster_markers <- functio(object, cluster1){
+cluster_markers <- function(object, cluster1){
   FindMarkers(object = object, ident.1=cluster1, verbose = TRUE, only.pos = TRUE)
 }
 

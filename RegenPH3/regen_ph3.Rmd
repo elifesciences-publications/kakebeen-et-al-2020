@@ -1,5 +1,5 @@
 ---
-title: "Regen PH#"
+title: "Regen PH3"
 author: "Anneke Kakebeen"
 date: "2/20/2020"
 output: html_document
@@ -40,12 +40,20 @@ datatable(ph3)
 
 ```
 
-## Plot 24hpa and 72hpa
-### per one clutch
-```{r load data, echo=FALSE, warning=FALSE, cache=TRUE}
+## Figure 5AA: PH3 cells in 24hpa and 72hpa tissue
+### subset working data
+```{r Figure5AA data, echo=FALSE, warning=FALSE, cache=TRUE}
 
+# subset data for plot
 ph3_2472 <- filter(ph3, Clutch == "20720")
- 
+
+# save source file
+# write.csv(ph3_2472, "ph3_24hpa_72hpa.csv")
+```
+
+### Plot 24hpa and 72hpa
+Conclusion: 72hpa has significant more ph3 cells per area of spinal cord.
+```{r Figure5AA plot, echo=FALSE, warning=FALSE, cache=TRUE}
 # plot ph3/area of spinal cord FOR FIGURES
 ggplot(ph3_2472, aes(x=Timepoint, y=CPMm)) +
   geom_boxplot(fill="green4") +
@@ -63,68 +71,33 @@ ggplot(ph3_2472, aes(x=Timepoint, y=CPMm)) +
 #   theme(text = element_text(colour = "white")) +
 #   stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test", label = "p.signif", color = "white") 
 
+# number of animals for each condition
 table(ph3_2472$Timepoint)
 
 ```
 
-### per both clutches
-```{r}
-#filter for morphant data
-ph3_2472_1 <- filter(ph3, Condition == "uninjured")
 
-# plot morphant data
-ggplot(ph3_2472_1, aes(x=Timepoint, y=CPMm)) +
-  geom_boxplot(fill="green4") +
-  ylab(expression("pH3 Cells per"~mm^2~" of the Spinal Cord")) +
-  theme_bw() +
-  theme(text = element_text(colour = "black", size = 18), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
-  stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test") +
-  facet_wrap(Condition~.) +
-  Seurat:::RotatedAxis()
-
-table(ph3_2472_1$Timepoint)
-
-```
-
-
-## Plot morphants
-```{r}
+## Figure 7L-M: Area of regenerated spinal cord and ph3 per area
+### Subset working data
+```{r Figure7L-M data, echo=FALSE, warning=FALSE, cache=TRUE}
 #filter for morphant data
 ph3_morphant <- filter(ph3, Clutch == "22120")
-ph3_morphant$Condition <- factor(ph3_morphant$Condition, levels = c("uninjured", "tracer", "pbx3_VMO", "meis1_VMO"))
 
-# set stats covmparison
-comparison <- list(c("uninjured", "tracer"), c("uninjured", "pbx3_VMO"), c("uninjured", "meis1_VMO"), c("tracer", "pbx3_VMO"), c("tracer", "meis1_VMO"))
+# source for morphant data
+# write.csv(ph3_morphant, "ph3_morphant.csv")
 
-# plot morphant data per each timepoint comparing between conditions
-ggplot(ph3_morphant, aes(x=Condition, y=ph3_morphant$CPMm)) +
-  geom_boxplot(fill="green4") +
-  ylab(expression("PH3+ Cells per"~mm^2~" of the Spinal Cord")) +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 20), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
-  stat_compare_means(comparisons = comparison, method = "t.test", label = "p.signif") +
-  facet_grid(Timepoint~.) +
-  Seurat:::RotatedAxis()
-
-# plot morphant data per each condition comparing timepoints
-ggplot(ph3_morphant, aes(x=Timepoint, y=ph3_morphant$CPMm)) +
-  geom_boxplot(fill="green4") +
-  ylab(expression("PH3+ Cells per"~mm^2~" of the Spinal Cord")) +
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), text = element_text(colour = "black", size = 18), axis.text.x = element_text(color="black"), axis.text.y = element_text(color="black")) +
-  stat_compare_means(comparisons = list(c("24hpa", "72hpa")), method = "t.test", label = "p.signif") +
-  facet_wrap(Condition~.) +
-  Seurat:::RotatedAxis()
-
-
-
+# Factor conditions for plotting
+ph3_morphant$Condition <- factor(ph3_morphant$Condition, levels = c("tracer", "meis1_VMO", "pbx3_VMO"))
 ```
 
-```{r}
-comparison <- list(c("tracer", "pbx3_VMO"), c("tracer", "meis1_VMO"))
-ph3_morphant$Condition <- factor(ph3_morphant$Condition, levels = c("tracer", "meis1_VMO", "pbx3_VMO"))
+### plot morphant data
+Conclusion: There is a significant decrease in area of regen spinal cord in morphants, howver the number of ph3 cells per area does not change in morphant conditions.
+```{r Figure7L-M daplotta, echo=FALSE, warning=FALSE, cache=TRUE}
 
-# plot morphant data per each timepoint comparing between conditions
+# set stats covmparison
+comparison <- list(c("tracer", "pbx3_VMO"), c("tracer", "meis1_VMO"))
+
+# Plot area of regen spinal cord
 ggplot(subset(ph3_morphant, Timepoint == "72hpa" & Condition %in% c("tracer", "meis1_VMO", "pbx3_VMO")), aes(x=Condition, y=(Area_micron/1000))) +
   geom_boxplot(fill="green4") +
   ylab(expression("Area of Spinal Cord"~paste(mm^2))) +
@@ -134,7 +107,7 @@ ggplot(subset(ph3_morphant, Timepoint == "72hpa" & Condition %in% c("tracer", "m
   xlab("") +
   Seurat:::RotatedAxis()
 
-
+# plot ph3 cells per area spinal cord
 ggplot(subset(ph3_morphant, Timepoint == "72hpa"& Condition %in% c("tracer", "meis1_VMO", "pbx3_VMO")), aes(x=Condition, y=CPMm)) +
   geom_boxplot(fill="green4") +
   ylab(expression("PH3 Cells/"~mm^2~"Spinal Cord")) +
@@ -146,27 +119,6 @@ ggplot(subset(ph3_morphant, Timepoint == "72hpa"& Condition %in% c("tracer", "me
 
 
 table(ph3_morphant$Condition, ph3_morphant$Timepoint)
-
-
-
-```
-
-
-```{r}
-
-test <- read.csv("axon_intensity.csv")
-test$condition <- factor(test$condition, levels=c("mr", "pbx3", 'meis1'))
-
-test %>%
-  group_by(condition) %>%
-  summarise(mean_int = mean(intden), mean_raw = mean(rawintden), mean_area = mean(area))
-
-ggplot(test, aes(x=condition, y=intden)) +
-  geom_boxplot() +
-  geom_jitter() +
-stat_compare_means(comparisons = list(c("mr", "pbx3"), c("mr", "meis1")))
-
-
 
 
 ```

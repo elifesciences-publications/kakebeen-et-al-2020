@@ -9,8 +9,8 @@ output:
     toc_depth: 3
 ---
 
-## load settings
-```{r load libraries, echo=FALSE, warning=FALSE, message=FALSE}
+## Set up 
+```{r set up, echo=FALSE, warning=FALSE, message=FALSE, cache=FALSE}
 
 # load packages 
 library(ggplot2)
@@ -21,7 +21,6 @@ library(dplyr)
 library(ggpubr)
 library(cowplot)
 library(Seurat)
-library(patchwork)
 
 # colors 
 uninjColor <- "white"
@@ -37,11 +36,10 @@ source("~/Desktop/R_working/common_source_functions.R")
 # set wd
 setwd("~/Desktop/pax6 paper/Final Markdowns/TailMeasurement/")
 
-
 ```
 
-
-## load data
+## Load in data
+This .csv file has values for all regeneration measurements taken in this study. Plots will be made on derivatives of this data. The working file for each chunck will be saved to submit to Elife as source file for data. 
 ```{r load data, echo=FALSE, warning=FALSE, cache=TRUE}
 
 # read in data
@@ -58,41 +56,96 @@ MOdata$Clutch <- as.character(MOdata$Clutch) # set numerical values of clutch as
 MOdata$MeasureType <- (gsub(MOdata$MeasureType, pattern = "sc", replacement = "Spinal Cord"))
 MOdata$MeasureType <- factor(MOdata$MeasureType, levels = c("Tail", "Spinal Cord", "Spinal Cord_width")) # factor measurement type for plot 
 
-```
-## Figure 6AA: Plot tail measurement data
-### Vivo-MO measurements
-```{r plot data, echo=FALSE, warning=FALSE, cache=TRUE}
-# filter data for last clutch with correct doses
-vmo_022120 <- filter(MOdata, Clutch == "22120")
-#factor data to order sample variables correctly
-vmo_022120$SampleID <- factor(vmo_022120$SampleID, levels = c("uninjected", "tracer", "meis1_VMO", "pbx3_VMO"))
-# define comparisons for statistics
-comparisons <- list(c("uninjected", "tracer"),c("uninjected", "meis1_VMO"),c("uninjected", "pbx3_VMO"),c("tracer", "meis1_VMO"), c("tracer", "pbx3_VMO")) # define comparisons for statistics
+# view data
+# datatable(MOdata)
 
+```
+
+
+## Figure 7K: Plot tail and spinal cord measurement data for vivo-morphants
+### Subset working data for vmo
+```{r Figure 7k data,  echo=FALSE, warning=FALSE, cache=TRUE}
+
+# filter data for last clutch with correct doses
+vmo_022120 <- MOdata %>%
+  filter(Clutch == "22120" ) %>%
+  filter(SampleID %in% c("tracer", "pbx3_VMO", "meis1_VMO"))
+
+# write source table
+# write.csv(vmo_022120, "vivo_morphant_tail_measurements.csv")
+
+#factor data to order sample variables correctly
+vmo_022120$SampleID <- factor(vmo_022120$SampleID, levels = c("tracer", "meis1_VMO", "pbx3_VMO"))
+```
+
+### Plot 72hpa for fig7k
+Conclusions: meis1 and pbx3 vivo-morpholinos result in significantly shorter regenerated spinal cord and tail. 
+```{r Figure 7k plot,  echo=FALSE, warning=FALSE, cache=TRUE}
+
+# define comparisons for statistics
+comparisons <- list(c("tracer", "meis1_VMO"), c("tracer", "pbx3_VMO")) # define comparisons for statistics
+
+# for publication
 ggplot(vmo_022120, aes(x=SampleID, y=Measurement, fill=SampleID)) +
+  geom_boxplot() +
+  theme_bw(base_size = 29) +
+  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(colour = "black"), axis.text.y = element_text(colour = "black"), strip.background =element_rect(fill="white")) +
+  facet_grid(Timepoint~MeasureType) +
+  ylab(expression(paste("Length ", mu, "m"))) +
+  xlab("") +
+   stat_compare_means(comparisons = comparisons, method = "t.test", label = "p.signif") +
+    Seurat:::RotatedAxis() +
+  scale_fill_manual(values = c(tracerColor, meisColor, pbxColor))
+
+
+# number of animals for each condition
+table(vmo_022120$SampleID, vmo_022120$MeasureType)
+
+```
+
+
+## Figure 7-supp1AA: Plot tail measurement data for embryonically injected morphants
+### Subset working data for embryonic
+```{r fig7-supp1AA data, echo=FALSE, warning=FALSE, cache=TRUE}
+ 
+# Get data for embryonic morphants
+# filter table for embryonic samples and only tail and spinal cord measurements
+TailS <- MOdata %>%
+  filter(Other.Notes == "embryonic study") %>%
+  filter(MeasureType %in% c("Tail", "Spinal Cord")) 
+
+# write out working data for source file
+# write.csv(TailS, "embryonic_morphant_tail_measurements.csv")
+```
+
+### Plot 72hpa for fig7-supp1AA 
+Conclusions: meis1 and pbx3 morpholinos result in significantly shorter regenerated spinal cord and tail. 
+```{r fig7-supp1AA plot, echo=FALSE, warning=FALSE, cache=TRUE}
+# define comparisons for statistics
+comparisons <- list(c("cntrl", "meis1MO1"),c("cntrl", "meis1MO2"),c("cntrl", "pbx3MO1"),c("cntrl", "pbx3MO2")) 
+
+# plot 72hpa
+ggplot(filter(TailS, Timepoint == "72hpa"), aes(x=SampleID, y=Measurement, fill=SampleID)) +
   geom_boxplot() +
   geom_jitter() +
   theme_bw(base_size = 20) +
   theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(colour = "black"), axis.text.y = element_text(colour = "black")) +
+  facet_grid(Timepoint~MeasureType) +
+  ylim(0, 1000) +
   ylab(expression(paste("Length ", mu, "m"))) +
   xlab("") +
-  facet_grid("MeasureType") +
-   stat_compare_means(comparisons = comparisons, method = "t.test", label = "p.signif") +
+   stat_compare_means(comparisons = comparisons, method = "t.test", label.y = c(750, 825, 900, 975), label = "p.signif") +
     Seurat:::RotatedAxis() +
-  scale_fill_manual(values = c(uninjColor,tracerColor, pbxColor, meisColor))
+  scale_fill_manual(values = c("white",meisColor, meisColor, pbxColor, pbxColor))
 
+# number of animals for each condition
+TailS_72 <- filter(TailS, Timepoint == "72hpa")
+table(TailS_72$SampleID, TailS_72$MeasureType)
 
 ```
 
-
-## Figure Supp 6AA: Plot tail measurement data
-### All Timepoints
-```{r plot1 data, echo=FALSE, warning=FALSE, cache=TRUE}
-
-# boxplot to compare measurement data across cntrl, meis1MO, and pbx3 MO 
-TailS <- filter(MOdata, SampleID %in% c("cntrl", "meis1MO1", "pbx3MO1", "meis1MO2", "pbx3MO2"))
-TailS <- filter(TailS, MeasureType %in% c("Tail", "Spinal Cord")) # filter table for only tail and spinal cord measurements
-comparisons <- list(c("cntrl", "meis1MO1"),c("cntrl", "meis1MO2"),c("cntrl", "pbx3MO1"),c("cntrl", "pbx3MO2")) # define comparisons for statistics
+### Plot all timepoints for reference
+```{r all timepoints plot, echo=FALSE, warning=FALSE, cache=TRUE}
 
 
 # plot all timepoints
@@ -111,31 +164,3 @@ ggplot(TailS, aes(x=SampleID, y=Measurement, fill=SampleID)) + # define datafram
 
 
 ```
-
-### Plot only 72hpa for figure
-```{r 6AA, echo=FALSE, warning=FALSE, cache=TRUE}
-
-# boxplot to compare measurement data across cntrl, meis1MO, and pbx3 MO 
-TailS <- filter(MOdata, SampleID %in% c("cntrl", "meis1MO1", "pbx3MO1", "meis1MO2", "pbx3MO2"))
-TailS <- filter(TailS, MeasureType %in% c("Tail", "Spinal Cord")) # filter table for only tail and spinal cord measurements
-TailS <- filter(TailS, Timepoint == "72hpa")
-comparisons <- list(c("cntrl", "meis1MO1"),c("cntrl", "meis1MO2"),c("cntrl", "pbx3MO1"),c("cntrl", "pbx3MO2")) # define comparisons for statistics
-
-# plot 72hpa
-ggplot(TailS, aes(x=SampleID, y=Measurement, fill=SampleID)) +
-  geom_boxplot() +
-  geom_jitter() +
-  theme_bw(base_size = 20) +
-  theme(legend.position = "none", panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(colour = "black"), axis.text.y = element_text(colour = "black")) +
-  facet_grid(Timepoint~MeasureType) +
-  ylim(0, 1000) +
-  ylab(expression(paste("Length ", mu, "m"))) +
-  xlab("") +
-   stat_compare_means(comparisons = comparisons, method = "t.test", label.y = c(750, 825, 900, 975), label = "p.signif") +
-    Seurat:::RotatedAxis() +
-  scale_fill_manual(values = c("white",meisColor, meisColor, pbxColor, pbxColor))
-
-
-```
-
-
