@@ -3,7 +3,7 @@ Kakebeen et al 2019 Intro
 Anneke Kakebeen
 13 Aug 2019
 
--   [Repository for analysis of data from Kakebeen et al 2019](#repository-for-analysis-of-data-from-kakebeen-et-al-2019)
+-   [Repository for analysis of data from Kakebeen et al 2020](#repository-for-analysis-of-data-from-kakebeen-et-al-2020)
 -   [Abstract](#abstract)
 -   [ATAC](#atac)
 -   [SingleCell\_1](#singlecell_1)
@@ -12,10 +12,10 @@ Anneke Kakebeen
 -   [FACS](#facs)
 -   [Regen PH3](#regen-ph3)
 
-Repository for analysis of data from Kakebeen et al 2019
+Repository for analysis of data from Kakebeen et al 2020
 --------------------------------------------------------
 
-This GitLab project holds code for sequencing data preparation, analysis, and figure making for the publication titled **Chromatin accessibility dynamics and single cell RNA-Seq reveal new regulators of regeneration in neural progenitors**. This paper can be found with the PMID..... or at this location.
+This GitLab project holds code for sequencing data preparation, analysis, and figure making for the publication titled **Chromatin accessibility dynamics and single cell RNA-Seq reveal new regulators of regeneration in neural progenitors**. eLife 2020;9:e52648 DOI: 10.7554/eLife.52648.
 
 Abstract
 --------
