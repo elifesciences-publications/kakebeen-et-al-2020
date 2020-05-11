@@ -264,7 +264,7 @@ TSS <- promoters(genes.gr, upstream=0, downstream = 1)
 DistanceToTSS <- function(peaks.gr, TSS.gr) {
 
   ## Run DistanceToNearest (GRanges fn) to get distances from TSS for all peaks
-  TSS.distance <- data.frame(distanceToNearest(peaks.gr, TSS.gr))
+  TSS.distance <- data.frame(distanceToNearest(peaks.gr, TSS.gr, ignore.strand=TRUE))
   colnames(TSS.distance) <- c("Peaks", "Genes", "Distance")
 
   ## A really long way to figure out which peaks are upstream/downstream from TSS
@@ -291,6 +291,13 @@ DistanceToTSS <- function(peaks.gr, TSS.gr) {
 for (i in 1:length(gr.files)) {
   assign(gr.files[i], DistanceToTSS(get(gr.files[i]), TSS))
 }
+
+# Save out RDS object of peak.gr files for figures
+tss.figure <- list("PW1_pax6_Whole-Tail_peaks.gr"=`PW1_pax6_Whole-Tail_peaks.gr`,
+                   "WW1_WT_Whole-Tail_peaks.gr"=`WW1_WT_Whole-Tail_peaks.gr`, 
+                   "gr.files"=gr.files[c(13,27)])
+
+saveRDS(tss.figure, "tss.RDS")
 
 ## ggplot function to wrangle data and make a hist of TSS distances
 dist_hist <- function(peaks.gr, xmin = -5000, xmax = 5000, Title) {

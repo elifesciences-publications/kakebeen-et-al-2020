@@ -497,12 +497,15 @@ pax.all.plotting <- cbind(umapdata, meta) #make table
 datatable(pax.all.plotting)
 colnames(pax.all.plotting)
 
+alldata <- FetchData(pax.combined, vars = c("AK_Names", "orig.ident", rownames(uninjured), "UMAP_1", "UMAP_2"))
+
 # Plot with ggplot from extracted data
 ggplot(pax.all.plotting, aes(x=UMAP_1, y=UMAP_2, color=AK_Names))+
   geom_point(stat="identity") + scale_color_manual(values = my.color) + Seurat:::NoAxes() + blank_theme
 
 # write out table
 write.table(pax.all.plotting, "pax.combined_metadata.txt", sep = "\t",row.names = TRUE, col.names = TRUE)
+write.table(alldata, "alldata_pax.combined.txt", sep = "\t",row.names = TRUE, col.names = TRUE)
 
 
 ```
@@ -524,13 +527,14 @@ remove <- select.cells
 remove <- concat.grep(remove)
 pax.neural.plotting <- pax.neural.plotting[-1*(grep(rownames(pax.neural.plotting), pattern = remove, ignore.case = TRUE)),]
 
+alldata <- FetchData(pax.neural, vars = c("Laevis", "orig.ident", rownames(neural), "UMAP_1", "UMAP_2"))
 # test plotting with umap plot
 ggplot(pax.neural.plotting, aes(x=UMAP_1, y=UMAP_2, color=AK_Names))+
   geom_point(stat="identity") + scale_color_manual(values = my.color.neural) + Seurat:::NoAxes() +blank_theme
 
 # write out table
 write.table(pax.neural.plotting, "pax.neural_metadata.txt", sep = "\t",row.names = TRUE, col.names = TRUE)
-
+write.table(test, "alldata_pax.neural.txt", sep = "\t",row.names = TRUE, col.names = TRUE)
 ```
 
 
