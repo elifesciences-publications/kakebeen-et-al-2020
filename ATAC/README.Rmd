@@ -60,7 +60,7 @@ log.counts.timepoints <- as.matrix(read.table("ATAC_DA/outs/log.counts_timepoint
 
 
 
-## Figure 2B
+## Figure 2B: MDS plot
 ```{r 2b, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.width= 8, fig.height= 8}
 
 # read in mds data
@@ -85,12 +85,38 @@ plotMDS(mds,
 
 ## Figure 2C: tss plots
 ```{r 2c, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE, fig.width= 8, fig.height= 8}
-# Fix when alex gets back to you
-# pax <- image_read("~/Desktop/Final_R/ATAC/tss_pax.png")
-# print(pax)
-# 
-# all <- image_read("~/Desktop/Final_R/ATAC/tss_all.png")
-# print(all)
+
+# Read in gr files for TSS (.gr files were made in "ATAC_QC_COUNTS_FINAL.Rmd")
+tss <- readRDS(file = "ATAC_QC_Counts/tss.RDS")
+
+# Unlist RDS object
+gr.files <- unlist(tss[[3]])
+`PW1_pax6_Whole-Tail_peaks.gr` <- tss[[1]]
+`WW1_WT_Whole-Tail_peaks.gr` <- tss[[2]]
+
+## ggplot function to wrangle data and make a hist of TSS distances
+dist_hist <- function(peaks.gr, xmin = -5000, xmax = 5000, Title) {
+  ## Title for plot
+  Title <- gsub(".gr", "", Title)
+
+  ## Put out distances and make a matrix
+  distance.mtx <- data.frame(Peak = peaks.gr$name, Distance = peaks.gr$DistanceToTSS)
+
+  ## ggplot function
+  ggplot(distance.mtx, aes(x = Distance)) +
+    geom_histogram(fill = "white", colour = "red", alpha = 0.8, binwidth = 100) +
+    xlim(xmin, xmax) +
+    ggtitle(paste("Distance To TSS", gsub("_peaks", "", Title)))
+
+}
+
+# plot Pax TSS
+dist_hist(get(gr.files[1]), xmin = -20000, xmax = 20000, Title = gr.files[1])
+
+# plot Whole tail TSs
+dist_hist(get(gr.files[2]), xmin = -20000, xmax = 20000, Title = gr.files[2])
+
+
 
 ```
 

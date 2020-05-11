@@ -5,7 +5,7 @@ Anneke Kakebeen
 
 -   [Setting up project: ATAC](#setting-up-project-atac)
 -   [Read in data for figures](#read-in-data-for-figures)
--   [Figure 2B](#figure-2b)
+-   [Figure 2B: MDS plot](#figure-2b-mds-plot)
 -   [Figure 2C: tss plots](#figure-2c-tss-plots)
 -   [Figure 2E: \# of peaks called DA between conditions](#figure-2e-of-peaks-called-da-between-conditions)
     -   [Number of peaks](#number-of-peaks)
@@ -40,13 +40,15 @@ Setting up project: ATAC
 Read in data for figures
 ------------------------
 
-Figure 2B
----------
+Figure 2B: MDS plot
+-------------------
 
 ![](README_files/figure-markdown_github/2b-1.png)
 
 Figure 2C: tss plots
 --------------------
+
+![](README_files/figure-markdown_github/2c-1.png)![](README_files/figure-markdown_github/2c-2.png)
 
 Figure 2E: \# of peaks called DA between conditions
 ---------------------------------------------------

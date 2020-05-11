@@ -294,7 +294,7 @@ write.table(GO_ALL_use, "~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_
 ## Figure 2G: heat map of terms in neurogenesis
 ```{r PaxVAll, cache=TRUE, warning=FALSE, message=FALSE, echo=FALSE}
 # read in go terms
-GO_PAX_use <- read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO_PAX_use.txt", header = TRUE, sep = " ")
+GO_PAX_use <- read.table("~/Desktop/pax6 paper/Final Markdowns/ATAC/ATAC_DA/outs_figures/GO_PAX_use.txt", header = TRUE, sep = "\t")
 
 # Define regions where npax > all
 pax <- paxVall_agg[c(paxVall_agg$DE.p.PaxVSWholeALL == "UP", paxVall_agg$Gene == "pax6"),]

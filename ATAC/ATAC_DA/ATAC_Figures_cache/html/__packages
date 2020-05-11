@@ -32,3 +32,5 @@ pdftools
 scales
 limma
 treemap
+GenomeInfoDb
+GenomicRanges
