@@ -40,6 +40,19 @@ concat.grep <- function(input){
   #assign(out, temp, envir = .GlobalEnv)
 }
 
+## To get all genes from treemap or go output table and put in form for searching via grep *** for semicolon
+concat.grep_sc <- function(input){
+  ## make list of call genes in nephron family.
+  temp <- strsplit(as.character(input), ";" ) # makes a list of all genes fron column 5
+  temp <- stringi::stri_paste_list(temp, sep = ",", collapse = ",") # concatenates list of lists into one list
+  temp <- strsplit(temp, ",") # split list to list of individual character strings
+  temp <- unique(as.vector(temp[[1]])) # save out 1 list as character vector and get unique values to eliminate repeats
+  temp <- tolower(temp) # lower case
+  temp <- list(temp) # relist after find unique values
+  temp <- unlist(stringi::stri_paste_list(temp, sep = "|", collapse = ",")) # unlist and seperate with "|" for grepping purposes
+  #assign(out, temp, envir = .GlobalEnv)
+}
+
 ## split violin plots
 GeomSplitViolin <- ggproto("GeomSplitViolin", GeomViolin, 
                            draw_group = function(self, data, ..., draw_quantiles = NULL) {

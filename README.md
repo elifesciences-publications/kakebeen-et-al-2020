@@ -9,7 +9,6 @@ Anneke Kakebeen
 -   [SingleCell\_1](#singlecell_1)
 -   [GRN](#grn)
 -   [Tail Measurement](#tail-measurement)
--   [FACS](#facs)
 -   [Regen PH3](#regen-ph3)
 
 Repository for analysis of data from Kakebeen et al 2020
@@ -41,11 +40,6 @@ Tail Measurement
 ----------------
 
 This folder contains the tail measurement data and graphical representations of this data for vivo-morphants and embryonic morphants.
-
-FACS
-----
-
-This folder contains the data representing cells collected by FACS. The code for the figure quantifying the number of sorted cells per tail lives here.
 
 Regen PH3
 ---------
